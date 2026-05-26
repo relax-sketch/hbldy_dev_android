@@ -1,0 +1,19 @@
+{
+  "sourceTemplate": "综合监测-江岸区-20260526102825.zdb",
+  "derivedFromPlotId": "420105003",
+  "badPlotId": "FIX_BAD_001",
+  "goodPlotId": "FIX_GOOD_001",
+  "badPlotExpectedAdditionalRuleIds": [
+    "ADD_GRASS_002",
+    "ADD_GRASS_003",
+    "ADD_GRASS_004",
+    "ADD_GRASS_011",
+    "ADD_GRASS_012",
+    "ADD_GRASS_018",
+    "ADD_GRASS_019",
+    "ADD_GRASS_020",
+    "ADD_GRASS_021",
+    "ADD_GRASS_029"
+  ],
+  "goodPlotExpectedAdditionalRuleIds": []
+}

@@ -1,0 +1,6017 @@
+{
+  "schemaVersion": 1,
+  "ruleSetVersion": "2026.05-initial",
+  "publishedAt": "2026-05-26",
+  "sources": [
+    {
+      "id": "zdb-baseline-20260526",
+      "kind": "BASE_SNAPSHOT",
+      "label": "ZDB 启用规则快照",
+      "description": "从已验证 ZDB 样本中提取的启用质检规则快照。"
+    },
+    {
+      "id": "grassland-additional-20260526",
+      "kind": "ADDITIONAL",
+      "label": "草地质检附加规则首批",
+      "description": "从草地样地调查质检规则表选择并 SQL 化的首批 10 条验证规则。"
+    }
+  ],
+  "rules": [
+    {
+      "id": "BASE_6600",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "调查人员为空",
+      "explanation": "来源于 ZDB 内置启用规则：调查人员为空。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (DC_RY IS NULL OR DC_RY='' OR DC_RY=' ')"
+    },
+    {
+      "id": "BASE_6601",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "调查日期为空",
+      "explanation": "来源于 ZDB 内置启用规则：调查日期为空。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (DC_RQ IS NULL)"
+    },
+    {
+      "id": "BASE_6602",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "调查状态为空",
+      "explanation": "来源于 ZDB 内置启用规则：调查状态为空。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (DC_ZT IS NULL OR DC_ZT='' OR DC_ZT=' ')"
+    },
+    {
+      "id": "BASE_6603",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "样地类型为空",
+      "explanation": "来源于 ZDB 内置启用规则：样地类型为空。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (YD_LX IS NULL OR YD_LX='' OR YD_LX=' ')"
+    },
+    {
+      "id": "BASE_6604",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "省为空",
+      "explanation": "来源于 ZDB 内置启用规则：省为空。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (SHENG IS NULL OR SHENG='' OR SHENG=' ')"
+    },
+    {
+      "id": "BASE_6605",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "市为空",
+      "explanation": "来源于 ZDB 内置启用规则：市为空。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (SHI IS NULL OR SHI='' OR SHI=' ')"
+    },
+    {
+      "id": "BASE_6606",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "县为空",
+      "explanation": "来源于 ZDB 内置启用规则：县为空。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (XIAN IS NULL OR XIAN='' OR XIAN=' ')"
+    },
+    {
+      "id": "BASE_6608",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "样地号为空",
+      "explanation": "来源于 ZDB 内置启用规则：样地号为空。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (YD_ID IS NULL OR YD_ID ='' OR YD_ID =' ')"
+    },
+    {
+      "id": "BASE_6609",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "样地中心点GNSS坐标X为空或整数位小于8位",
+      "explanation": "来源于 ZDB 内置启用规则：样地中心点GNSS坐标X为空或整数位小于8位。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (LENGTH(ROUND(ZUOBIAO_X,0))<8 OR ZUOBIAO_X IS NULL OR ZUOBIAO_X =0 OR TRIM(ZUOBIAO_X)='')"
+    },
+    {
+      "id": "BASE_6610",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "样地中心点GNSS坐标Y为空或整数位小于7位",
+      "explanation": "来源于 ZDB 内置启用规则：样地中心点GNSS坐标Y为空或整数位小于7位。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (LENGTH(ROUND(ZUOBIAO_X,0))<7 OR ZUOBIAO_Y IS NULL OR ZUOBIAO_Y =0 OR TRIM(ZUOBIAO_Y)='')"
+    },
+    {
+      "id": "BASE_6611",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "海拔为空",
+      "explanation": "来源于 ZDB 内置启用规则：海拔为空。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (HAI_BA IS NULL OR HAI_BA =0 OR TRIM(HAI_BA)='')"
+    },
+    {
+      "id": "BASE_6612",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "草地类为空",
+      "explanation": "来源于 ZDB 内置启用规则：草地类为空。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (CD_L IS NULL OR CD_L ='' OR CD_L =' ')"
+    },
+    {
+      "id": "BASE_6613",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "草地型为空",
+      "explanation": "来源于 ZDB 内置启用规则：草地型为空。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (CD_XING IS NULL OR CD_XING ='' OR CD_XING =' ')"
+    },
+    {
+      "id": "BASE_6614",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "草地型为其他时，其他草地型为空",
+      "explanation": "来源于 ZDB 内置启用规则：草地型为其他时，其他草地型为空。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (CD_XING ='826'AND (CD_XING_QT IS NULL OR CD_XING_QT ='' OR CD_XING_QT =' '))"
+    },
+    {
+      "id": "BASE_6615",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "草地起源为空",
+      "explanation": "来源于 ZDB 内置启用规则：草地起源为空。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (CD_LB IS NULL OR CD_LB ='' OR CD_LB ='? ')"
+    },
+    {
+      "id": "BASE_6616",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "植被结构为空",
+      "explanation": "来源于 ZDB 内置启用规则：植被结构为空。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (ZB_JG IS NULL OR ZB_JG = '' OR ZB_JG =' ')"
+    },
+    {
+      "id": "BASE_6617",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "优势草种为空",
+      "explanation": "来源于 ZDB 内置启用规则：优势草种为空。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (YS_CZ IS NULL OR YS_CZ ='' OR YS_CZ =' ')"
+    },
+    {
+      "id": "BASE_6618",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "砾石覆盖面积比例值应在0-100之间",
+      "explanation": "来源于 ZDB 内置启用规则：砾石覆盖面积比例值应在0-100之间。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (LSFG_BL <0 OR LSFG_BL >100 OR LSFG_BL IS NULL OR TRIM(LSFG_BL)='')"
+    },
+    {
+      "id": "BASE_6619",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "覆沙厚度为空",
+      "explanation": "来源于 ZDB 内置启用规则：覆沙厚度为空。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (FS_HD IS NULL OR FS_HD <0 OR TRIM(FS_HD)='')"
+    },
+    {
+      "id": "BASE_6620",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "盐碱斑块面积比例应在0-100之间",
+      "explanation": "来源于 ZDB 内置启用规则：盐碱斑块面积比例应在0-100之间。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (YJB_BL <0 OR YJB_BL>100 OR YJB_BL IS NULL OR TRIM(YJB_BL)='')"
+    },
+    {
+      "id": "BASE_6621",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "地表侵蚀类型为空",
+      "explanation": "来源于 ZDB 内置启用规则：地表侵蚀类型为空。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (DB_QS_LX IS NULL OR DB_QS_LX ='' OR DB_QS_LX= ' ')"
+    },
+    {
+      "id": "BASE_6622",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "地表侵蚀类型不为无侵蚀时，地表侵蚀程度为空",
+      "explanation": "来源于 ZDB 内置启用规则：地表侵蚀类型不为无侵蚀时，地表侵蚀程度为空。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (DB_QS_LX !='5' AND (DB_QS_CD IS NULL OR DB_QS_CD ='' OR DB_QS_CD= ' '))"
+    },
+    {
+      "id": "BASE_6623",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "功能类别为空",
+      "explanation": "来源于 ZDB 内置启用规则：功能类别为空。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (GNLB IS NULL OR GNLB ='' OR GNLB =' ')"
+    },
+    {
+      "id": "BASE_6624",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "利用方式为空",
+      "explanation": "来源于 ZDB 内置启用规则：利用方式为空。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND ((LYFS IS NULL OR LYFS ='' OR LYFS =' ') AND (GNLB IN ('2','3','4') OR GNLB IS NULL OR GNLB='' OR GNLB=' ' ))"
+    },
+    {
+      "id": "BASE_6625",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "主要生态功能为空",
+      "explanation": "来源于 ZDB 内置启用规则：主要生态功能为空。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND ((GNLB='1' OR GNLB IS NULL OR GNLB='' OR GNLB=' ') AND (STGN IS NULL OR STGN ='' OR STGN=' ' ))"
+    },
+    {
+      "id": "BASE_6626",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "利用强度为空",
+      "explanation": "来源于 ZDB 内置启用规则：利用强度为空。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (LYQD IS NULL OR LYQD='' OR LYQD =' ')"
+    },
+    {
+      "id": "BASE_6627",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "划区轮牧为空",
+      "explanation": "来源于 ZDB 内置启用规则：划区轮牧为空。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (HQLM IS NULL OR HQLM ='' OR HQLM =' ')"
+    },
+    {
+      "id": "BASE_6628",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "基本草原为空",
+      "explanation": "来源于 ZDB 内置启用规则：基本草原为空。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (JBCYQK IS NULL OR JBCYQK ='' OR JBCYQK =' ')"
+    },
+    {
+      "id": "BASE_6629",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "地貌为空",
+      "explanation": "来源于 ZDB 内置启用规则：地貌为空。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (DI_MAO IS NULL OR DI_MAO ='' OR DI_MAO =' ')"
+    },
+    {
+      "id": "BASE_6630",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "坡度应在0-90之间",
+      "explanation": "来源于 ZDB 内置启用规则：坡度应在0-90之间。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (PO_DU IS NULL OR PO_DU <0 OR PO_DU >90 OR TRIM(PO_DU)='')"
+    },
+    {
+      "id": "BASE_6631",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "坡位为空",
+      "explanation": "来源于 ZDB 内置启用规则：坡位为空。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (PO_WEI IS NULL OR PO_WEI ='' OR PO_WEI =' ')"
+    },
+    {
+      "id": "BASE_6632",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "当坡位不为无坡时，坡向为空",
+      "explanation": "来源于 ZDB 内置启用规则：当坡位不为无坡时，坡向为空。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND ((PO_XIANG IS NULL OR PO_XIANG ='' OR PO_XIANG =' ') and PO_WEI!='0')"
+    },
+    {
+      "id": "BASE_6633",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "土壤质地为空",
+      "explanation": "来源于 ZDB 内置启用规则：土壤质地为空。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (TU_RANG_ZD IS NULL OR TU_RANG_ZD ='' OR TU_RANG_ZD =' ')"
+    },
+    {
+      "id": "BASE_6634",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "土层厚度为空",
+      "explanation": "来源于 ZDB 内置启用规则：土层厚度为空。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (TU_CENG_HD IS NULL OR TU_CENG_HD <0 OR TRIM(TU_CENG_HD)='')"
+    },
+    {
+      "id": "BASE_6635",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "中心桩照片未拍摄",
+      "explanation": "来源于 ZDB 内置启用规则：中心桩照片未拍摄。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (ZXZ_ZP is null OR ZXZ_ZP='' OR ZXZ_ZP=' ')"
+    },
+    {
+      "id": "BASE_6636",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "远景照未拍摄",
+      "explanation": "来源于 ZDB 内置启用规则：远景照未拍摄。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (YJ_ZP is null OR YJ_ZP='' OR YJ_ZP=' ')"
+    },
+    {
+      "id": "BASE_6637",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "近景照未拍摄",
+      "explanation": "来源于 ZDB 内置启用规则：近景照未拍摄。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (JJ_ZP is null OR JJ_ZP='' OR JJ_ZP=' ')"
+    },
+    {
+      "id": "BASE_6638",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "土壤照片未拍摄",
+      "explanation": "来源于 ZDB 内置启用规则：土壤照片未拍摄。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (TR_ZP is null OR TR_ZP='' OR TR_ZP=' ')"
+    },
+    {
+      "id": "BASE_6639",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "缺少观测样方表",
+      "explanation": "来源于 ZDB 内置启用规则：缺少观测样方表。",
+      "requiredTables": [
+        "YD_TRCY_PT",
+        "YF_TRCYGC_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (MZGUID NOT IN (SELECT XB_GLH FROM YF_TRCYGC_TB WHERE XB_GLH IS NOT NULL))"
+    },
+    {
+      "id": "BASE_6640",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "缺少测产样方表",
+      "explanation": "来源于 ZDB 内置启用规则：缺少测产样方表。",
+      "requiredTables": [
+        "YD_TRCY_PT",
+        "YF_TRCYCC_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (MZGUID NOT IN (SELECT XB_GLH FROM YF_TRCYCC_TB WHERE XB_GLH IS NOT NULL))"
+    },
+    {
+      "id": "BASE_6641",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "缺少样线表",
+      "explanation": "来源于 ZDB 内置启用规则：缺少样线表。",
+      "requiredTables": [
+        "YD_TRCY_PT",
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (MZGUID NOT IN (SELECT XB_GLH FROM YX_TRCY_TB WHERE XB_GLH IS NOT NULL))"
+    },
+    {
+      "id": "BASE_6642",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "样线不足3条",
+      "explanation": "来源于 ZDB 内置启用规则：样线不足3条。",
+      "requiredTables": [
+        "YD_TRCY_PT",
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (MZGUID IN(SELECT D.MZGUID FROM (SELECT A.MZGUID,C.YXSL FROM YD_TRCY_PT A LEFT JOIN (SELECT B.XB_GLH,COUNT(B.XB_GLH) AS YXSL FROM YX_TRCY_TB B GROUP BY B.XB_GLH) C ON A.MZGUID=C.XB_GLH) D WHERE D.YXSL<3))"
+    },
+    {
+      "id": "BASE_6643",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "观测样方不足3个",
+      "explanation": "来源于 ZDB 内置启用规则：观测样方不足3个。",
+      "requiredTables": [
+        "YD_TRCY_PT",
+        "YF_TRCYGC_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (MZGUID IN(SELECT D.MZGUID FROM (SELECT A.MZGUID,C.YXSL FROM YD_TRCY_PT A LEFT JOIN (SELECT B.XB_GLH,COUNT(B.XB_GLH) AS YXSL FROM YF_TRCYGC_TB B GROUP BY B.XB_GLH) C ON A.MZGUID=C.XB_GLH) D WHERE D.YXSL<3))"
+    },
+    {
+      "id": "BASE_6644",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "测产样方不足3个",
+      "explanation": "来源于 ZDB 内置启用规则：测产样方不足3个。",
+      "requiredTables": [
+        "YD_TRCY_PT",
+        "YF_TRCYCC_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (MZGUID IN(SELECT D.MZGUID FROM (SELECT A.MZGUID,C.YXSL FROM YD_TRCY_PT A LEFT JOIN (SELECT B.XB_GLH,COUNT(B.XB_GLH) AS YXSL FROM YF_TRCYCC_TB B GROUP BY B.XB_GLH) C ON A.MZGUID=C.XB_GLH) D WHERE D.YXSL<3))"
+    },
+    {
+      "id": "BASE_6645",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "样线长度不一致",
+      "explanation": "来源于 ZDB 内置启用规则：样线长度不一致。",
+      "requiredTables": [
+        "YD_TRCY_PT",
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (MZGUID IN (SELECT B.XB_GLH FROM (SELECT A.XB_GLH,A.YX_CD FROM YX_TRCY_TB A GROUP BY A.XB_GLH,A.YX_CD) B GROUP BY B.XB_GLH HAVING COUNT(*)>1))"
+    },
+    {
+      "id": "BASE_6648",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_JM_PT",
+      "title": "调查人员为空",
+      "explanation": "来源于 ZDB 内置启用规则：调查人员为空。",
+      "requiredTables": [
+        "YD_JM_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_JM_PT\" WHERE YD_ID = :ydId AND (DC_RY IS NULL OR DC_RY='' OR DC_RY=' ')"
+    },
+    {
+      "id": "BASE_6649",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_JM_PT",
+      "title": "调查日期为空",
+      "explanation": "来源于 ZDB 内置启用规则：调查日期为空。",
+      "requiredTables": [
+        "YD_JM_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_JM_PT\" WHERE YD_ID = :ydId AND (DC_RQ IS NULL)"
+    },
+    {
+      "id": "BASE_6650",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_JM_PT",
+      "title": "调查状态为空",
+      "explanation": "来源于 ZDB 内置启用规则：调查状态为空。",
+      "requiredTables": [
+        "YD_JM_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_JM_PT\" WHERE YD_ID = :ydId AND (DC_ZT IS NULL OR DC_ZT='' OR DC_ZT=' ')"
+    },
+    {
+      "id": "BASE_6651",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_JM_PT",
+      "title": "样地类型为空",
+      "explanation": "来源于 ZDB 内置启用规则：样地类型为空。",
+      "requiredTables": [
+        "YD_JM_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_JM_PT\" WHERE YD_ID = :ydId AND (YD_LX IS NULL OR YD_LX='' OR YD_LX=' ')"
+    },
+    {
+      "id": "BASE_6652",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_JM_PT",
+      "title": "省为空",
+      "explanation": "来源于 ZDB 内置启用规则：省为空。",
+      "requiredTables": [
+        "YD_JM_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_JM_PT\" WHERE YD_ID = :ydId AND (SHENG IS NULL OR SHENG='' OR SHENG=' ')"
+    },
+    {
+      "id": "BASE_6653",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_JM_PT",
+      "title": "市为空",
+      "explanation": "来源于 ZDB 内置启用规则：市为空。",
+      "requiredTables": [
+        "YD_JM_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_JM_PT\" WHERE YD_ID = :ydId AND (SHI IS NULL OR SHI='' OR SHI=' ')"
+    },
+    {
+      "id": "BASE_6654",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_JM_PT",
+      "title": "县为空",
+      "explanation": "来源于 ZDB 内置启用规则：县为空。",
+      "requiredTables": [
+        "YD_JM_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_JM_PT\" WHERE YD_ID = :ydId AND (XIAN IS NULL OR XIAN='' OR XIAN=' ')"
+    },
+    {
+      "id": "BASE_6656",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_JM_PT",
+      "title": "样地号为空",
+      "explanation": "来源于 ZDB 内置启用规则：样地号为空。",
+      "requiredTables": [
+        "YD_JM_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_JM_PT\" WHERE YD_ID = :ydId AND (YD_ID IS NULL OR YD_ID ='' OR YD_ID =' ')"
+    },
+    {
+      "id": "BASE_6657",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_JM_PT",
+      "title": "样地中心点GNSS坐标X为空或整数位小于8位",
+      "explanation": "来源于 ZDB 内置启用规则：样地中心点GNSS坐标X为空或整数位小于8位。",
+      "requiredTables": [
+        "YD_JM_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_JM_PT\" WHERE YD_ID = :ydId AND (LENGTH(ROUND(ZUOBIAO_X,0))<8 OR ZUOBIAO_X IS NULL OR ZUOBIAO_X =0 OR TRIM(ZUOBIAO_X)='')"
+    },
+    {
+      "id": "BASE_6658",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_JM_PT",
+      "title": "样地中心点GNSS坐标Y为空或整数位小于7位",
+      "explanation": "来源于 ZDB 内置启用规则：样地中心点GNSS坐标Y为空或整数位小于7位。",
+      "requiredTables": [
+        "YD_JM_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_JM_PT\" WHERE YD_ID = :ydId AND (LENGTH(ROUND(ZUOBIAO_X,0))<7 OR ZUOBIAO_Y IS NULL OR ZUOBIAO_Y =0 OR TRIM(ZUOBIAO_Y)='')"
+    },
+    {
+      "id": "BASE_6659",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_JM_PT",
+      "title": "海拔为空",
+      "explanation": "来源于 ZDB 内置启用规则：海拔为空。",
+      "requiredTables": [
+        "YD_JM_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_JM_PT\" WHERE YD_ID = :ydId AND (HAI_BA IS NULL OR HAI_BA =0 OR TRIM(HAI_BA)='')"
+    },
+    {
+      "id": "BASE_6660",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_JM_PT",
+      "title": "草地类为空",
+      "explanation": "来源于 ZDB 内置启用规则：草地类为空。",
+      "requiredTables": [
+        "YD_JM_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_JM_PT\" WHERE YD_ID = :ydId AND (CD_L IS NULL OR CD_L ='' OR CD_L =' ')"
+    },
+    {
+      "id": "BASE_6661",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_JM_PT",
+      "title": "草地型为空",
+      "explanation": "来源于 ZDB 内置启用规则：草地型为空。",
+      "requiredTables": [
+        "YD_JM_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_JM_PT\" WHERE YD_ID = :ydId AND (CD_XING IS NULL OR CD_XING ='' OR CD_XING =' ')"
+    },
+    {
+      "id": "BASE_6662",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_JM_PT",
+      "title": "草地型为其他时，其他草地型为空",
+      "explanation": "来源于 ZDB 内置启用规则：草地型为其他时，其他草地型为空。",
+      "requiredTables": [
+        "YD_JM_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_JM_PT\" WHERE YD_ID = :ydId AND (CD_XING ='826'AND (CD_XING_QT IS NULL OR CD_XING_QT ='' OR CD_XING_QT =' '))"
+    },
+    {
+      "id": "BASE_6663",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_JM_PT",
+      "title": "草地起源为空",
+      "explanation": "来源于 ZDB 内置启用规则：草地起源为空。",
+      "requiredTables": [
+        "YD_JM_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_JM_PT\" WHERE YD_ID = :ydId AND (CD_LB IS NULL OR CD_LB ='' OR CD_LB ='? ')"
+    },
+    {
+      "id": "BASE_6664",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_JM_PT",
+      "title": "植被结构为空",
+      "explanation": "来源于 ZDB 内置启用规则：植被结构为空。",
+      "requiredTables": [
+        "YD_JM_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_JM_PT\" WHERE YD_ID = :ydId AND (ZB_JG IS NULL OR ZB_JG = '' OR ZB_JG =' ')"
+    },
+    {
+      "id": "BASE_6665",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_JM_PT",
+      "title": "优势草种为空",
+      "explanation": "来源于 ZDB 内置启用规则：优势草种为空。",
+      "requiredTables": [
+        "YD_JM_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_JM_PT\" WHERE YD_ID = :ydId AND (YS_CZ IS NULL OR YS_CZ ='' OR YS_CZ =' ')"
+    },
+    {
+      "id": "BASE_6666",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_JM_PT",
+      "title": "砾石覆盖面积比例值应在0-100之间",
+      "explanation": "来源于 ZDB 内置启用规则：砾石覆盖面积比例值应在0-100之间。",
+      "requiredTables": [
+        "YD_JM_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_JM_PT\" WHERE YD_ID = :ydId AND (LSFG_BL <0 OR LSFG_BL >100 OR LSFG_BL IS NULL OR TRIM(LSFG_BL)='')"
+    },
+    {
+      "id": "BASE_6667",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_JM_PT",
+      "title": "覆沙厚度为空",
+      "explanation": "来源于 ZDB 内置启用规则：覆沙厚度为空。",
+      "requiredTables": [
+        "YD_JM_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_JM_PT\" WHERE YD_ID = :ydId AND (FS_HD IS NULL OR FS_HD <0 OR TRIM(FS_HD)='')"
+    },
+    {
+      "id": "BASE_6668",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_JM_PT",
+      "title": "盐碱斑块面积比例应在0-100之间",
+      "explanation": "来源于 ZDB 内置启用规则：盐碱斑块面积比例应在0-100之间。",
+      "requiredTables": [
+        "YD_JM_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_JM_PT\" WHERE YD_ID = :ydId AND (YJB_BL <0 OR YJB_BL>100 OR YJB_BL IS NULL OR TRIM(YJB_BL)='')"
+    },
+    {
+      "id": "BASE_6669",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_JM_PT",
+      "title": "地表侵蚀类型为空",
+      "explanation": "来源于 ZDB 内置启用规则：地表侵蚀类型为空。",
+      "requiredTables": [
+        "YD_JM_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_JM_PT\" WHERE YD_ID = :ydId AND (DB_QS_LX IS NULL OR DB_QS_LX ='' OR DB_QS_LX= ' ')"
+    },
+    {
+      "id": "BASE_6670",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_JM_PT",
+      "title": "地表侵蚀类型不为无侵蚀时，地表侵蚀程度为空",
+      "explanation": "来源于 ZDB 内置启用规则：地表侵蚀类型不为无侵蚀时，地表侵蚀程度为空。",
+      "requiredTables": [
+        "YD_JM_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_JM_PT\" WHERE YD_ID = :ydId AND (DB_QS_LX !='5' AND (DB_QS_CD IS NULL OR DB_QS_CD ='' OR DB_QS_CD= ' '))"
+    },
+    {
+      "id": "BASE_6671",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_JM_PT",
+      "title": "功能类别为空",
+      "explanation": "来源于 ZDB 内置启用规则：功能类别为空。",
+      "requiredTables": [
+        "YD_JM_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_JM_PT\" WHERE YD_ID = :ydId AND (GNLB IS NULL OR GNLB ='' OR GNLB =' ')"
+    },
+    {
+      "id": "BASE_6672",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_JM_PT",
+      "title": "利用方式为空",
+      "explanation": "来源于 ZDB 内置启用规则：利用方式为空。",
+      "requiredTables": [
+        "YD_JM_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_JM_PT\" WHERE YD_ID = :ydId AND ((LYFS IS NULL OR LYFS ='' OR LYFS =' ') AND (GNLB IN ('2','3','4') OR GNLB IS NULL OR GNLB='' OR GNLB=' ' ))"
+    },
+    {
+      "id": "BASE_6673",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_JM_PT",
+      "title": "主要生态功能为空",
+      "explanation": "来源于 ZDB 内置启用规则：主要生态功能为空。",
+      "requiredTables": [
+        "YD_JM_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_JM_PT\" WHERE YD_ID = :ydId AND ((GNLB='1' OR GNLB IS NULL OR GNLB='' OR GNLB=' ') AND (STGN IS NULL OR STGN ='' OR STGN=' ' ))"
+    },
+    {
+      "id": "BASE_6674",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_JM_PT",
+      "title": "利用强度为空",
+      "explanation": "来源于 ZDB 内置启用规则：利用强度为空。",
+      "requiredTables": [
+        "YD_JM_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_JM_PT\" WHERE YD_ID = :ydId AND (LYQD IS NULL OR LYQD='' OR LYQD =' ')"
+    },
+    {
+      "id": "BASE_6675",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_JM_PT",
+      "title": "划区轮牧为空",
+      "explanation": "来源于 ZDB 内置启用规则：划区轮牧为空。",
+      "requiredTables": [
+        "YD_JM_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_JM_PT\" WHERE YD_ID = :ydId AND (HQLM IS NULL OR HQLM ='' OR HQLM =' ')"
+    },
+    {
+      "id": "BASE_6676",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_JM_PT",
+      "title": "基本草原为空",
+      "explanation": "来源于 ZDB 内置启用规则：基本草原为空。",
+      "requiredTables": [
+        "YD_JM_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_JM_PT\" WHERE YD_ID = :ydId AND (JBCYQK IS NULL OR JBCYQK ='' OR JBCYQK =' ')"
+    },
+    {
+      "id": "BASE_6677",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_JM_PT",
+      "title": "地貌为空",
+      "explanation": "来源于 ZDB 内置启用规则：地貌为空。",
+      "requiredTables": [
+        "YD_JM_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_JM_PT\" WHERE YD_ID = :ydId AND (DI_MAO IS NULL OR DI_MAO ='' OR DI_MAO =' ')"
+    },
+    {
+      "id": "BASE_6678",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_JM_PT",
+      "title": "坡度应在0-90之间",
+      "explanation": "来源于 ZDB 内置启用规则：坡度应在0-90之间。",
+      "requiredTables": [
+        "YD_JM_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_JM_PT\" WHERE YD_ID = :ydId AND (PO_DU IS NULL OR PO_DU <0 OR PO_DU >90 OR TRIM(PO_DU)='')"
+    },
+    {
+      "id": "BASE_6679",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_JM_PT",
+      "title": "坡位为空",
+      "explanation": "来源于 ZDB 内置启用规则：坡位为空。",
+      "requiredTables": [
+        "YD_JM_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_JM_PT\" WHERE YD_ID = :ydId AND (PO_WEI IS NULL OR PO_WEI ='' OR PO_WEI =' ')"
+    },
+    {
+      "id": "BASE_6680",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_JM_PT",
+      "title": "当坡位不为无坡时，坡向为空",
+      "explanation": "来源于 ZDB 内置启用规则：当坡位不为无坡时，坡向为空。",
+      "requiredTables": [
+        "YD_JM_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_JM_PT\" WHERE YD_ID = :ydId AND ((PO_XIANG IS NULL OR PO_XIANG ='' OR PO_XIANG =' ') and PO_WEI!='0')"
+    },
+    {
+      "id": "BASE_6681",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_JM_PT",
+      "title": "土壤质地为空",
+      "explanation": "来源于 ZDB 内置启用规则：土壤质地为空。",
+      "requiredTables": [
+        "YD_JM_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_JM_PT\" WHERE YD_ID = :ydId AND (TU_RANG_ZD IS NULL OR TU_RANG_ZD ='' OR TU_RANG_ZD =' ')"
+    },
+    {
+      "id": "BASE_6682",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_JM_PT",
+      "title": "土层厚度为空",
+      "explanation": "来源于 ZDB 内置启用规则：土层厚度为空。",
+      "requiredTables": [
+        "YD_JM_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_JM_PT\" WHERE YD_ID = :ydId AND (TU_CENG_HD IS NULL OR TU_CENG_HD <0 OR TRIM(TU_CENG_HD)='')"
+    },
+    {
+      "id": "BASE_6683",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_JM_PT",
+      "title": "远景照未拍摄",
+      "explanation": "来源于 ZDB 内置启用规则：远景照未拍摄。",
+      "requiredTables": [
+        "YD_JM_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_JM_PT\" WHERE YD_ID = :ydId AND (YJ_ZP is null OR YJ_ZP='' OR YJ_ZP=' ')"
+    },
+    {
+      "id": "BASE_6684",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_JM_PT",
+      "title": "近景照未拍摄",
+      "explanation": "来源于 ZDB 内置启用规则：近景照未拍摄。",
+      "requiredTables": [
+        "YD_JM_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_JM_PT\" WHERE YD_ID = :ydId AND (JJ_ZP is null OR JJ_ZP='' OR JJ_ZP=' ')"
+    },
+    {
+      "id": "BASE_6685",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_JM_PT",
+      "title": "缺少加密样地测产样方",
+      "explanation": "来源于 ZDB 内置启用规则：缺少加密样地测产样方。",
+      "requiredTables": [
+        "YD_JM_PT",
+        "YF_JMCC_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_JM_PT\" WHERE YD_ID = :ydId AND (MZGUID NOT IN (SELECT XB_GLH FROM YF_JMCC_TB WHERE XB_GLH IS NOT NULL))"
+    },
+    {
+      "id": "BASE_6686",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_JM_PT",
+      "title": "加密测产样方不足3个",
+      "explanation": "来源于 ZDB 内置启用规则：加密测产样方不足3个。",
+      "requiredTables": [
+        "YD_JM_PT",
+        "YF_JMCC_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_JM_PT\" WHERE YD_ID = :ydId AND (MZGUID IN(SELECT D.MZGUID FROM (SELECT A.MZGUID,C.YXSL FROM YD_JM_PT A LEFT JOIN (SELECT B.XB_GLH,COUNT(B.XB_GLH) AS YXSL FROM YF_JMCC_TB B GROUP BY B.XB_GLH) C ON A.MZGUID=C.XB_GLH) D WHERE D.YXSL<3))"
+    },
+    {
+      "id": "BASE_6689",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "样地号为空",
+      "explanation": "来源于 ZDB 内置启用规则：样地号为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (YD_ID IS NULL OR YD_ID ='' OR YD_ID=' ')"
+    },
+    {
+      "id": "BASE_6690",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "样线编号为空",
+      "explanation": "来源于 ZDB 内置启用规则：样线编号为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (YX_ID IS NULL OR TRIM(YX_ID)='')"
+    },
+    {
+      "id": "BASE_6691",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "样线长度为空",
+      "explanation": "来源于 ZDB 内置启用规则：样线长度为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (YX_CD IS NULL OR YX_CD =0)"
+    },
+    {
+      "id": "BASE_6692",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "是否改平为空",
+      "explanation": "来源于 ZDB 内置启用规则：是否改平为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (YX_GP IS NULL OR YX_GP ='' OR YX_GP=' ')"
+    },
+    {
+      "id": "BASE_6693",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "样线终点GNSS坐标X为空",
+      "explanation": "来源于 ZDB 内置启用规则：样线终点GNSS坐标X为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (YX_X IS NULL OR YX_X ='' OR  TRIM(YX_X)=' ')"
+    },
+    {
+      "id": "BASE_6694",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "样线终点GNSS坐标Y为空",
+      "explanation": "来源于 ZDB 内置启用规则：样线终点GNSS坐标Y为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (YX_Y IS NULL OR YX_Y ='' OR  TRIM(YX_Y)=' ')"
+    },
+    {
+      "id": "BASE_6695",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "1号记录植被覆盖为空",
+      "explanation": "来源于 ZDB 内置启用规则：1号记录植被覆盖为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (ZCJL_ZBFG_01 IS NULL OR ZCJL_ZBFG_01 ='' OR ZCJL_ZBFG_01=' ')"
+    },
+    {
+      "id": "BASE_6696",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "2号记录植被覆盖为空",
+      "explanation": "来源于 ZDB 内置启用规则：2号记录植被覆盖为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (ZCJL_ZBFG_02 IS NULL OR ZCJL_ZBFG_02 ='' OR ZCJL_ZBFG_02=' ')"
+    },
+    {
+      "id": "BASE_6697",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "3号记录植被覆盖为空",
+      "explanation": "来源于 ZDB 内置启用规则：3号记录植被覆盖为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (ZCJL_ZBFG_03 IS NULL OR ZCJL_ZBFG_03 ='' OR ZCJL_ZBFG_03=' ')"
+    },
+    {
+      "id": "BASE_6698",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "4号记录植被覆盖为空",
+      "explanation": "来源于 ZDB 内置启用规则：4号记录植被覆盖为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (ZCJL_ZBFG_04 IS NULL OR ZCJL_ZBFG_04 ='' OR ZCJL_ZBFG_04=' ')"
+    },
+    {
+      "id": "BASE_6699",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "5号记录植被覆盖为空",
+      "explanation": "来源于 ZDB 内置启用规则：5号记录植被覆盖为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (ZCJL_ZBFG_05 IS NULL OR ZCJL_ZBFG_05 ='' OR ZCJL_ZBFG_05=' ')"
+    },
+    {
+      "id": "BASE_6700",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "6号记录植被覆盖为空",
+      "explanation": "来源于 ZDB 内置启用规则：6号记录植被覆盖为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (ZCJL_ZBFG_06 IS NULL OR ZCJL_ZBFG_06 ='' OR ZCJL_ZBFG_06=' ')"
+    },
+    {
+      "id": "BASE_6701",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "7号记录植被覆盖为空",
+      "explanation": "来源于 ZDB 内置启用规则：7号记录植被覆盖为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (ZCJL_ZBFG_07 IS NULL OR ZCJL_ZBFG_07 ='' OR ZCJL_ZBFG_07=' ')"
+    },
+    {
+      "id": "BASE_6702",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "8号记录植被覆盖为空",
+      "explanation": "来源于 ZDB 内置启用规则：8号记录植被覆盖为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (ZCJL_ZBFG_08 IS NULL OR ZCJL_ZBFG_08 ='' OR ZCJL_ZBFG_08=' ')"
+    },
+    {
+      "id": "BASE_6703",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "9号记录植被覆盖为空",
+      "explanation": "来源于 ZDB 内置启用规则：9号记录植被覆盖为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (ZCJL_ZBFG_09 IS NULL OR ZCJL_ZBFG_09 ='' OR ZCJL_ZBFG_09=' ')"
+    },
+    {
+      "id": "BASE_6704",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "10号记录植被覆盖为空",
+      "explanation": "来源于 ZDB 内置启用规则：10号记录植被覆盖为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (ZCJL_ZBFG_10 IS NULL OR ZCJL_ZBFG_10 ='' OR ZCJL_ZBFG_10=' ')"
+    },
+    {
+      "id": "BASE_6705",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "11号记录植被覆盖为空",
+      "explanation": "来源于 ZDB 内置启用规则：11号记录植被覆盖为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (ZCJL_ZBFG_11 IS NULL OR ZCJL_ZBFG_11 ='' OR ZCJL_ZBFG_11=' ')"
+    },
+    {
+      "id": "BASE_6706",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "12号记录植被覆盖为空",
+      "explanation": "来源于 ZDB 内置启用规则：12号记录植被覆盖为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (ZCJL_ZBFG_12 IS NULL OR ZCJL_ZBFG_12 ='' OR ZCJL_ZBFG_12=' ')"
+    },
+    {
+      "id": "BASE_6707",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "13号记录植被覆盖为空",
+      "explanation": "来源于 ZDB 内置启用规则：13号记录植被覆盖为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (ZCJL_ZBFG_13 IS NULL OR ZCJL_ZBFG_13 ='' OR ZCJL_ZBFG_13=' ')"
+    },
+    {
+      "id": "BASE_6708",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "14号记录植被覆盖为空",
+      "explanation": "来源于 ZDB 内置启用规则：14号记录植被覆盖为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (ZCJL_ZBFG_14 IS NULL OR ZCJL_ZBFG_14 ='' OR ZCJL_ZBFG_14=' ')"
+    },
+    {
+      "id": "BASE_6709",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "15号记录植被覆盖为空",
+      "explanation": "来源于 ZDB 内置启用规则：15号记录植被覆盖为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (ZCJL_ZBFG_15 IS NULL OR ZCJL_ZBFG_15 ='' OR ZCJL_ZBFG_15=' ')"
+    },
+    {
+      "id": "BASE_6710",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "16号记录植被覆盖为空",
+      "explanation": "来源于 ZDB 内置启用规则：16号记录植被覆盖为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (ZCJL_ZBFG_16 IS NULL OR ZCJL_ZBFG_16 ='' OR ZCJL_ZBFG_16=' ')"
+    },
+    {
+      "id": "BASE_6711",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "17号记录植被覆盖为空",
+      "explanation": "来源于 ZDB 内置启用规则：17号记录植被覆盖为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (ZCJL_ZBFG_17 IS NULL OR ZCJL_ZBFG_17 ='' OR ZCJL_ZBFG_17=' ')"
+    },
+    {
+      "id": "BASE_6712",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "18号记录植被覆盖为空",
+      "explanation": "来源于 ZDB 内置启用规则：18号记录植被覆盖为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (ZCJL_ZBFG_18 IS NULL OR ZCJL_ZBFG_18 ='' OR ZCJL_ZBFG_18=' ')"
+    },
+    {
+      "id": "BASE_6713",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "19号记录植被覆盖为空",
+      "explanation": "来源于 ZDB 内置启用规则：19号记录植被覆盖为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (ZCJL_ZBFG_19 IS NULL OR ZCJL_ZBFG_19 ='' OR ZCJL_ZBFG_19=' ')"
+    },
+    {
+      "id": "BASE_6714",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "20号记录植被覆盖为空",
+      "explanation": "来源于 ZDB 内置启用规则：20号记录植被覆盖为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (ZCJL_ZBFG_20 IS NULL OR ZCJL_ZBFG_20 ='' OR ZCJL_ZBFG_20=' ')"
+    },
+    {
+      "id": "BASE_6715",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "21号记录植被覆盖为空",
+      "explanation": "来源于 ZDB 内置启用规则：21号记录植被覆盖为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (YX_CD=40 AND (ZCJL_ZBFG_21 IS NULL OR ZCJL_ZBFG_21 ='' OR ZCJL_ZBFG_21=' ' ))"
+    },
+    {
+      "id": "BASE_6716",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "22号记录植被覆盖为空",
+      "explanation": "来源于 ZDB 内置启用规则：22号记录植被覆盖为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (YX_CD=40 AND (ZCJL_ZBFG_22 IS NULL OR ZCJL_ZBFG_22 ='' OR ZCJL_ZBFG_22=' ' ))"
+    },
+    {
+      "id": "BASE_6717",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "23号记录植被覆盖为空",
+      "explanation": "来源于 ZDB 内置启用规则：23号记录植被覆盖为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (YX_CD=40 AND (ZCJL_ZBFG_23 IS NULL OR ZCJL_ZBFG_23 ='' OR ZCJL_ZBFG_23=' ' ))"
+    },
+    {
+      "id": "BASE_6718",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "24号记录植被覆盖为空",
+      "explanation": "来源于 ZDB 内置启用规则：24号记录植被覆盖为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (YX_CD=40 AND (ZCJL_ZBFG_24 IS NULL OR ZCJL_ZBFG_24 ='' OR ZCJL_ZBFG_24=' ' ))"
+    },
+    {
+      "id": "BASE_6719",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "25号记录植被覆盖为空",
+      "explanation": "来源于 ZDB 内置启用规则：25号记录植被覆盖为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (YX_CD=40 AND (ZCJL_ZBFG_25 IS NULL OR ZCJL_ZBFG_25 ='' OR ZCJL_ZBFG_25=' ' ))"
+    },
+    {
+      "id": "BASE_6720",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "26号记录植被覆盖为空",
+      "explanation": "来源于 ZDB 内置启用规则：26号记录植被覆盖为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (YX_CD=40 AND (ZCJL_ZBFG_26 IS NULL OR ZCJL_ZBFG_26 ='' OR ZCJL_ZBFG_26=' ' ))"
+    },
+    {
+      "id": "BASE_6721",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "27号记录植被覆盖为空",
+      "explanation": "来源于 ZDB 内置启用规则：27号记录植被覆盖为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (YX_CD=40 AND (ZCJL_ZBFG_27 IS NULL OR ZCJL_ZBFG_27 ='' OR ZCJL_ZBFG_27=' ' ))"
+    },
+    {
+      "id": "BASE_6722",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "28号记录植被覆盖为空",
+      "explanation": "来源于 ZDB 内置启用规则：28号记录植被覆盖为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (YX_CD=40 AND (ZCJL_ZBFG_28 IS NULL OR ZCJL_ZBFG_28 ='' OR ZCJL_ZBFG_28=' ' ))"
+    },
+    {
+      "id": "BASE_6723",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "29号记录植被覆盖为空",
+      "explanation": "来源于 ZDB 内置启用规则：29号记录植被覆盖为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (YX_CD=40 AND (ZCJL_ZBFG_29 IS NULL OR ZCJL_ZBFG_29 ='' OR ZCJL_ZBFG_29=' ' ))"
+    },
+    {
+      "id": "BASE_6724",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "30号记录植被覆盖为空",
+      "explanation": "来源于 ZDB 内置启用规则：30号记录植被覆盖为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (YX_CD=40 AND (ZCJL_ZBFG_30 IS NULL OR ZCJL_ZBFG_30 ='' OR ZCJL_ZBFG_30=' ' ))"
+    },
+    {
+      "id": "BASE_6725",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "31号记录植被覆盖为空",
+      "explanation": "来源于 ZDB 内置启用规则：31号记录植被覆盖为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (YX_CD=40 AND (ZCJL_ZBFG_31 IS NULL OR ZCJL_ZBFG_31 ='' OR ZCJL_ZBFG_31=' ' ))"
+    },
+    {
+      "id": "BASE_6726",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "32号记录植被覆盖为空",
+      "explanation": "来源于 ZDB 内置启用规则：32号记录植被覆盖为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (YX_CD=40 AND (ZCJL_ZBFG_32 IS NULL OR ZCJL_ZBFG_32 ='' OR ZCJL_ZBFG_32=' ' ))"
+    },
+    {
+      "id": "BASE_6727",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "33号记录植被覆盖为空",
+      "explanation": "来源于 ZDB 内置启用规则：33号记录植被覆盖为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (YX_CD=40 AND (ZCJL_ZBFG_33 IS NULL OR ZCJL_ZBFG_33 ='' OR ZCJL_ZBFG_33=' ' ))"
+    },
+    {
+      "id": "BASE_6728",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "34号记录植被覆盖为空",
+      "explanation": "来源于 ZDB 内置启用规则：34号记录植被覆盖为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (YX_CD=40 AND (ZCJL_ZBFG_34 IS NULL OR ZCJL_ZBFG_34 ='' OR ZCJL_ZBFG_34=' ' ))"
+    },
+    {
+      "id": "BASE_6729",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "35号记录植被覆盖为空",
+      "explanation": "来源于 ZDB 内置启用规则：35号记录植被覆盖为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (YX_CD=40 AND (ZCJL_ZBFG_35 IS NULL OR ZCJL_ZBFG_35 ='' OR ZCJL_ZBFG_35=' ' ))"
+    },
+    {
+      "id": "BASE_6730",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "36号记录植被覆盖为空",
+      "explanation": "来源于 ZDB 内置启用规则：36号记录植被覆盖为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (YX_CD=40 AND (ZCJL_ZBFG_36 IS NULL OR ZCJL_ZBFG_36 ='' OR ZCJL_ZBFG_36=' ' ))"
+    },
+    {
+      "id": "BASE_6731",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "37号记录植被覆盖为空",
+      "explanation": "来源于 ZDB 内置启用规则：37号记录植被覆盖为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (YX_CD=40 AND (ZCJL_ZBFG_37 IS NULL OR ZCJL_ZBFG_37 ='' OR ZCJL_ZBFG_37=' ' ))"
+    },
+    {
+      "id": "BASE_6732",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "38号记录植被覆盖为空",
+      "explanation": "来源于 ZDB 内置启用规则：38号记录植被覆盖为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (YX_CD=40 AND (ZCJL_ZBFG_38 IS NULL OR ZCJL_ZBFG_38 ='' OR ZCJL_ZBFG_38=' ' ))"
+    },
+    {
+      "id": "BASE_6733",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "39号记录植被覆盖为空",
+      "explanation": "来源于 ZDB 内置启用规则：39号记录植被覆盖为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (YX_CD=40 AND (ZCJL_ZBFG_39 IS NULL OR ZCJL_ZBFG_39 ='' OR ZCJL_ZBFG_39=' ' ))"
+    },
+    {
+      "id": "BASE_6734",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "40号记录植被覆盖为空",
+      "explanation": "来源于 ZDB 内置启用规则：40号记录植被覆盖为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (YX_CD=40 AND (ZCJL_ZBFG_40 IS NULL OR ZCJL_ZBFG_40 ='' OR ZCJL_ZBFG_40=' ' ))"
+    },
+    {
+      "id": "BASE_6735",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "1号记录连续裸斑为空",
+      "explanation": "来源于 ZDB 内置启用规则：1号记录连续裸斑为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (ZCJL_LXLB_01 IS NULL OR ZCJL_LXLB_01 ='' OR ZCJL_LXLB_01=' ')"
+    },
+    {
+      "id": "BASE_6736",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "2号记录连续裸斑为空",
+      "explanation": "来源于 ZDB 内置启用规则：2号记录连续裸斑为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (ZCJL_LXLB_02 IS NULL OR ZCJL_LXLB_02 ='' OR ZCJL_LXLB_02=' ')"
+    },
+    {
+      "id": "BASE_6737",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "3号记录连续裸斑为空",
+      "explanation": "来源于 ZDB 内置启用规则：3号记录连续裸斑为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (ZCJL_LXLB_03 IS NULL OR ZCJL_LXLB_03 ='' OR ZCJL_LXLB_03=' ')"
+    },
+    {
+      "id": "BASE_6738",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "4号记录连续裸斑为空",
+      "explanation": "来源于 ZDB 内置启用规则：4号记录连续裸斑为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (ZCJL_LXLB_04 IS NULL OR ZCJL_LXLB_04 ='' OR ZCJL_LXLB_04=' ')"
+    },
+    {
+      "id": "BASE_6739",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "5号记录连续裸斑为空",
+      "explanation": "来源于 ZDB 内置启用规则：5号记录连续裸斑为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (ZCJL_LXLB_05 IS NULL OR ZCJL_LXLB_05 ='' OR ZCJL_LXLB_05=' ')"
+    },
+    {
+      "id": "BASE_6740",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "6号记录连续裸斑为空",
+      "explanation": "来源于 ZDB 内置启用规则：6号记录连续裸斑为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (ZCJL_LXLB_06 IS NULL OR ZCJL_LXLB_06 ='' OR ZCJL_LXLB_06=' ')"
+    },
+    {
+      "id": "BASE_6741",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "7号记录连续裸斑为空",
+      "explanation": "来源于 ZDB 内置启用规则：7号记录连续裸斑为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (ZCJL_LXLB_07 IS NULL OR ZCJL_LXLB_07 ='' OR ZCJL_LXLB_07=' ')"
+    },
+    {
+      "id": "BASE_6742",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "8号记录连续裸斑为空",
+      "explanation": "来源于 ZDB 内置启用规则：8号记录连续裸斑为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (ZCJL_LXLB_08 IS NULL OR ZCJL_LXLB_08 ='' OR ZCJL_LXLB_08=' ')"
+    },
+    {
+      "id": "BASE_6743",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "9号记录连续裸斑为空",
+      "explanation": "来源于 ZDB 内置启用规则：9号记录连续裸斑为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (ZCJL_LXLB_09 IS NULL OR ZCJL_LXLB_09 ='' OR ZCJL_LXLB_09=' ')"
+    },
+    {
+      "id": "BASE_6744",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "10号记录连续裸斑为空",
+      "explanation": "来源于 ZDB 内置启用规则：10号记录连续裸斑为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (ZCJL_LXLB_10 IS NULL OR ZCJL_LXLB_10 ='' OR ZCJL_LXLB_10=' ')"
+    },
+    {
+      "id": "BASE_6745",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "11号记录连续裸斑为空",
+      "explanation": "来源于 ZDB 内置启用规则：11号记录连续裸斑为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (ZCJL_LXLB_11 IS NULL OR ZCJL_LXLB_11 ='' OR ZCJL_LXLB_11=' ')"
+    },
+    {
+      "id": "BASE_6746",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "12号记录连续裸斑为空",
+      "explanation": "来源于 ZDB 内置启用规则：12号记录连续裸斑为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (ZCJL_LXLB_12 IS NULL OR ZCJL_LXLB_12 ='' OR ZCJL_LXLB_12=' ')"
+    },
+    {
+      "id": "BASE_6747",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "13号记录连续裸斑为空",
+      "explanation": "来源于 ZDB 内置启用规则：13号记录连续裸斑为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (ZCJL_LXLB_13 IS NULL OR ZCJL_LXLB_13 ='' OR ZCJL_LXLB_13=' ')"
+    },
+    {
+      "id": "BASE_6748",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "14号记录连续裸斑为空",
+      "explanation": "来源于 ZDB 内置启用规则：14号记录连续裸斑为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (ZCJL_LXLB_14 IS NULL OR ZCJL_LXLB_14 ='' OR ZCJL_LXLB_14=' ')"
+    },
+    {
+      "id": "BASE_6749",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "15号记录连续裸斑为空",
+      "explanation": "来源于 ZDB 内置启用规则：15号记录连续裸斑为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (ZCJL_LXLB_15 IS NULL OR ZCJL_LXLB_15 ='' OR ZCJL_LXLB_15=' ')"
+    },
+    {
+      "id": "BASE_6750",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "16号记录连续裸斑为空",
+      "explanation": "来源于 ZDB 内置启用规则：16号记录连续裸斑为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (ZCJL_LXLB_16 IS NULL OR ZCJL_LXLB_16 ='' OR ZCJL_LXLB_16=' ')"
+    },
+    {
+      "id": "BASE_6751",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "17号记录连续裸斑为空",
+      "explanation": "来源于 ZDB 内置启用规则：17号记录连续裸斑为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (ZCJL_LXLB_17 IS NULL OR ZCJL_LXLB_17 ='' OR ZCJL_LXLB_17=' ')"
+    },
+    {
+      "id": "BASE_6752",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "18号记录连续裸斑为空",
+      "explanation": "来源于 ZDB 内置启用规则：18号记录连续裸斑为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (ZCJL_LXLB_18 IS NULL OR ZCJL_LXLB_18 ='' OR ZCJL_LXLB_18=' ')"
+    },
+    {
+      "id": "BASE_6753",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "19号记录连续裸斑为空",
+      "explanation": "来源于 ZDB 内置启用规则：19号记录连续裸斑为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (ZCJL_LXLB_19 IS NULL OR ZCJL_LXLB_19 ='' OR ZCJL_LXLB_19=' ')"
+    },
+    {
+      "id": "BASE_6754",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "20号记录连续裸斑为空",
+      "explanation": "来源于 ZDB 内置启用规则：20号记录连续裸斑为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (ZCJL_LXLB_20 IS NULL OR ZCJL_LXLB_20 ='' OR ZCJL_LXLB_20=' ')"
+    },
+    {
+      "id": "BASE_6755",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "21号记录连续裸斑为空",
+      "explanation": "来源于 ZDB 内置启用规则：21号记录连续裸斑为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (YX_CD=40 AND (ZCJL_LXLB_21 IS NULL OR ZCJL_LXLB_21 ='' OR ZCJL_LXLB_21=' ' ))"
+    },
+    {
+      "id": "BASE_6756",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "22号记录连续裸斑为空",
+      "explanation": "来源于 ZDB 内置启用规则：22号记录连续裸斑为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (YX_CD=40 AND (ZCJL_LXLB_22 IS NULL OR ZCJL_LXLB_22 ='' OR ZCJL_LXLB_22=' ' ))"
+    },
+    {
+      "id": "BASE_6757",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "23号记录连续裸斑为空",
+      "explanation": "来源于 ZDB 内置启用规则：23号记录连续裸斑为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (YX_CD=40 AND (ZCJL_LXLB_23 IS NULL OR ZCJL_LXLB_23 ='' OR ZCJL_LXLB_23=' ' ))"
+    },
+    {
+      "id": "BASE_6758",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "24号记录连续裸斑为空",
+      "explanation": "来源于 ZDB 内置启用规则：24号记录连续裸斑为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (YX_CD=40 AND (ZCJL_LXLB_24 IS NULL OR ZCJL_LXLB_24 ='' OR ZCJL_LXLB_24=' ' ))"
+    },
+    {
+      "id": "BASE_6759",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "25号记录连续裸斑为空",
+      "explanation": "来源于 ZDB 内置启用规则：25号记录连续裸斑为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (YX_CD=40 AND (ZCJL_LXLB_25 IS NULL OR ZCJL_LXLB_25 ='' OR ZCJL_LXLB_25=' ' ))"
+    },
+    {
+      "id": "BASE_6760",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "26号记录连续裸斑为空",
+      "explanation": "来源于 ZDB 内置启用规则：26号记录连续裸斑为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (YX_CD=40 AND (ZCJL_LXLB_26 IS NULL OR ZCJL_LXLB_26 ='' OR ZCJL_LXLB_26=' ' ))"
+    },
+    {
+      "id": "BASE_6761",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "27号记录连续裸斑为空",
+      "explanation": "来源于 ZDB 内置启用规则：27号记录连续裸斑为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (YX_CD=40 AND (ZCJL_LXLB_27 IS NULL OR ZCJL_LXLB_27 ='' OR ZCJL_LXLB_27=' ' ))"
+    },
+    {
+      "id": "BASE_6762",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "28号记录连续裸斑为空",
+      "explanation": "来源于 ZDB 内置启用规则：28号记录连续裸斑为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (YX_CD=40 AND (ZCJL_LXLB_28 IS NULL OR ZCJL_LXLB_28 ='' OR ZCJL_LXLB_28=' ' ))"
+    },
+    {
+      "id": "BASE_6763",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "29号记录连续裸斑为空",
+      "explanation": "来源于 ZDB 内置启用规则：29号记录连续裸斑为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (YX_CD=40 AND (ZCJL_LXLB_29 IS NULL OR ZCJL_LXLB_29 ='' OR ZCJL_LXLB_29=' ' ))"
+    },
+    {
+      "id": "BASE_6764",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "30号记录连续裸斑为空",
+      "explanation": "来源于 ZDB 内置启用规则：30号记录连续裸斑为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (YX_CD=40 AND (ZCJL_LXLB_30 IS NULL OR ZCJL_LXLB_30 ='' OR ZCJL_LXLB_30=' ' ))"
+    },
+    {
+      "id": "BASE_6765",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "31号记录连续裸斑为空",
+      "explanation": "来源于 ZDB 内置启用规则：31号记录连续裸斑为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (YX_CD=40 AND (ZCJL_LXLB_31 IS NULL OR ZCJL_LXLB_31 ='' OR ZCJL_LXLB_31=' ' ))"
+    },
+    {
+      "id": "BASE_6766",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "32号记录连续裸斑为空",
+      "explanation": "来源于 ZDB 内置启用规则：32号记录连续裸斑为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (YX_CD=40 AND (ZCJL_LXLB_32 IS NULL OR ZCJL_LXLB_32 ='' OR ZCJL_LXLB_32=' ' ))"
+    },
+    {
+      "id": "BASE_6767",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "33号记录连续裸斑为空",
+      "explanation": "来源于 ZDB 内置启用规则：33号记录连续裸斑为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (YX_CD=40 AND (ZCJL_LXLB_33 IS NULL OR ZCJL_LXLB_33 ='' OR ZCJL_LXLB_33=' ' ))"
+    },
+    {
+      "id": "BASE_6768",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "34号记录连续裸斑为空",
+      "explanation": "来源于 ZDB 内置启用规则：34号记录连续裸斑为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (YX_CD=40 AND (ZCJL_LXLB_34 IS NULL OR ZCJL_LXLB_34 ='' OR ZCJL_LXLB_34=' ' ))"
+    },
+    {
+      "id": "BASE_6769",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "35号记录连续裸斑为空",
+      "explanation": "来源于 ZDB 内置启用规则：35号记录连续裸斑为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (YX_CD=40 AND (ZCJL_LXLB_35 IS NULL OR ZCJL_LXLB_35 ='' OR ZCJL_LXLB_35=' ' ))"
+    },
+    {
+      "id": "BASE_6770",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "36号记录连续裸斑为空",
+      "explanation": "来源于 ZDB 内置启用规则：36号记录连续裸斑为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (YX_CD=40 AND (ZCJL_LXLB_36 IS NULL OR ZCJL_LXLB_36 ='' OR ZCJL_LXLB_36=' ' ))"
+    },
+    {
+      "id": "BASE_6771",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "37号记录连续裸斑为空",
+      "explanation": "来源于 ZDB 内置启用规则：37号记录连续裸斑为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (YX_CD=40 AND (ZCJL_LXLB_37 IS NULL OR ZCJL_LXLB_37 ='' OR ZCJL_LXLB_37=' ' ))"
+    },
+    {
+      "id": "BASE_6772",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "38号记录连续裸斑为空",
+      "explanation": "来源于 ZDB 内置启用规则：38号记录连续裸斑为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (YX_CD=40 AND (ZCJL_LXLB_38 IS NULL OR ZCJL_LXLB_38 ='' OR ZCJL_LXLB_38=' ' ))"
+    },
+    {
+      "id": "BASE_6773",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "39号记录连续裸斑为空",
+      "explanation": "来源于 ZDB 内置启用规则：39号记录连续裸斑为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (YX_CD=40 AND (ZCJL_LXLB_39 IS NULL OR ZCJL_LXLB_39 ='' OR ZCJL_LXLB_39=' ' ))"
+    },
+    {
+      "id": "BASE_6774",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "40号记录连续裸斑为空",
+      "explanation": "来源于 ZDB 内置启用规则：40号记录连续裸斑为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT * FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (YX_CD=40 AND (ZCJL_LXLB_40 IS NULL OR ZCJL_LXLB_40 ='' OR ZCJL_LXLB_40=' ' ))"
+    },
+    {
+      "id": "BASE_6776",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YF_TRCYGC_TB",
+      "title": "样地编号为空",
+      "explanation": "来源于 ZDB 内置启用规则：样地编号为空。",
+      "requiredTables": [
+        "YF_TRCYGC_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "sql": "SELECT * FROM \"YF_TRCYGC_TB\" WHERE YD_ID = :ydId AND (YD_ID IS NULL OR YD_ID='' OR YD_ID =' ')"
+    },
+    {
+      "id": "BASE_6777",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YF_TRCYGC_TB",
+      "title": "样方号为空",
+      "explanation": "来源于 ZDB 内置启用规则：样方号为空。",
+      "requiredTables": [
+        "YF_TRCYGC_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "sql": "SELECT * FROM \"YF_TRCYGC_TB\" WHERE YD_ID = :ydId AND (YF_ID IS NULL OR TRIM(YF_ID)='')"
+    },
+    {
+      "id": "BASE_6778",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YF_TRCYGC_TB",
+      "title": "面积为空",
+      "explanation": "来源于 ZDB 内置启用规则：面积为空。",
+      "requiredTables": [
+        "YF_TRCYGC_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "sql": "SELECT * FROM \"YF_TRCYGC_TB\" WHERE YD_ID = :ydId AND (MIAN_JI IS NULL OR MIAN_JI=0 OR TRIM(MIAN_JI) ='')"
+    },
+    {
+      "id": "BASE_6779",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YF_TRCYGC_TB",
+      "title": "总盖度为空",
+      "explanation": "来源于 ZDB 内置启用规则：总盖度为空。",
+      "requiredTables": [
+        "YF_TRCYGC_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "sql": "SELECT * FROM \"YF_TRCYGC_TB\" WHERE YD_ID = :ydId AND (ZGD IS NULL OR TRIM(ZGD)='' OR ZGD<0 OR ZGD>100)"
+    },
+    {
+      "id": "BASE_6780",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YF_TRCYGC_TB",
+      "title": "草群平均高度为空",
+      "explanation": "来源于 ZDB 内置启用规则：草群平均高度为空。",
+      "requiredTables": [
+        "YF_TRCYGC_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "sql": "SELECT * FROM \"YF_TRCYGC_TB\" WHERE YD_ID = :ydId AND (CQPJ_GD IS NULL OR TRIM(CQPJ_GD)='' OR CQPJ_GD <0)"
+    },
+    {
+      "id": "BASE_6781",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YF_TRCYGC_TB",
+      "title": "植物种数为空",
+      "explanation": "来源于 ZDB 内置启用规则：植物种数为空。",
+      "requiredTables": [
+        "YF_TRCYGC_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "sql": "SELECT * FROM \"YF_TRCYGC_TB\" WHERE YD_ID = :ydId AND (ZWZS IS NULL OR TRIM(ZWZS)='' OR  ZWZS<0)"
+    },
+    {
+      "id": "BASE_6782",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YF_TRCYGC_TB",
+      "title": "当总盖度不为0时，\r\n必须填写观测样方植物调查表",
+      "explanation": "来源于 ZDB 内置启用规则：当总盖度不为0时，\r\n必须填写观测样方植物调查表。",
+      "requiredTables": [
+        "YF_TRCYGC_TB",
+        "ZWDCB_GCYF_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "sql": "SELECT * FROM \"YF_TRCYGC_TB\" WHERE YD_ID = :ydId AND (ZGD!=0 AND MZGUID NOT IN (SELECT XB_GLH FROM ZWDCB_GCYF_TB WHERE XB_GLH IS NOT NULL ))"
+    },
+    {
+      "id": "BASE_6784",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "ZWDCB_GCYF_TB",
+      "title": "样地编号为空",
+      "explanation": "来源于 ZDB 内置启用规则：样地编号为空。",
+      "requiredTables": [
+        "ZWDCB_GCYF_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "sql": "SELECT * FROM \"ZWDCB_GCYF_TB\" WHERE YD_ID = :ydId AND (YD_ID IS NULL OR YD_ID ='' OR YD_ID=' ')"
+    },
+    {
+      "id": "BASE_6785",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "ZWDCB_GCYF_TB",
+      "title": "样方号为空",
+      "explanation": "来源于 ZDB 内置启用规则：样方号为空。",
+      "requiredTables": [
+        "ZWDCB_GCYF_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "sql": "SELECT * FROM \"ZWDCB_GCYF_TB\" WHERE YD_ID = :ydId AND (YF_ID IS NULL OR YF_ID ='' OR YF_ID=' ')"
+    },
+    {
+      "id": "BASE_6786",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "ZWDCB_GCYF_TB",
+      "title": "植物名称为空",
+      "explanation": "来源于 ZDB 内置启用规则：植物名称为空。",
+      "requiredTables": [
+        "ZWDCB_GCYF_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "sql": "SELECT * FROM \"ZWDCB_GCYF_TB\" WHERE YD_ID = :ydId AND (ZW_MC IS NULL OR ZW_MC ='' OR ZW_MC=' ')"
+    },
+    {
+      "id": "BASE_6787",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "ZWDCB_GCYF_TB",
+      "title": "高度为空",
+      "explanation": "来源于 ZDB 内置启用规则：高度为空。",
+      "requiredTables": [
+        "ZWDCB_GCYF_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "sql": "SELECT * FROM \"ZWDCB_GCYF_TB\" WHERE YD_ID = :ydId AND (H IS NULL OR TRIM(H) ='' OR H<=0)"
+    },
+    {
+      "id": "BASE_6788",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "ZWDCB_GCYF_TB",
+      "title": "盖度取值【0,100】",
+      "explanation": "来源于 ZDB 内置启用规则：盖度取值【0,100】。",
+      "requiredTables": [
+        "ZWDCB_GCYF_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "sql": "SELECT * FROM \"ZWDCB_GCYF_TB\" WHERE YD_ID = :ydId AND (FVC IS NULL OR TRIM(FVC) =''  OR FVC<0 OR FVC>100)"
+    },
+    {
+      "id": "BASE_6789",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "ZWDCB_GCYF_TB",
+      "title": "是否可食为空",
+      "explanation": "来源于 ZDB 内置启用规则：是否可食为空。",
+      "requiredTables": [
+        "ZWDCB_GCYF_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "sql": "SELECT * FROM \"ZWDCB_GCYF_TB\" WHERE YD_ID = :ydId AND (KESHI IS NULL OR KESHI ='' OR KESHI=' ')"
+    },
+    {
+      "id": "BASE_6790",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "ZWDCB_GCYF_TB",
+      "title": "是否为优势种为空",
+      "explanation": "来源于 ZDB 内置启用规则：是否为优势种为空。",
+      "requiredTables": [
+        "ZWDCB_GCYF_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "sql": "SELECT * FROM \"ZWDCB_GCYF_TB\" WHERE YD_ID = :ydId AND (YOUSHIZHONG IS NULL OR YOUSHIZHONG ='' OR YOUSHIZHONG =' ')"
+    },
+    {
+      "id": "BASE_6792",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YF_TRCYCC_TB",
+      "title": "样地编号为空",
+      "explanation": "来源于 ZDB 内置启用规则：样地编号为空。",
+      "requiredTables": [
+        "YF_TRCYCC_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "sql": "SELECT * FROM \"YF_TRCYCC_TB\" WHERE YD_ID = :ydId AND (YD_ID IS NULL OR YD_ID ='' OR YD_ID =' ')"
+    },
+    {
+      "id": "BASE_6793",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YF_TRCYCC_TB",
+      "title": "样方号为空",
+      "explanation": "来源于 ZDB 内置启用规则：样方号为空。",
+      "requiredTables": [
+        "YF_TRCYCC_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "sql": "SELECT * FROM \"YF_TRCYCC_TB\" WHERE YD_ID = :ydId AND (YF_ID IS NULL OR TRIM(YF_ID) ='')"
+    },
+    {
+      "id": "BASE_6794",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YF_TRCYCC_TB",
+      "title": "总盖度取值【0,100】",
+      "explanation": "来源于 ZDB 内置启用规则：总盖度取值【0,100】。",
+      "requiredTables": [
+        "YF_TRCYCC_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "sql": "SELECT * FROM \"YF_TRCYCC_TB\" WHERE YD_ID = :ydId AND (ZGD IS NULL OR TRIM(ZGD) ='' OR ZGD <0  OR ZGD>100)"
+    },
+    {
+      "id": "BASE_6795",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YF_TRCYCC_TB",
+      "title": "草群平均高度为空",
+      "explanation": "来源于 ZDB 内置启用规则：草群平均高度为空。",
+      "requiredTables": [
+        "YF_TRCYCC_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "sql": "SELECT * FROM \"YF_TRCYCC_TB\" WHERE YD_ID = :ydId AND (CQPJ_GD IS NULL OR TRIM(CQPJ_GD) ='' OR CQPJ_GD <0)"
+    },
+    {
+      "id": "BASE_6796",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YF_TRCYCC_TB",
+      "title": "植物种数为空",
+      "explanation": "来源于 ZDB 内置启用规则：植物种数为空。",
+      "requiredTables": [
+        "YF_TRCYCC_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "sql": "SELECT * FROM \"YF_TRCYCC_TB\" WHERE YD_ID = :ydId AND (ZWZS IS NULL OR TRIM(ZWZS) ='')"
+    },
+    {
+      "id": "BASE_6797",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YF_TRCYCC_TB",
+      "title": "枯落物总量为空",
+      "explanation": "来源于 ZDB 内置启用规则：枯落物总量为空。",
+      "requiredTables": [
+        "YF_TRCYCC_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "sql": "SELECT * FROM \"YF_TRCYCC_TB\" WHERE YD_ID = :ydId AND (KLW_ZL IS NULL OR TRIM(KLW_ZL) ='')"
+    },
+    {
+      "id": "BASE_6798",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YF_TRCYCC_TB",
+      "title": "当总盖度不为0时，必须填写测产样方植物调查表",
+      "explanation": "来源于 ZDB 内置启用规则：当总盖度不为0时，必须填写测产样方植物调查表。",
+      "requiredTables": [
+        "YF_TRCYCC_TB",
+        "ZWDCB_CCYF_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "sql": "SELECT * FROM \"YF_TRCYCC_TB\" WHERE YD_ID = :ydId AND (ZGD!=0 AND MZGUID NOT IN (SELECT XB_GLH FROM ZWDCB_CCYF_TB WHERE XB_GLH IS NOT NULL))"
+    },
+    {
+      "id": "BASE_6800",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YF_JMCC_TB",
+      "title": "样地编号为空",
+      "explanation": "来源于 ZDB 内置启用规则：样地编号为空。",
+      "requiredTables": [
+        "YF_JMCC_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "sql": "SELECT * FROM \"YF_JMCC_TB\" WHERE YD_ID = :ydId AND (YD_ID IS NULL OR YD_ID ='' OR YD_ID =' ')"
+    },
+    {
+      "id": "BASE_6801",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YF_JMCC_TB",
+      "title": "样方号为空",
+      "explanation": "来源于 ZDB 内置启用规则：样方号为空。",
+      "requiredTables": [
+        "YF_JMCC_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "sql": "SELECT * FROM \"YF_JMCC_TB\" WHERE YD_ID = :ydId AND (YF_ID IS NULL OR TRIM(YF_ID) ='')"
+    },
+    {
+      "id": "BASE_6802",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YF_JMCC_TB",
+      "title": "总盖度取值【0,100】",
+      "explanation": "来源于 ZDB 内置启用规则：总盖度取值【0,100】。",
+      "requiredTables": [
+        "YF_JMCC_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "sql": "SELECT * FROM \"YF_JMCC_TB\" WHERE YD_ID = :ydId AND (ZGD IS NULL OR TRIM(ZGD) ='' OR ZGD <0  OR ZGD>100)"
+    },
+    {
+      "id": "BASE_6803",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YF_JMCC_TB",
+      "title": "草群平均高度为空",
+      "explanation": "来源于 ZDB 内置启用规则：草群平均高度为空。",
+      "requiredTables": [
+        "YF_JMCC_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "sql": "SELECT * FROM \"YF_JMCC_TB\" WHERE YD_ID = :ydId AND (CQPJ_GD IS NULL OR TRIM(CQPJ_GD) ='' OR CQPJ_GD <0)"
+    },
+    {
+      "id": "BASE_6804",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YF_JMCC_TB",
+      "title": "植物种数为空",
+      "explanation": "来源于 ZDB 内置启用规则：植物种数为空。",
+      "requiredTables": [
+        "YF_JMCC_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "sql": "SELECT * FROM \"YF_JMCC_TB\" WHERE YD_ID = :ydId AND (ZWZS IS NULL OR TRIM(ZWZS) ='')"
+    },
+    {
+      "id": "BASE_6805",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YF_JMCC_TB",
+      "title": "枯落物总量为空",
+      "explanation": "来源于 ZDB 内置启用规则：枯落物总量为空。",
+      "requiredTables": [
+        "YF_JMCC_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "sql": "SELECT * FROM \"YF_JMCC_TB\" WHERE YD_ID = :ydId AND (KLW_ZL IS NULL OR TRIM(KLW_ZL) ='')"
+    },
+    {
+      "id": "BASE_6806",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YF_JMCC_TB",
+      "title": "当总盖度不为0时，必须填写加密样地测产样方植物调查表",
+      "explanation": "来源于 ZDB 内置启用规则：当总盖度不为0时，必须填写加密样地测产样方植物调查表。",
+      "requiredTables": [
+        "YF_JMCC_TB",
+        "ZWDCB_JMCCYF_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "sql": "SELECT * FROM \"YF_JMCC_TB\" WHERE YD_ID = :ydId AND (ZGD!=0 AND MZGUID NOT IN (SELECT XB_GLH FROM ZWDCB_JMCCYF_TB WHERE XB_GLH IS NOT NULL))"
+    },
+    {
+      "id": "BASE_6808",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "ZWDCB_CCYF_TB",
+      "title": "样地编号为空",
+      "explanation": "来源于 ZDB 内置启用规则：样地编号为空。",
+      "requiredTables": [
+        "ZWDCB_CCYF_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "sql": "SELECT * FROM \"ZWDCB_CCYF_TB\" WHERE YD_ID = :ydId AND (YD_ID IS NULL OR YD_ID ='' OR YD_ID =' ')"
+    },
+    {
+      "id": "BASE_6809",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "ZWDCB_CCYF_TB",
+      "title": "样方号为空",
+      "explanation": "来源于 ZDB 内置启用规则：样方号为空。",
+      "requiredTables": [
+        "ZWDCB_CCYF_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "sql": "SELECT * FROM \"ZWDCB_CCYF_TB\" WHERE YD_ID = :ydId AND (YF_ID IS NULL OR YF_ID ='' OR YF_ID =' ')"
+    },
+    {
+      "id": "BASE_6810",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "ZWDCB_CCYF_TB",
+      "title": "植物名称为空",
+      "explanation": "来源于 ZDB 内置启用规则：植物名称为空。",
+      "requiredTables": [
+        "ZWDCB_CCYF_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "sql": "SELECT * FROM \"ZWDCB_CCYF_TB\" WHERE YD_ID = :ydId AND (ZW_MC IS NULL OR ZW_MC ='' OR ZW_MC =' ')"
+    },
+    {
+      "id": "BASE_6811",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "ZWDCB_CCYF_TB",
+      "title": "高度为空",
+      "explanation": "来源于 ZDB 内置启用规则：高度为空。",
+      "requiredTables": [
+        "ZWDCB_CCYF_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "sql": "SELECT * FROM \"ZWDCB_CCYF_TB\" WHERE YD_ID = :ydId AND (H IS NULL OR TRIM(H) ='' OR H <0)"
+    },
+    {
+      "id": "BASE_6812",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "ZWDCB_CCYF_TB",
+      "title": "盖度取值【0,100】",
+      "explanation": "来源于 ZDB 内置启用规则：盖度取值【0,100】。",
+      "requiredTables": [
+        "ZWDCB_CCYF_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "sql": "SELECT * FROM \"ZWDCB_CCYF_TB\" WHERE YD_ID = :ydId AND (FVC IS NULL OR TRIM(FVC) ='' OR FVC <0  OR FVC>100)"
+    },
+    {
+      "id": "BASE_6813",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "ZWDCB_CCYF_TB",
+      "title": "产草量鲜重为空",
+      "explanation": "来源于 ZDB 内置启用规则：产草量鲜重为空。",
+      "requiredTables": [
+        "ZWDCB_CCYF_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "sql": "SELECT * FROM \"ZWDCB_CCYF_TB\" WHERE YD_ID = :ydId AND (CCL_XIAN IS NULL OR TRIM(CCL_XIAN) ='' OR CCL_XIAN <=0)"
+    },
+    {
+      "id": "BASE_6814",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "ZWDCB_CCYF_TB",
+      "title": "是否可食为空",
+      "explanation": "来源于 ZDB 内置启用规则：是否可食为空。",
+      "requiredTables": [
+        "ZWDCB_CCYF_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "sql": "SELECT * FROM \"ZWDCB_CCYF_TB\" WHERE YD_ID = :ydId AND (KESHI IS NULL OR KESHI ='' OR KESHI =' ')"
+    },
+    {
+      "id": "BASE_6815",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "ZWDCB_CCYF_TB",
+      "title": "是否毒害为空",
+      "explanation": "来源于 ZDB 内置启用规则：是否毒害为空。",
+      "requiredTables": [
+        "ZWDCB_CCYF_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "sql": "SELECT * FROM \"ZWDCB_CCYF_TB\" WHERE YD_ID = :ydId AND (DUHAI IS NULL OR DUHAI ='' OR DUHAI =' ')"
+    },
+    {
+      "id": "BASE_6816",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "ZWDCB_CCYF_TB",
+      "title": "是否为优势种为空",
+      "explanation": "来源于 ZDB 内置启用规则：是否为优势种为空。",
+      "requiredTables": [
+        "ZWDCB_CCYF_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "sql": "SELECT * FROM \"ZWDCB_CCYF_TB\" WHERE YD_ID = :ydId AND (YOUSHIZHONG IS NULL OR YOUSHIZHONG ='' OR YOUSHIZHONG =' ')"
+    },
+    {
+      "id": "BASE_6818",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "ZWDCB_JMCCYF_TB",
+      "title": "样地编号为空",
+      "explanation": "来源于 ZDB 内置启用规则：样地编号为空。",
+      "requiredTables": [
+        "ZWDCB_JMCCYF_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "sql": "SELECT * FROM \"ZWDCB_JMCCYF_TB\" WHERE YD_ID = :ydId AND (YD_ID IS NULL OR YD_ID ='' OR YD_ID =' ')"
+    },
+    {
+      "id": "BASE_6819",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "ZWDCB_JMCCYF_TB",
+      "title": "样方号为空",
+      "explanation": "来源于 ZDB 内置启用规则：样方号为空。",
+      "requiredTables": [
+        "ZWDCB_JMCCYF_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "sql": "SELECT * FROM \"ZWDCB_JMCCYF_TB\" WHERE YD_ID = :ydId AND (YF_ID IS NULL OR YF_ID ='' OR YF_ID =' ')"
+    },
+    {
+      "id": "BASE_6820",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "ZWDCB_JMCCYF_TB",
+      "title": "植物名称为空",
+      "explanation": "来源于 ZDB 内置启用规则：植物名称为空。",
+      "requiredTables": [
+        "ZWDCB_JMCCYF_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "sql": "SELECT * FROM \"ZWDCB_JMCCYF_TB\" WHERE YD_ID = :ydId AND (ZW_MC IS NULL OR ZW_MC ='' OR ZW_MC =' ')"
+    },
+    {
+      "id": "BASE_6821",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "ZWDCB_JMCCYF_TB",
+      "title": "高度为空",
+      "explanation": "来源于 ZDB 内置启用规则：高度为空。",
+      "requiredTables": [
+        "ZWDCB_JMCCYF_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "sql": "SELECT * FROM \"ZWDCB_JMCCYF_TB\" WHERE YD_ID = :ydId AND (H IS NULL OR TRIM(H) ='' OR H <0)"
+    },
+    {
+      "id": "BASE_6822",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "ZWDCB_JMCCYF_TB",
+      "title": "盖度取值【0,100】",
+      "explanation": "来源于 ZDB 内置启用规则：盖度取值【0,100】。",
+      "requiredTables": [
+        "ZWDCB_JMCCYF_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "sql": "SELECT * FROM \"ZWDCB_JMCCYF_TB\" WHERE YD_ID = :ydId AND (FVC IS NULL OR TRIM(FVC) ='' OR FVC <0  OR FVC>100)"
+    },
+    {
+      "id": "BASE_6823",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "ZWDCB_JMCCYF_TB",
+      "title": "产草量鲜重为空",
+      "explanation": "来源于 ZDB 内置启用规则：产草量鲜重为空。",
+      "requiredTables": [
+        "ZWDCB_JMCCYF_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "sql": "SELECT * FROM \"ZWDCB_JMCCYF_TB\" WHERE YD_ID = :ydId AND (CCL_XIAN IS NULL OR TRIM(CCL_XIAN) ='' OR CCL_XIAN <=0)"
+    },
+    {
+      "id": "BASE_6824",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "ZWDCB_JMCCYF_TB",
+      "title": "是否可食为空",
+      "explanation": "来源于 ZDB 内置启用规则：是否可食为空。",
+      "requiredTables": [
+        "ZWDCB_JMCCYF_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "sql": "SELECT * FROM \"ZWDCB_JMCCYF_TB\" WHERE YD_ID = :ydId AND (KESHI IS NULL OR KESHI ='' OR KESHI =' ')"
+    },
+    {
+      "id": "BASE_6825",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "ZWDCB_JMCCYF_TB",
+      "title": "是否毒害为空",
+      "explanation": "来源于 ZDB 内置启用规则：是否毒害为空。",
+      "requiredTables": [
+        "ZWDCB_JMCCYF_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "sql": "SELECT * FROM \"ZWDCB_JMCCYF_TB\" WHERE YD_ID = :ydId AND (DUHAI IS NULL OR DUHAI ='' OR DUHAI =' ')"
+    },
+    {
+      "id": "BASE_6826",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "ZWDCB_JMCCYF_TB",
+      "title": "是否为优势种为空",
+      "explanation": "来源于 ZDB 内置启用规则：是否为优势种为空。",
+      "requiredTables": [
+        "ZWDCB_JMCCYF_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "sql": "SELECT * FROM \"ZWDCB_JMCCYF_TB\" WHERE YD_ID = :ydId AND (YOUSHIZHONG IS NULL OR YOUSHIZHONG ='' OR YOUSHIZHONG =' ')"
+    },
+    {
+      "id": "BASE_6828",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YF_TRCY_TB",
+      "title": "样地编号为空",
+      "explanation": "来源于 ZDB 内置启用规则：样地编号为空。",
+      "requiredTables": [
+        "YF_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "sql": "SELECT * FROM \"YF_TRCY_TB\" WHERE YD_ID = :ydId AND (YD_ID IS NULL OR YD_ID ='' OR YD_ID =' ')"
+    },
+    {
+      "id": "BASE_6829",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YF_TRCY_TB",
+      "title": "样方号为空",
+      "explanation": "来源于 ZDB 内置启用规则：样方号为空。",
+      "requiredTables": [
+        "YF_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "sql": "SELECT * FROM \"YF_TRCY_TB\" WHERE YD_ID = :ydId AND (YF_ID IS NULL OR TRIM(YF_ID) ='')"
+    },
+    {
+      "id": "BASE_6830",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YF_TRCY_TB",
+      "title": "面积为空",
+      "explanation": "来源于 ZDB 内置启用规则：面积为空。",
+      "requiredTables": [
+        "YF_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "sql": "SELECT * FROM \"YF_TRCY_TB\" WHERE YD_ID = :ydId AND (MIAN_JI IS NULL OR TRIM( MIAN_JI) ='' OR MIAN_JI =0)"
+    },
+    {
+      "id": "BASE_6831",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YF_TRCY_TB",
+      "title": "缺少高大草灌植物调查表",
+      "explanation": "来源于 ZDB 内置启用规则：缺少高大草灌植物调查表。",
+      "requiredTables": [
+        "YF_TRCY_TB",
+        "ZWDCB_GDCG_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "sql": "SELECT * FROM \"YF_TRCY_TB\" WHERE YD_ID = :ydId AND (MZGUID NOT IN (SELECT XB_GLH FROM ZWDCB_GDCG_TB WHERE XB_GLH IS NOT NULL ))"
+    },
+    {
+      "id": "BASE_6833",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YF_JMGDCG_TB",
+      "title": "样地编号为空",
+      "explanation": "来源于 ZDB 内置启用规则：样地编号为空。",
+      "requiredTables": [
+        "YF_JMGDCG_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "sql": "SELECT * FROM \"YF_JMGDCG_TB\" WHERE YD_ID = :ydId AND (YD_ID IS NULL OR YD_ID ='' OR YD_ID =' ')"
+    },
+    {
+      "id": "BASE_6834",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YF_JMGDCG_TB",
+      "title": "样方号为空",
+      "explanation": "来源于 ZDB 内置启用规则：样方号为空。",
+      "requiredTables": [
+        "YF_JMGDCG_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "sql": "SELECT * FROM \"YF_JMGDCG_TB\" WHERE YD_ID = :ydId AND (YF_ID IS NULL OR TRIM(YF_ID) ='')"
+    },
+    {
+      "id": "BASE_6835",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YF_JMGDCG_TB",
+      "title": "面积为空",
+      "explanation": "来源于 ZDB 内置启用规则：面积为空。",
+      "requiredTables": [
+        "YF_JMGDCG_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "sql": "SELECT * FROM \"YF_JMGDCG_TB\" WHERE YD_ID = :ydId AND (MIAN_JI IS NULL OR TRIM( MIAN_JI) ='' OR MIAN_JI =0)"
+    },
+    {
+      "id": "BASE_6836",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YF_JMGDCG_TB",
+      "title": "缺少加密样地高大草灌植物调查表",
+      "explanation": "来源于 ZDB 内置启用规则：缺少加密样地高大草灌植物调查表。",
+      "requiredTables": [
+        "YF_JMGDCG_TB",
+        "ZWDCB_JMGDCG_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "sql": "SELECT * FROM \"YF_JMGDCG_TB\" WHERE YD_ID = :ydId AND (MZGUID NOT IN (SELECT XB_GLH FROM ZWDCB_JMGDCG_TB WHERE XB_GLH IS NOT NULL ))"
+    },
+    {
+      "id": "BASE_6838",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "ZWDCB_GDCG_TB",
+      "title": "样地编号为空",
+      "explanation": "来源于 ZDB 内置启用规则：样地编号为空。",
+      "requiredTables": [
+        "ZWDCB_GDCG_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "MC"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID",
+        "MC"
+      ],
+      "sql": "SELECT * FROM \"ZWDCB_GDCG_TB\" WHERE YD_ID = :ydId AND (YD_ID IS NULL OR YD_ID ='' OR YD_ID =' ')"
+    },
+    {
+      "id": "BASE_6839",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "ZWDCB_GDCG_TB",
+      "title": "样方号为空",
+      "explanation": "来源于 ZDB 内置启用规则：样方号为空。",
+      "requiredTables": [
+        "ZWDCB_GDCG_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "MC"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID",
+        "MC"
+      ],
+      "sql": "SELECT * FROM \"ZWDCB_GDCG_TB\" WHERE YD_ID = :ydId AND (YF_ID IS NULL OR YF_ID ='' OR YF_ID =' ')"
+    },
+    {
+      "id": "BASE_6840",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "ZWDCB_GDCG_TB",
+      "title": "名称为空",
+      "explanation": "来源于 ZDB 内置启用规则：名称为空。",
+      "requiredTables": [
+        "ZWDCB_GDCG_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "MC"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID",
+        "MC"
+      ],
+      "sql": "SELECT * FROM \"ZWDCB_GDCG_TB\" WHERE YD_ID = :ydId AND (MC IS NULL OR MC ='' OR MC =' ')"
+    },
+    {
+      "id": "BASE_6841",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "ZWDCB_GDCG_TB",
+      "title": "株丛数为空",
+      "explanation": "来源于 ZDB 内置启用规则：株丛数为空。",
+      "requiredTables": [
+        "ZWDCB_GDCG_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "MC"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID",
+        "MC"
+      ],
+      "sql": "SELECT * FROM \"ZWDCB_GDCG_TB\" WHERE YD_ID = :ydId AND (ZS IS NULL OR ZS<0 OR TRIM(ZS)='')"
+    },
+    {
+      "id": "BASE_6842",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "ZWDCB_GDCG_TB",
+      "title": "丛径为空",
+      "explanation": "来源于 ZDB 内置启用规则：丛径为空。",
+      "requiredTables": [
+        "ZWDCB_GDCG_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "MC"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID",
+        "MC"
+      ],
+      "sql": "SELECT * FROM \"ZWDCB_GDCG_TB\" WHERE YD_ID = :ydId AND (CJ IS NULL OR CJ<0 OR TRIM(CJ)='')"
+    },
+    {
+      "id": "BASE_6843",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "ZWDCB_GDCG_TB",
+      "title": "株丛高度为空",
+      "explanation": "来源于 ZDB 内置启用规则：株丛高度为空。",
+      "requiredTables": [
+        "ZWDCB_GDCG_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "MC"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID",
+        "MC"
+      ],
+      "sql": "SELECT * FROM \"ZWDCB_GDCG_TB\" WHERE YD_ID = :ydId AND (GD IS NULL OR  GD<0 OR TRIM(GD)='')"
+    },
+    {
+      "id": "BASE_6844",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "ZWDCB_GDCG_TB",
+      "title": "株丛鲜重为空",
+      "explanation": "来源于 ZDB 内置启用规则：株丛鲜重为空。",
+      "requiredTables": [
+        "ZWDCB_GDCG_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "MC"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID",
+        "MC"
+      ],
+      "sql": "SELECT * FROM \"ZWDCB_GDCG_TB\" WHERE YD_ID = :ydId AND (XZ IS NULL OR XZ<0 OR TRIM(XZ)='')"
+    },
+    {
+      "id": "BASE_6845",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "ZWDCB_GDCG_TB",
+      "title": "株丛类型为空",
+      "explanation": "来源于 ZDB 内置启用规则：株丛类型为空。",
+      "requiredTables": [
+        "ZWDCB_GDCG_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "MC"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID",
+        "MC"
+      ],
+      "sql": "SELECT * FROM \"ZWDCB_GDCG_TB\" WHERE YD_ID = :ydId AND (ZC_LX IS NULL OR ZC_LX ='' OR ZC_LX =' ')"
+    },
+    {
+      "id": "BASE_6847",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "ZWDCB_JMGDCG_TB",
+      "title": "样地编号为空",
+      "explanation": "来源于 ZDB 内置启用规则：样地编号为空。",
+      "requiredTables": [
+        "ZWDCB_JMGDCG_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "MC"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID",
+        "MC"
+      ],
+      "sql": "SELECT * FROM \"ZWDCB_JMGDCG_TB\" WHERE YD_ID = :ydId AND (YD_ID IS NULL OR YD_ID ='' OR YD_ID =' ')"
+    },
+    {
+      "id": "BASE_6848",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "ZWDCB_JMGDCG_TB",
+      "title": "样方号为空",
+      "explanation": "来源于 ZDB 内置启用规则：样方号为空。",
+      "requiredTables": [
+        "ZWDCB_JMGDCG_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "MC"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID",
+        "MC"
+      ],
+      "sql": "SELECT * FROM \"ZWDCB_JMGDCG_TB\" WHERE YD_ID = :ydId AND (YF_ID IS NULL OR YF_ID ='' OR YF_ID =' ')"
+    },
+    {
+      "id": "BASE_6849",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "ZWDCB_JMGDCG_TB",
+      "title": "名称为空",
+      "explanation": "来源于 ZDB 内置启用规则：名称为空。",
+      "requiredTables": [
+        "ZWDCB_JMGDCG_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "MC"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID",
+        "MC"
+      ],
+      "sql": "SELECT * FROM \"ZWDCB_JMGDCG_TB\" WHERE YD_ID = :ydId AND (MC IS NULL OR MC ='' OR MC =' ')"
+    },
+    {
+      "id": "BASE_6850",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "ZWDCB_JMGDCG_TB",
+      "title": "株丛数为空",
+      "explanation": "来源于 ZDB 内置启用规则：株丛数为空。",
+      "requiredTables": [
+        "ZWDCB_JMGDCG_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "MC"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID",
+        "MC"
+      ],
+      "sql": "SELECT * FROM \"ZWDCB_JMGDCG_TB\" WHERE YD_ID = :ydId AND (ZS IS NULL OR ZS<0 OR TRIM(ZS)='')"
+    },
+    {
+      "id": "BASE_6851",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "ZWDCB_JMGDCG_TB",
+      "title": "丛径为空",
+      "explanation": "来源于 ZDB 内置启用规则：丛径为空。",
+      "requiredTables": [
+        "ZWDCB_JMGDCG_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "MC"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID",
+        "MC"
+      ],
+      "sql": "SELECT * FROM \"ZWDCB_JMGDCG_TB\" WHERE YD_ID = :ydId AND (CJ IS NULL OR CJ<0 OR TRIM(CJ)='')"
+    },
+    {
+      "id": "BASE_6852",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "ZWDCB_JMGDCG_TB",
+      "title": "株丛高度为空",
+      "explanation": "来源于 ZDB 内置启用规则：株丛高度为空。",
+      "requiredTables": [
+        "ZWDCB_JMGDCG_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "MC"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID",
+        "MC"
+      ],
+      "sql": "SELECT * FROM \"ZWDCB_JMGDCG_TB\" WHERE YD_ID = :ydId AND (GD IS NULL OR  GD<0 OR TRIM(GD)='')"
+    },
+    {
+      "id": "BASE_6853",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "ZWDCB_JMGDCG_TB",
+      "title": "株丛鲜重为空",
+      "explanation": "来源于 ZDB 内置启用规则：株丛鲜重为空。",
+      "requiredTables": [
+        "ZWDCB_JMGDCG_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "MC"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID",
+        "MC"
+      ],
+      "sql": "SELECT * FROM \"ZWDCB_JMGDCG_TB\" WHERE YD_ID = :ydId AND (XZ IS NULL OR XZ<0 OR TRIM(XZ)='')"
+    },
+    {
+      "id": "BASE_6854",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "ZWDCB_JMGDCG_TB",
+      "title": "株丛类型为空",
+      "explanation": "来源于 ZDB 内置启用规则：株丛类型为空。",
+      "requiredTables": [
+        "ZWDCB_JMGDCG_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "MC"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID",
+        "MC"
+      ],
+      "sql": "SELECT * FROM \"ZWDCB_JMGDCG_TB\" WHERE YD_ID = :ydId AND (ZC_LX IS NULL OR ZC_LX ='' OR ZC_LX =' ')"
+    },
+    {
+      "id": "BASE_6856",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_RGCD_PT",
+      "title": "省为空",
+      "explanation": "来源于 ZDB 内置启用规则：省为空。",
+      "requiredTables": [
+        "YD_RGCD_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_RGCD_PT\" WHERE YD_ID = :ydId AND (SHENG IS NULL OR SHENG ='' OR SHENG =' ')"
+    },
+    {
+      "id": "BASE_6857",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_RGCD_PT",
+      "title": "市为空",
+      "explanation": "来源于 ZDB 内置启用规则：市为空。",
+      "requiredTables": [
+        "YD_RGCD_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_RGCD_PT\" WHERE YD_ID = :ydId AND (SHI IS NULL OR SHI ='' OR SHI =' ')"
+    },
+    {
+      "id": "BASE_6858",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_RGCD_PT",
+      "title": "县为空",
+      "explanation": "来源于 ZDB 内置启用规则：县为空。",
+      "requiredTables": [
+        "YD_RGCD_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_RGCD_PT\" WHERE YD_ID = :ydId AND (XIAN IS NULL OR XIAN ='' OR XIAN =' ')"
+    },
+    {
+      "id": "BASE_6859",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_RGCD_PT",
+      "title": "乡为空",
+      "explanation": "来源于 ZDB 内置启用规则：乡为空。",
+      "requiredTables": [
+        "YD_RGCD_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_RGCD_PT\" WHERE YD_ID = :ydId AND (XIANG IS NULL OR XIANG ='' OR XIANG =' ')"
+    },
+    {
+      "id": "BASE_6861",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_RGCD_PT",
+      "title": "样地号为空",
+      "explanation": "来源于 ZDB 内置启用规则：样地号为空。",
+      "requiredTables": [
+        "YD_RGCD_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_RGCD_PT\" WHERE YD_ID = :ydId AND (YD_ID IS NULL OR YD_ID ='' OR YD_ID =' ')"
+    },
+    {
+      "id": "BASE_6862",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_RGCD_PT",
+      "title": "海拔为空或小于-100",
+      "explanation": "来源于 ZDB 内置启用规则：海拔为空或小于-100。",
+      "requiredTables": [
+        "YD_RGCD_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_RGCD_PT\" WHERE YD_ID = :ydId AND (HAI_BA IS NULL OR TRIM(HAI_BA)=''   OR HAI_BA <-100)"
+    },
+    {
+      "id": "BASE_6863",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_RGCD_PT",
+      "title": "草种名称为空",
+      "explanation": "来源于 ZDB 内置启用规则：草种名称为空。",
+      "requiredTables": [
+        "YD_RGCD_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_RGCD_PT\" WHERE YD_ID = :ydId AND (CZ_MC IS NULL OR CZ_MC ='' OR CZ_MC =' ')"
+    },
+    {
+      "id": "BASE_6864",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_RGCD_PT",
+      "title": "生命周期为空",
+      "explanation": "来源于 ZDB 内置启用规则：生命周期为空。",
+      "requiredTables": [
+        "YD_RGCD_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_RGCD_PT\" WHERE YD_ID = :ydId AND (CZ_ZHQ IS NULL OR CZ_ZHQ ='' OR CZ_ZHQ =' ')"
+    },
+    {
+      "id": "BASE_6865",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_RGCD_PT",
+      "title": "草种来源为空",
+      "explanation": "来源于 ZDB 内置启用规则：草种来源为空。",
+      "requiredTables": [
+        "YD_RGCD_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_RGCD_PT\" WHERE YD_ID = :ydId AND (CZ_LY IS NULL OR CZ_LY ='' OR CZ_LY =' ')"
+    },
+    {
+      "id": "BASE_6866",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_RGCD_PT",
+      "title": "灌溉条件为空",
+      "explanation": "来源于 ZDB 内置启用规则：灌溉条件为空。",
+      "requiredTables": [
+        "YD_RGCD_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_RGCD_PT\" WHERE YD_ID = :ydId AND (GG_TJ IS NULL OR GG_TJ ='' OR GG_TJ =' ')"
+    },
+    {
+      "id": "BASE_6867",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_RGCD_PT",
+      "title": "全年鲜草产量为空",
+      "explanation": "来源于 ZDB 内置启用规则：全年鲜草产量为空。",
+      "requiredTables": [
+        "YD_RGCD_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_RGCD_PT\" WHERE YD_ID = :ydId AND (XC_CHL IS NULL OR XC_CHL ='' OR XC_CHL <=0)"
+    },
+    {
+      "id": "BASE_6868",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_RGCD_PT",
+      "title": "全年干草产量为空",
+      "explanation": "来源于 ZDB 内置启用规则：全年干草产量为空。",
+      "requiredTables": [
+        "YD_RGCD_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_RGCD_PT\" WHERE YD_ID = :ydId AND (GC_CHL IS NULL OR GC_CHL ='' OR GC_CHL <=0)"
+    },
+    {
+      "id": "BASE_6869",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_RGCD_PT",
+      "title": "种植年份为空",
+      "explanation": "来源于 ZDB 内置启用规则：种植年份为空。",
+      "requiredTables": [
+        "YD_RGCD_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_RGCD_PT\" WHERE YD_ID = :ydId AND (ZZ_NF IS NULL OR ZZ_NF ='' OR ZZ_NF =' ')"
+    },
+    {
+      "id": "BASE_6870",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_RGCD_PT",
+      "title": "调查人员为空",
+      "explanation": "来源于 ZDB 内置启用规则：调查人员为空。",
+      "requiredTables": [
+        "YD_RGCD_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_RGCD_PT\" WHERE YD_ID = :ydId AND (DC_RY IS NULL OR DC_RY ='' OR DC_RY =' ')"
+    },
+    {
+      "id": "BASE_6871",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_RGCD_PT",
+      "title": "调查日期为空",
+      "explanation": "来源于 ZDB 内置启用规则：调查日期为空。",
+      "requiredTables": [
+        "YD_RGCD_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_RGCD_PT\" WHERE YD_ID = :ydId AND (DC_RQ IS NULL OR DC_RQ ='' OR DC_RQ =' ')"
+    },
+    {
+      "id": "BASE_6872",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_RGCD_PT",
+      "title": "调查状态为空",
+      "explanation": "来源于 ZDB 内置启用规则：调查状态为空。",
+      "requiredTables": [
+        "YD_RGCD_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_RGCD_PT\" WHERE YD_ID = :ydId AND (DC_ZT IS NULL OR DC_ZT ='' OR DC_ZT =' ')"
+    },
+    {
+      "id": "BASE_6873",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_RGCD_PT",
+      "title": "样地类型为空",
+      "explanation": "来源于 ZDB 内置启用规则：样地类型为空。",
+      "requiredTables": [
+        "YD_RGCD_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_RGCD_PT\" WHERE YD_ID = :ydId AND (YD_LX IS NULL OR YD_LX ='' OR YD_LX =' ')"
+    },
+    {
+      "id": "BASE_6874",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_RGCD_PT",
+      "title": "样地面积为空",
+      "explanation": "来源于 ZDB 内置启用规则：样地面积为空。",
+      "requiredTables": [
+        "YD_RGCD_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_RGCD_PT\" WHERE YD_ID = :ydId AND (MIAN_JI IS NULL OR MIAN_JI=0 OR TRIM(MIAN_JI)='')"
+    },
+    {
+      "id": "BASE_6876",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_JM_PT",
+      "title": "植被覆盖类型为空",
+      "explanation": "来源于 ZDB 内置启用规则：植被覆盖类型为空。",
+      "requiredTables": [
+        "YD_JM_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_JM_PT\" WHERE YD_ID = :ydId AND (VEGECOVER_TYPE IS NULL OR VEGECOVER_TYPE ='' OR VEGECOVER_TYPE =' ')"
+    },
+    {
+      "id": "BASE_6877",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_JM_PT",
+      "title": "地类为空",
+      "explanation": "来源于 ZDB 内置启用规则：地类为空。",
+      "requiredTables": [
+        "YD_JM_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_JM_PT\" WHERE YD_ID = :ydId AND (LAND_TYPE IS NULL OR LAND_TYPE ='' OR LAND_TYPE =' ')"
+    },
+    {
+      "id": "BASE_6878",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "植被覆盖类型为空",
+      "explanation": "来源于 ZDB 内置启用规则：植被覆盖类型为空。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (VEGECOVER_TYPE IS NULL OR VEGECOVER_TYPE ='' OR VEGECOVER_TYPE =' ')"
+    },
+    {
+      "id": "BASE_6879",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "地类为空",
+      "explanation": "来源于 ZDB 内置启用规则：地类为空。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (LAND_TYPE IS NULL OR LAND_TYPE ='' OR LAND_TYPE =' ')"
+    },
+    {
+      "id": "BASE_6880",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_JM_PT",
+      "title": "裸斑面积比例为空",
+      "explanation": "来源于 ZDB 内置启用规则：裸斑面积比例为空。",
+      "requiredTables": [
+        "YD_JM_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_JM_PT\" WHERE YD_ID = :ydId AND (LB_BL <0 OR LB_BL >100 OR LB_BL IS NULL  OR TRIM(LB_BL)='')"
+    },
+    {
+      "id": "BASE_6906",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "荒漠调查区类型为石漠化调查区时，基岩裸露度为空或不在1%-100%之间",
+      "explanation": "来源于 ZDB 内置启用规则：荒漠调查区类型为石漠化调查区时，基岩裸露度为空或不在1%-100%之间。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (HMDCQLX='4' AND (ROCK_EXPOSURE IS NULL OR ROCK_EXPOSURE<1 OR ROCK_EXPOSURE>100 OR TRIM(ROCK_EXPOSURE)=''))"
+    },
+    {
+      "id": "BASE_6907",
+      "sourceId": "zdb-baseline-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_JM_PT",
+      "title": "荒漠调查区类型为石漠化调查区时，基岩裸露度为空或不在1%-100%之间",
+      "explanation": "来源于 ZDB 内置启用规则：荒漠调查区类型为石漠化调查区时，基岩裸露度为空或不在1%-100%之间。",
+      "requiredTables": [
+        "YD_JM_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XIAN",
+        "XIANG",
+        "CUN"
+      ],
+      "locatorFields": [
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "YD_ID"
+      ],
+      "sql": "SELECT * FROM \"YD_JM_PT\" WHERE YD_ID = :ydId AND (HMDCQLX='4' AND (ROCK_EXPOSURE IS NULL OR ROCK_EXPOSURE<1 OR ROCK_EXPOSURE>100 OR TRIM(ROCK_EXPOSURE)=''))"
+    },
+    {
+      "id": "ADD_GRASS_002",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "天然草原样地面积不是 0.125",
+      "explanation": "天然草原样地面积统一填写为 0.125。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "MIAN_JI"
+      ],
+      "locatorFields": [
+        "YD_ID"
+      ],
+      "sql": "SELECT YD_ID, MIAN_JI AS actualValue FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (MIAN_JI IS NULL OR CAST(MIAN_JI AS REAL) <> 0.125)"
+    },
+    {
+      "id": "ADD_GRASS_003",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "中心桩 GNSS 坐标 X 位数异常",
+      "explanation": "中心桩 GNSS 坐标 X（米）的整数部分必须为 8 位。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "ZUOBIAO_X"
+      ],
+      "locatorFields": [
+        "YD_ID"
+      ],
+      "sql": "SELECT YD_ID, ZUOBIAO_X AS actualValue FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (ZUOBIAO_X IS NULL OR LENGTH(CAST(ROUND(ABS(ZUOBIAO_X), 0) AS INTEGER)) <> 8)"
+    },
+    {
+      "id": "ADD_GRASS_004",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "中心桩 GNSS 坐标 Y 位数异常",
+      "explanation": "中心桩 GNSS 坐标 Y（米）的整数部分必须为 7 位。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "ZUOBIAO_Y"
+      ],
+      "locatorFields": [
+        "YD_ID"
+      ],
+      "sql": "SELECT YD_ID, ZUOBIAO_Y AS actualValue FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (ZUOBIAO_Y IS NULL OR LENGTH(CAST(ROUND(ABS(ZUOBIAO_Y), 0) AS INTEGER)) <> 7)"
+    },
+    {
+      "id": "ADD_GRASS_011",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "ADVISORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "植被盖度低于 60%",
+      "explanation": "植被盖度小于 60% 时提示人工检查核对。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "CDGD"
+      ],
+      "locatorFields": [
+        "YD_ID"
+      ],
+      "sql": "SELECT YD_ID, CDGD AS actualValue FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND CDGD IS NOT NULL AND CAST(CDGD AS REAL) < 60"
+    },
+    {
+      "id": "ADD_GRASS_012",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "ADVISORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "草群平均高度超出 5 至 100",
+      "explanation": "草群平均高度低于 5 或高于 100 时提示人工检查核对。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "ZBGD"
+      ],
+      "locatorFields": [
+        "YD_ID"
+      ],
+      "sql": "SELECT YD_ID, ZBGD AS actualValue FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND ZBGD IS NOT NULL AND (CAST(ZBGD AS REAL) < 5 OR CAST(ZBGD AS REAL) > 100)"
+    },
+    {
+      "id": "ADD_GRASS_018",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "ADVISORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "裸斑面积比例超过 40%",
+      "explanation": "裸斑面积比例超过 40% 时提示人工检查核对。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "LB_BL"
+      ],
+      "locatorFields": [
+        "YD_ID"
+      ],
+      "sql": "SELECT YD_ID, LB_BL AS actualValue FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND LB_BL IS NOT NULL AND CAST(LB_BL AS REAL) > 40"
+    },
+    {
+      "id": "ADD_GRASS_019",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "ADVISORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "砾石覆盖面积比例超过 20%",
+      "explanation": "砾石覆盖面积比例超过 20% 时提示人工检查核对。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "LSFG_BL"
+      ],
+      "locatorFields": [
+        "YD_ID"
+      ],
+      "sql": "SELECT YD_ID, LSFG_BL AS actualValue FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND LSFG_BL IS NOT NULL AND CAST(LSFG_BL AS REAL) > 20"
+    },
+    {
+      "id": "ADD_GRASS_020",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "ADVISORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "盐碱斑块面积比例超过 20%",
+      "explanation": "盐碱斑块面积比例超过 20% 时提示人工检查核对。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YJB_BL"
+      ],
+      "locatorFields": [
+        "YD_ID"
+      ],
+      "sql": "SELECT YD_ID, YJB_BL AS actualValue FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND YJB_BL IS NOT NULL AND CAST(YJB_BL AS REAL) > 20"
+    },
+    {
+      "id": "ADD_GRASS_021",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "ADVISORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "覆沙厚度超过 10 厘米",
+      "explanation": "覆沙厚度超过 10 厘米时提示人工检查核对。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "FS_HD"
+      ],
+      "locatorFields": [
+        "YD_ID"
+      ],
+      "sql": "SELECT YD_ID, FS_HD AS actualValue FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND FS_HD IS NOT NULL AND CAST(FS_HD AS REAL) > 10"
+    },
+    {
+      "id": "ADD_GRASS_029",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "样线长度不是 20 米",
+      "explanation": "样线长度统一填写为 20 米。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID",
+        "YX_CD"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT YD_ID, YX_ID, YX_CD AS actualValue FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (YX_CD IS NULL OR CAST(YX_CD AS REAL) <> 20)"
+    }
+  ]
+}
