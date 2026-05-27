@@ -8,6 +8,7 @@ import com.example.myapplication.quality.domain.PlotIndexResult
 import com.example.myapplication.quality.domain.PlotRef
 import com.example.myapplication.quality.domain.PlotTable
 import com.example.myapplication.quality.domain.ZdbSourceRef
+import com.example.myapplication.quality.domain.countyDisplayLabel
 
 class SafPlotIndexRepository(
     private val databaseAccess: ReadOnlyZdbAccess,
@@ -77,7 +78,7 @@ class SafPlotIndexRepository(
                             rawPlotId = rawPlotId,
                             displayPlotId = rawPlotId,
                             countyCode = countyCode,
-                            countyLabel = countyCode,
+                            countyLabel = source.countyDisplayLabel(),
                             plotTable = plotTable,
                             parentGuid = cursor.getStringOrNull(2),
                         ),

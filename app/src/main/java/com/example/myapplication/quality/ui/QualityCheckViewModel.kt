@@ -18,6 +18,8 @@ import com.example.myapplication.quality.domain.DefaultCheckScopeSelector
 import com.example.myapplication.quality.domain.PlotRef
 import com.example.myapplication.quality.domain.ZdbScanResult
 import com.example.myapplication.quality.review.IssueReviewService
+import com.example.myapplication.quality.review.DetailStatusFilter
+import com.example.myapplication.quality.review.QualityTableGroup
 import com.example.myapplication.quality.review.ReviewedCheckRun
 import com.example.myapplication.quality.review.ReviewedPlotResult
 import com.example.myapplication.quality.rules.AssetRuleRepository
@@ -67,28 +69,32 @@ class QualityCheckViewModel(application: Application) : AndroidViewModel(applica
     }
 
     fun showSourceSelection() {
-        _uiState.update { it.copy(screen = QualityScreen.SOURCE, errorMessage = null) }
+        _uiState.update { it.copy(screen = QualityScreen.SOURCE, detailPlot = null, errorMessage = null) }
     }
 
     fun showScopeSelection() {
         if (_uiState.value.indexedPlots.isNotEmpty()) {
-            _uiState.update { it.copy(screen = QualityScreen.SCOPE, errorMessage = null) }
+            _uiState.update { it.copy(screen = QualityScreen.SCOPE, detailPlot = null, errorMessage = null) }
         }
     }
 
     fun updateCountyFilter(county: String?) {
+        if (_uiState.value.checkAllMode) return
+        directoryStore.saveCountyLabel(county)
         _uiState.update { state ->
             filter(state, selectedCounty = county, plotQuery = state.plotQuery)
         }
     }
 
     fun updatePlotQuery(query: String) {
+        if (_uiState.value.checkAllMode) return
         _uiState.update { state ->
             filter(state, selectedCounty = state.selectedCounty, plotQuery = query)
         }
     }
 
     fun selectPlot(plot: PlotRef) {
+        if (_uiState.value.checkAllMode) return
         _uiState.update {
             it.copy(
                 selectedPlot = plot,
@@ -123,16 +129,49 @@ class QualityCheckViewModel(application: Application) : AndroidViewModel(applica
         }
     }
 
+    fun setTestMode(enabled: Boolean) {
+        _uiState.update { it.copy(testMode = enabled) }
+    }
+
+    fun setCheckAllMode(enabled: Boolean) {
+        _uiState.update { state ->
+            if (enabled) {
+                state.withCheckAllMode(enabled = true)
+            } else {
+                val restoredCounty = scopeSelector.restoreCounty(state.selectedCounty, state.countyOptions)
+                state.withCheckAllMode(enabled = false, restoredCounty = restoredCounty)
+            }
+        }
+    }
+
     fun startCheck() {
-        val scope = _uiState.value.selectedScope
+        val state = _uiState.value
+        val scope = if (state.checkAllMode) {
+            scopeSelector.all(state.indexedPlots)
+        } else {
+            state.selectedPlot?.let(scopeSelector::single)
+        }
         if (scope == null || scope.plots.isEmpty()) {
-            setError("当前质检范围没有样地。")
+            setError(if (state.checkAllMode) "当前质检范围没有样地。" else "请先选择一个样地。")
             return
         }
 
+        runCheck(scope)
+    }
+
+    private fun runCheck(scope: CheckScope) {
         cancelRequested = false
         runJob?.cancel()
-        _uiState.update { it.copy(screen = QualityScreen.PROGRESS, progress = null, errorMessage = null) }
+        _uiState.update {
+            it.copy(
+                selectedScope = scope,
+                screen = QualityScreen.PROGRESS,
+                progress = null,
+                reviewedRun = null,
+                detailPlot = null,
+                errorMessage = null,
+            )
+        }
         runJob = viewModelScope.launch(Dispatchers.IO) {
             runCatching {
                 engine.check(
@@ -142,10 +181,18 @@ class QualityCheckViewModel(application: Application) : AndroidViewModel(applica
                 )
             }.onSuccess { run ->
                 val reviewed = reviewService.review(run)
+                val singleDetail = if (run.scope is CheckScope.Single) {
+                    reviewed.plotResults.singleOrNull()
+                } else {
+                    null
+                }
                 _uiState.update {
                     it.copy(
-                        screen = QualityScreen.SUMMARY,
+                        screen = if (singleDetail == null) QualityScreen.SUMMARY else screenAfterCompletedCheck(run.scope),
                         reviewedRun = reviewed,
+                        detailPlot = singleDetail,
+                        detailStatusFilter = DetailStatusFilter.ALL,
+                        detailTableGroup = QualityTableGroup.ALL,
                         progress = null,
                     )
                 }
@@ -166,18 +213,40 @@ class QualityCheckViewModel(application: Application) : AndroidViewModel(applica
     }
 
     fun showPlotDetails(result: ReviewedPlotResult) {
-        _uiState.update { it.copy(screen = QualityScreen.DETAIL, detailPlot = result) }
+        _uiState.update {
+            it.copy(
+                screen = QualityScreen.DETAIL,
+                detailPlot = result,
+                detailStatusFilter = DetailStatusFilter.ALL,
+                detailTableGroup = QualityTableGroup.ALL,
+            )
+        }
     }
 
     fun showSummary() {
         _uiState.update { it.copy(screen = QualityScreen.SUMMARY, detailPlot = null) }
     }
 
+    fun navigateBack() {
+        when (_uiState.value.screen) {
+            QualityScreen.SOURCE -> Unit
+            QualityScreen.PROGRESS -> Unit
+            QualityScreen.SCOPE -> showSourceSelection()
+            QualityScreen.SUMMARY -> showScopeSelection()
+            QualityScreen.DETAIL -> {
+                when (screenAfterDetailBack(_uiState.value.reviewedRun?.sourceRun?.scope)) {
+                    QualityScreen.SCOPE -> showScopeSelection()
+                    QualityScreen.SUMMARY -> showSummary()
+                    else -> Unit
+                }
+            }
+        }
+    }
+
     fun recheck() {
         val previousScope = _uiState.value.reviewedRun?.sourceRun?.scope ?: _uiState.value.selectedScope
         if (previousScope != null) {
-            _uiState.update { it.copy(selectedScope = previousScope) }
-            startCheck()
+            runCheck(previousScope)
         }
     }
 
@@ -194,6 +263,14 @@ class QualityCheckViewModel(application: Application) : AndroidViewModel(applica
         updateReview(reviewService.review(current.sourceRun))
     }
 
+    fun setDetailStatusFilter(filter: DetailStatusFilter) {
+        _uiState.update { it.copy(detailStatusFilter = filter) }
+    }
+
+    fun setDetailTableGroup(group: QualityTableGroup) {
+        _uiState.update { it.copy(detailTableGroup = group) }
+    }
+
     private fun scan(directory: DataDirectoryRef) {
         _uiState.update {
             it.copy(
@@ -203,6 +280,9 @@ class QualityCheckViewModel(application: Application) : AndroidViewModel(applica
                 scanResult = null,
                 indexedPlots = emptyList(),
                 filteredPlots = emptyList(),
+                selectedPlot = null,
+                selectedScope = null,
+                checkAllMode = false,
             )
         }
         viewModelScope.launch(Dispatchers.IO) {
@@ -211,18 +291,21 @@ class QualityCheckViewModel(application: Application) : AndroidViewModel(applica
                 scanResult to plotIndexRepository.index(scanResult.validSources)
             }.onSuccess { (scanResult, indexResult) ->
                 val indexedPlots = indexResult.plots
+                val countyOptions = scopeSelector.countyOptions(indexedPlots)
+                val selectedCounty = scopeSelector.restoreCounty(directoryStore.savedCountyLabel(), countyOptions)
                 _uiState.update {
                     it.copy(
                         screen = if (indexedPlots.isEmpty()) QualityScreen.SOURCE else QualityScreen.SCOPE,
                         scanResult = scanResult,
                         indexedPlots = indexedPlots,
                         rejectedSources = scanResult.invalidSources + indexResult.rejectedSources,
-                        countyOptions = scopeSelector.countyOptions(indexedPlots),
-                        selectedCounty = null,
+                        countyOptions = countyOptions,
+                        selectedCounty = selectedCounty,
                         plotQuery = "",
-                        filteredPlots = indexedPlots,
+                        filteredPlots = scopeSelector.filterPlots(indexedPlots, selectedCounty, ""),
                         selectedPlot = null,
                         selectedScope = null,
+                        checkAllMode = false,
                         isScanning = false,
                         errorMessage = if (indexedPlots.isEmpty()) "未发现可质检的样地数据。" else null,
                     )

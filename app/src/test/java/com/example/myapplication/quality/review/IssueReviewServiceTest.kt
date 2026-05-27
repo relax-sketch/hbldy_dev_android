@@ -4,9 +4,11 @@ import com.example.myapplication.quality.annotations.IssueAnnotationStore
 import com.example.myapplication.quality.check.QualityCheckRun
 import com.example.myapplication.quality.domain.CheckIssue
 import com.example.myapplication.quality.domain.CheckScope
+import com.example.myapplication.quality.domain.PassedRule
 import com.example.myapplication.quality.domain.PlotCheckResult
 import com.example.myapplication.quality.domain.PlotRef
 import com.example.myapplication.quality.domain.PlotTable
+import com.example.myapplication.quality.domain.SkippedRule
 import com.example.myapplication.quality.domain.ZdbSourceRef
 import com.example.myapplication.quality.rules.RuleSetSummary
 import com.example.myapplication.quality.rules.RuleSeverity
@@ -34,6 +36,28 @@ class IssueReviewServiceTest {
         locationValues = mapOf("YD_ID" to "PLOT_1"),
         actualValues = mapOf("actualValue" to "bad"),
     )
+    private val advisoryIssue = issue.copy(
+        fingerprint = "fingerprint-2",
+        ruleId = "RULE_2",
+        severity = RuleSeverity.ADVISORY,
+        title = "提示问题",
+    )
+    private val skippedRule = SkippedRule(
+        plot = plot,
+        ruleId = "RULE_SKIP",
+        severity = RuleSeverity.MANDATORY,
+        title = "跳过规则",
+        tableName = "YD_TRCY_PT",
+        reason = "missing table",
+    )
+    private val passedRule = PassedRule(
+        plot = plot,
+        ruleId = "RULE_PASS",
+        severity = RuleSeverity.ADVISORY,
+        title = "通过规则",
+        explanation = "说明",
+        tableName = "YD_TRCY_PT",
+    )
 
     @Test
     fun ignoreAndCancelIgnore_moveIssueBetweenPendingAndIgnoredSections() {
@@ -59,7 +83,36 @@ class IssueReviewServiceTest {
         assertEquals(0, resolvedReview.summary.ignoredIssues)
     }
 
-    private fun runWithIssues(issues: List<CheckIssue>): QualityCheckRun =
+    @Test
+    fun review_preservesPassedRulesForTestModeDisplay() {
+        val reviewed = IssueReviewService(InMemoryAnnotationStore())
+            .review(runWithIssues(issues = emptyList(), passedRules = listOf(passedRule)))
+
+        assertEquals(listOf(passedRule), reviewed.plotResults.single().passedRules)
+        assertEquals(1, reviewed.summary.passedRules)
+        assertEquals(1, reviewed.summary.executedRules)
+    }
+
+    @Test
+    fun reviewedPlotResult_detailCountTextIncludesPendingSkippedAndIgnoredCounts() {
+        val service = IssueReviewService(InMemoryAnnotationStore())
+        service.ignore(issue)
+
+        val reviewed = service.review(
+            runWithIssues(
+                issues = listOf(issue, advisoryIssue),
+                skippedRules = listOf(skippedRule),
+            ),
+        ).plotResults.single()
+
+        assertEquals("强制性 0 · 提示性 1 · 跳过 1 · 忽略 1", reviewed.detailCountText)
+    }
+
+    private fun runWithIssues(
+        issues: List<CheckIssue>,
+        skippedRules: List<SkippedRule> = emptyList(),
+        passedRules: List<PassedRule> = emptyList(),
+    ): QualityCheckRun =
         QualityCheckRun(
             scope = CheckScope.Single(plot),
             ruleSetSummary = RuleSetSummary("test", 1, 0, 1, 1, 0),
@@ -67,7 +120,8 @@ class IssueReviewServiceTest {
                 PlotCheckResult(
                     plot = plot,
                     issues = issues,
-                    skippedRules = emptyList(),
+                    skippedRules = skippedRules,
+                    passedRules = passedRules,
                     executedRuleCount = 1,
                 ),
             ),

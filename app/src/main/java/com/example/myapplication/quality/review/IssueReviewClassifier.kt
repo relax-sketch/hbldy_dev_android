@@ -30,6 +30,7 @@ class IssueReviewClassifier(
             pendingAdvisory = pendingAdvisory,
             ignored = ignored,
             skippedRules = result.skippedRules,
+            passedRules = result.passedRules.sortedWith(compareBy({ it.title }, { it.ruleId })),
             executedRuleCount = result.executedRuleCount,
         )
     }
@@ -43,6 +44,7 @@ class IssueReviewClassifier(
             ignoredIssues = results.sumOf { it.ignored.size },
             executedRules = results.sumOf { it.executedRuleCount },
             skippedRules = results.sumOf { it.skippedRules.size },
+            passedRules = results.sumOf { it.passedRules.size },
         )
 
     private companion object {

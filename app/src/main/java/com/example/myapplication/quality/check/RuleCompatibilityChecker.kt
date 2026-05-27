@@ -71,6 +71,7 @@ class RuleCompatibilityChecker {
                 ruleId = rule.id,
                 severity = rule.severity,
                 title = rule.title,
+                tableName = rule.targetTable,
                 reason = reason,
             ),
         )

@@ -31,7 +31,7 @@ class AssetRuleRepository(
     override fun loadRuleSet(): EmbeddedRuleSet = ruleSet
 
     override fun summary(): RuleSetSummary {
-        val rules = ruleSet.rules
+        val rules = TemporarilyDisabledRules.enabledRules(ruleSet.rules)
         val sourcesById = ruleSet.sources.associateBy(RuleSourceMetadata::id)
         return RuleSetSummary(
             ruleSetVersion = ruleSet.ruleSetVersion,

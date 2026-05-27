@@ -5,6 +5,7 @@ import com.example.myapplication.quality.domain.PlotCheckResult
 import com.example.myapplication.quality.domain.PlotRef
 import com.example.myapplication.quality.rules.RuleRepository
 import com.example.myapplication.quality.rules.RuleSetSummary
+import com.example.myapplication.quality.rules.TemporarilyDisabledRules
 
 data class CheckProgress(
     val completedPlots: Int,
@@ -29,6 +30,7 @@ class QualityCheckEngine(
         isCancelled: () -> Boolean = { false },
     ): QualityCheckRun {
         val ruleSet = ruleRepository.loadRuleSet()
+        val executableRules = TemporarilyDisabledRules.enabledRules(ruleSet.rules)
         val results = mutableListOf<PlotCheckResult>()
         val totalPlots = scope.plots.size
         onProgress(CheckProgress(0, totalPlots, scope.plots.firstOrNull()))
@@ -39,7 +41,7 @@ class QualityCheckEngine(
                 cancelled = true
                 break
             }
-            results.add(plotRuleExecutor.check(plot, ruleSet.rules))
+            results.add(plotRuleExecutor.check(plot, executableRules))
             onProgress(CheckProgress(results.size, totalPlots, plot))
         }
 

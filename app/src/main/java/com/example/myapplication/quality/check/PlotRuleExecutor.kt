@@ -4,6 +4,7 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteException
 import com.example.myapplication.quality.data.ReadOnlyZdbAccess
 import com.example.myapplication.quality.domain.CheckIssue
+import com.example.myapplication.quality.domain.PassedRule
 import com.example.myapplication.quality.domain.PlotCheckResult
 import com.example.myapplication.quality.domain.PlotRef
 import com.example.myapplication.quality.domain.PreparedRuleQuery
@@ -24,6 +25,7 @@ class PlotRuleExecutor(
             val schema = SQLiteZdbSchemaInspector(database)
             val issues = mutableListOf<CheckIssue>()
             val skippedRules = mutableListOf<SkippedRule>()
+            val passedRules = mutableListOf<PassedRule>()
             var executedRuleCount = 0
 
             rules.forEach { rule ->
@@ -38,6 +40,18 @@ class PlotRuleExecutor(
                                 cursor.readIssues(plot, compatibility.query)
                             }
                             issues.addAll(matchedIssues)
+                            if (matchedIssues.isEmpty()) {
+                                passedRules.add(
+                                    PassedRule(
+                                        plot = plot,
+                                        ruleId = rule.id,
+                                        severity = rule.severity,
+                                        title = rule.title,
+                                        explanation = rule.explanation,
+                                        tableName = rule.targetTable,
+                                    ),
+                                )
+                            }
                             executedRuleCount += 1
                         } catch (exception: SQLiteException) {
                             skippedRules.add(
@@ -46,6 +60,7 @@ class PlotRuleExecutor(
                                     ruleId = rule.id,
                                     severity = rule.severity,
                                     title = rule.title,
+                                    tableName = rule.targetTable,
                                     reason = "Rule query is incompatible with this source: ${exception.message.orEmpty()}",
                                 ),
                             )
@@ -58,6 +73,7 @@ class PlotRuleExecutor(
                 plot = plot,
                 issues = issues,
                 skippedRules = skippedRules,
+                passedRules = passedRules,
                 executedRuleCount = executedRuleCount,
             )
         }

@@ -23,6 +23,18 @@ class AndroidDataDirectoryStore(private val context: Context) : DataDirectorySto
             .apply()
     }
 
+    fun savedCountyLabel(): String? = preferences.getString(KEY_SELECTED_COUNTY, null)
+
+    fun saveCountyLabel(countyLabel: String?) {
+        preferences.edit().apply {
+            if (countyLabel.isNullOrBlank()) {
+                remove(KEY_SELECTED_COUNTY)
+            } else {
+                putString(KEY_SELECTED_COUNTY, countyLabel)
+            }
+        }.apply()
+    }
+
     fun persistPickedDirectory(uri: Uri, resultFlags: Int): DataDirectoryRef {
         val readFlag = resultFlags and Intent.FLAG_GRANT_READ_URI_PERMISSION
         context.contentResolver.takePersistableUriPermission(uri, readFlag)
@@ -49,5 +61,6 @@ class AndroidDataDirectoryStore(private val context: Context) : DataDirectorySto
         const val PREFERENCES_NAME = "quality_data_directory"
         const val KEY_URI = "uri"
         const val KEY_DISPLAY_NAME = "display_name"
+        const val KEY_SELECTED_COUNTY = "selected_county"
     }
 }

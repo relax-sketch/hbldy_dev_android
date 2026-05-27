@@ -51,6 +51,23 @@ class QualityCheckEngineTest {
         assertNotEquals(fingerprints(results[0]), fingerprints(results[1]))
     }
 
+    @Test
+    fun check_filtersTemporarilyDisabledRulesBeforeExecution() {
+        val checker = RecordingPlotChecker()
+        val run = QualityCheckEngine(
+            FakeRuleRepository(
+                rules = listOf(
+                    rule(id = "ACTIVE", targetTable = "YD_TRCY_PT"),
+                    rule(id = "DISABLED", targetTable = "YD_JM_PT"),
+                ),
+            ),
+            checker,
+        ).check(selector.single(plots.first()))
+
+        assertEquals(listOf("ACTIVE"), checker.receivedRuleIds)
+        assertEquals(1, run.plotResults.single().executedRuleCount)
+    }
+
     private fun fingerprints(result: PlotCheckResult): List<String> = result.issues.map(CheckIssue::fingerprint)
 
     private fun plot(uri: String, rawId: String, displayId: String, county: String): PlotRef =
@@ -82,34 +99,69 @@ class QualityCheckEngineTest {
                     ),
                 ),
                 skippedRules = emptyList(),
+                passedRules = emptyList(),
                 executedRuleCount = 1,
             )
     }
 
-    private class FakeRuleRepository : RuleRepository {
+    private fun rule(id: String = "TEST", targetTable: String = "YD_TRCY_PT"): EmbeddedRule =
+        EmbeddedRule(
+            id = id,
+            sourceId = "test",
+            severity = RuleSeverity.MANDATORY,
+            targetTable = targetTable,
+            title = "test",
+            explanation = "test",
+            requiredTables = listOf(targetTable),
+            requiredFields = listOf("YD_ID"),
+            locatorFields = listOf("YD_ID"),
+            sql = "SELECT YD_ID FROM $targetTable WHERE YD_ID = :ydId",
+        )
+
+    private class RecordingPlotChecker : PlotChecker {
+        var receivedRuleIds: List<String> = emptyList()
+
+        override fun check(plot: PlotRef, rules: List<EmbeddedRule>): PlotCheckResult {
+            receivedRuleIds = rules.map(EmbeddedRule::id)
+            return PlotCheckResult(
+                plot = plot,
+                issues = emptyList(),
+                skippedRules = emptyList(),
+                passedRules = emptyList(),
+                executedRuleCount = rules.size,
+            )
+        }
+    }
+
+    private class FakeRuleRepository(
+        private val rules: List<EmbeddedRule> = listOf(defaultRule()),
+    ) : RuleRepository {
         override fun loadRuleSet(): EmbeddedRuleSet =
             EmbeddedRuleSet(
                 schemaVersion = 1,
                 ruleSetVersion = "test",
                 publishedAt = "2026-05-26",
                 sources = listOf(RuleSourceMetadata("test", RuleSourceKind.ADDITIONAL, "test", "test")),
-                rules = listOf(
-                    EmbeddedRule(
-                        id = "TEST",
-                        sourceId = "test",
-                        severity = RuleSeverity.MANDATORY,
-                        targetTable = "YD_TRCY_PT",
-                        title = "test",
-                        explanation = "test",
-                        requiredTables = listOf("YD_TRCY_PT"),
-                        requiredFields = listOf("YD_ID"),
-                        locatorFields = listOf("YD_ID"),
-                        sql = "SELECT YD_ID FROM YD_TRCY_PT WHERE YD_ID = :ydId",
-                    ),
-                ),
+                rules = rules,
             )
 
         override fun summary(): RuleSetSummary =
             RuleSetSummary("test", 1, 0, 1, 1, 0)
+
+        private companion object {
+            fun defaultRule(): EmbeddedRule =
+                EmbeddedRule(
+                    id = "TEST",
+                    sourceId = "test",
+                    severity = RuleSeverity.MANDATORY,
+                    targetTable = "YD_TRCY_PT",
+                    title = "test",
+                    explanation = "test",
+                    requiredTables = listOf("YD_TRCY_PT"),
+                    requiredFields = listOf("YD_ID"),
+                    locatorFields = listOf("YD_ID"),
+                    sql = "SELECT YD_ID FROM YD_TRCY_PT WHERE YD_ID = :ydId",
+                )
+        }
     }
 }

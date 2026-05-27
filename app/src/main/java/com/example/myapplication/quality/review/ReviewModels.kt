@@ -1,6 +1,7 @@
 package com.example.myapplication.quality.review
 
 import com.example.myapplication.quality.domain.CheckIssue
+import com.example.myapplication.quality.domain.PassedRule
 import com.example.myapplication.quality.domain.PlotCheckResult
 import com.example.myapplication.quality.domain.PlotRef
 import com.example.myapplication.quality.domain.SkippedRule
@@ -12,9 +13,12 @@ data class ReviewedPlotResult(
     val pendingAdvisory: List<CheckIssue>,
     val ignored: List<CheckIssue>,
     val skippedRules: List<SkippedRule>,
+    val passedRules: List<PassedRule>,
     val executedRuleCount: Int,
 ) {
     val pendingCount: Int = pendingMandatory.size + pendingAdvisory.size
+    val detailCountText: String =
+        "强制性 ${pendingMandatory.size} · 提示性 ${pendingAdvisory.size} · 跳过 ${skippedRules.size} · 忽略 ${ignored.size}"
 }
 
 data class ReviewSummary(
@@ -25,6 +29,7 @@ data class ReviewSummary(
     val ignoredIssues: Int,
     val executedRules: Int,
     val skippedRules: Int,
+    val passedRules: Int,
 )
 
 data class ReviewedCheckRun(
@@ -38,5 +43,6 @@ fun ReviewedPlotResult.toPlotCheckResult(): PlotCheckResult =
         plot = plot,
         issues = pendingMandatory + pendingAdvisory + ignored,
         skippedRules = skippedRules,
+        passedRules = passedRules,
         executedRuleCount = executedRuleCount,
     )

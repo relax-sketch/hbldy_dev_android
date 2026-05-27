@@ -8,6 +8,7 @@ data class SkippedRule(
     val ruleId: String,
     val severity: RuleSeverity,
     val title: String,
+    val tableName: String,
     val reason: String,
 )
 
@@ -24,10 +25,20 @@ data class CheckIssue(
     val ignored: Boolean = false,
 )
 
+data class PassedRule(
+    val plot: PlotRef,
+    val ruleId: String,
+    val severity: RuleSeverity,
+    val title: String,
+    val explanation: String,
+    val tableName: String,
+)
+
 data class PlotCheckResult(
     val plot: PlotRef,
     val issues: List<CheckIssue>,
     val skippedRules: List<SkippedRule>,
+    val passedRules: List<PassedRule>,
     val executedRuleCount: Int,
 )
 

@@ -7,6 +7,9 @@ class DefaultCheckScopeSelector : CheckScopeSelector {
             .distinct()
             .sorted()
 
+    fun restoreCounty(savedCountyLabel: String?, countyOptions: List<String>): String? =
+        savedCountyLabel?.takeIf { it in countyOptions }
+
     override fun filterPlots(
         plots: List<PlotRef>,
         countyLabel: String?,
