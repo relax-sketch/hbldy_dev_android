@@ -32,7 +32,7 @@ import kotlinx.coroutines.launch
 class QualityCheckViewModel(application: Application) : AndroidViewModel(application) {
     private val directoryStore = AndroidDataDirectoryStore(application)
     private val sourceScanner = AndroidZdbSourceScanner(application.contentResolver)
-    private val databaseAccess = SafReadOnlyZdbAccess(application.contentResolver)
+    private val databaseAccess = SafReadOnlyZdbAccess(application)
     private val plotIndexRepository = SafPlotIndexRepository(databaseAccess)
     private val scopeSelector = DefaultCheckScopeSelector()
     private val engine = QualityCheckEngine(

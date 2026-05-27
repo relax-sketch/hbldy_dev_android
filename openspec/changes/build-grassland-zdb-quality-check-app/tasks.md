@@ -39,4 +39,4 @@
 - [x] 6.2 Add fixture-based tests proving the 10 additional rules produce expected hit/pass cases and that related-table checks do not leak results across plots.
 - [x] 6.3 Add tests proving single-plot, county, and full-area scopes yield consistent per-plot results and that duplicate IDs remain correctly separated by source.
 - [x] 6.4 Add tests proving ignore persistence, cancel-ignore, and recheck reconciliation behavior.
-- [ ] 6.5 Verify source ZDB file digests remain unchanged across scanning and checking, build an installable APK, and manually validate the real Android directory-selection workflow.
+- [x] 6.5 Verify source ZDB file digests remain unchanged across scanning and checking, build an installable APK, and manually validate the real Android directory-selection workflow.
