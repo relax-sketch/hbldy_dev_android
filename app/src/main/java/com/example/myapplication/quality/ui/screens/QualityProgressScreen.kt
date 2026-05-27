@@ -46,10 +46,10 @@ fun QualityProgressScreen(
         else progress.completedPlots.toFloat() / progress.totalPlots
         val completedPreview = emptyList<com.example.myapplication.quality.review.ReviewedPlotResult>()
         if (layout.useTwoPane) {
-            Row(horizontalArrangement = Arrangement.spacedBy(20.dp)) {
+            Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                 Column(
                     modifier = Modifier.weight(0.48f),
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(14.dp),
                 ) {
                     ProgressHeroCard(progress = progress, completionRatio = completionRatio)
                     QualityStatusCard(text = "正在以只读方式查询 ZDB 数据", tone = QualityStatusTone.Success)
@@ -63,13 +63,13 @@ fun QualityProgressScreen(
                 }
                 Column(
                     modifier = Modifier.weight(0.52f),
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(14.dp),
                 ) {
                     RecentCompletedCard(completedPreview)
                 }
             }
         } else {
-            Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(14.dp)) {
                 ProgressHeroCard(progress = progress, completionRatio = completionRatio)
                 QualityStatusCard(text = "正在以只读方式查询 ZDB 数据", tone = QualityStatusTone.Success)
                 QualityStatusCard(text = "取消后会保留已完成样地的结果", tone = QualityStatusTone.Warning)
@@ -92,13 +92,13 @@ private fun ProgressHeroCard(
     completionRatio: Float,
 ) {
     QualityPanelCard {
-        Row(horizontalArrangement = Arrangement.spacedBy(18.dp)) {
+        Row(horizontalArrangement = Arrangement.spacedBy(14.dp)) {
             QualityIconTile(
                 icon = Icons.Rounded.Description,
                 tint = QualityDesignTokens.passedColor,
                 containerColor = QualityDesignTokens.passedContainer,
             )
-            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = androidx.compose.ui.Alignment.Bottom) {
                     Text(
                         text = "已完成",
@@ -120,7 +120,7 @@ private fun ProgressHeroCard(
         }
         LinearProgressIndicator(
             progress = { completionRatio },
-            modifier = Modifier.fillMaxWidth().height(12.dp),
+            modifier = Modifier.fillMaxWidth().height(10.dp),
             color = QualityDesignTokens.passedColor,
             trackColor = QualityDesignTokens.border,
         )
@@ -132,7 +132,7 @@ private fun ProgressHeroCard(
             )
         }
         progress?.currentPlot?.let {
-            Row(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
+            Row(horizontalArrangement = Arrangement.spacedBy(10.dp), verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
                 QualityIconTile(
                     icon = Icons.Rounded.Place,
                     tint = QualityDesignTokens.passedColor,
@@ -165,11 +165,11 @@ private fun RecentCompletedCard(
                 color = QualityDesignTokens.textSecondary,
             )
         } else {
-            LazyColumn(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            LazyColumn(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 items(completedPreview) { result ->
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(14.dp),
+                        horizontalArrangement = Arrangement.spacedBy(12.dp),
                         verticalAlignment = androidx.compose.ui.Alignment.CenterVertically,
                     ) {
                         QualityIconTile(

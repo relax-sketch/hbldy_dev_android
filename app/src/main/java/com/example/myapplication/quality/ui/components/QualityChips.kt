@@ -22,7 +22,7 @@ fun QualityTagChip(
     containerColor: Color = QualityDesignTokens.surfaceAlt,
     textColor: Color = QualityDesignTokens.textSecondary,
     borderColor: Color = Color.Transparent,
-    contentPadding: PaddingValues = PaddingValues(horizontal = 14.dp, vertical = 8.dp),
+    contentPadding: PaddingValues = PaddingValues(horizontal = 12.dp, vertical = 7.dp),
 ) {
     Box(
         modifier = modifier
@@ -56,6 +56,6 @@ fun QualityFilterChip(
         containerColor = if (selected) selectedContainer else QualityDesignTokens.surface,
         textColor = if (selected) selectedText else QualityDesignTokens.textSecondary,
         borderColor = if (selected) Color.Transparent else QualityDesignTokens.border,
-        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 10.dp),
+        contentPadding = PaddingValues(horizontal = 14.dp, vertical = 8.dp),
     )
 }

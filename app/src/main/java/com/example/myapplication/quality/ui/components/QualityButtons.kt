@@ -48,8 +48,8 @@ fun QualityPrimaryButton(
         textColor = if (enabled) QualityDesignTokens.onPrimary else QualityDesignTokens.textSecondary,
         borderColor = Color.Transparent,
         minHeight = QualityDesignTokens.buttonHeight,
-        horizontalPadding = 24.dp,
-        cornerRadius = 24.dp,
+        horizontalPadding = 20.dp,
+        cornerRadius = 20.dp,
     )
 }
 
@@ -77,7 +77,7 @@ fun QualitySecondaryButton(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 20.dp, vertical = 18.dp),
+                .padding(horizontal = 18.dp, vertical = 14.dp),
             contentAlignment = Alignment.Center,
         ) {
             ButtonLabel(
@@ -130,9 +130,9 @@ fun QualityModePill(
         brush = background,
         textColor = if (checked) QualityDesignTokens.onPrimary else QualityDesignTokens.textSecondary,
         borderColor = if (checked) Color.Transparent else QualityDesignTokens.borderStrong,
-        minHeight = 54.dp,
-        horizontalPadding = 20.dp,
-        cornerRadius = 22.dp,
+        minHeight = 46.dp,
+        horizontalPadding = 16.dp,
+        cornerRadius = 18.dp,
     )
 }
 
@@ -159,7 +159,7 @@ private fun QualityBrushButton(
         color = Color.Transparent,
         contentColor = textColor,
         shape = RoundedCornerShape(cornerRadius),
-        shadowElevation = if (enabled) 12.dp else 0.dp,
+        shadowElevation = if (enabled) 8.dp else 0.dp,
     ) {
         Box(
             modifier = Modifier
@@ -172,7 +172,7 @@ private fun QualityBrushButton(
                         Modifier
                     },
                 )
-                .padding(horizontal = horizontalPadding, vertical = 18.dp),
+                .padding(horizontal = horizontalPadding, vertical = 14.dp),
             contentAlignment = Alignment.Center,
         ) {
             ButtonLabel(text = text, color = textColor, leadingIcon = leadingIcon)
@@ -192,9 +192,9 @@ private fun ButtonLabel(
                 imageVector = leadingIcon,
                 contentDescription = null,
                 tint = color,
-                modifier = Modifier.size(24.dp),
+                modifier = Modifier.size(20.dp),
             )
-            Spacer(Modifier.size(10.dp))
+            Spacer(Modifier.size(8.dp))
         }
         Text(text = text, color = color, textAlign = TextAlign.Center)
     }

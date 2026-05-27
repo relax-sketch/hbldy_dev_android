@@ -1,13 +1,14 @@
 package com.example.myapplication.quality.ui.screens
 
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
@@ -18,7 +19,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.CheckCircle
 import androidx.compose.material.icons.rounded.Eco
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.material.icons.rounded.Search
@@ -28,6 +28,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -42,6 +43,7 @@ import androidx.compose.ui.unit.dp
 import com.example.myapplication.quality.domain.PlotRef
 import com.example.myapplication.quality.ui.QualityCheckUiState
 import com.example.myapplication.quality.ui.QualityCheckViewModel
+import com.example.myapplication.quality.ui.components.QualityIconTile
 import com.example.myapplication.quality.ui.components.QualityModePill
 import com.example.myapplication.quality.ui.components.QualityPageScaffold
 import com.example.myapplication.quality.ui.components.QualityPanelCard
@@ -75,95 +77,67 @@ fun QualityScopeScreen(
                 onClick = { viewModel.setTestMode(!state.testMode) },
             )
         },
+        bottomBar = {
+            QualityPrimaryButton(
+                text = "开始质检",
+                onClick = viewModel::startCheck,
+                enabled = if (state.checkAllMode) state.indexedPlots.isNotEmpty() else state.selectedPlot != null,
+                modifier = Modifier.weight(1f),
+            )
+        },
     ) { layout ->
-        if (layout.useTwoPane) {
-            Row(horizontalArrangement = Arrangement.spacedBy(20.dp)) {
-                Column(
-                    modifier = Modifier.weight(0.42f),
-                    verticalArrangement = Arrangement.spacedBy(layout.verticalSpacing),
-                ) {
-                    ScopeFilterCard(
-                        state = state,
-                        filterControlsEnabled = filterControlsEnabled,
-                        countyMenuExpanded = countyMenuExpanded,
-                        onExpandCounty = { countyMenuExpanded = true },
-                        onDismissCounty = { countyMenuExpanded = false },
-                        onSelectCounty = {
-                            countyMenuExpanded = false
-                            viewModel.updateCountyFilter(it)
-                        },
-                        onUpdateQuery = viewModel::updatePlotQuery,
-                    )
-                    if (state.errorMessage != null) {
-                        QualityStatusCard(text = state.errorMessage, tone = QualityStatusTone.Error)
-                    }
-                    if (state.checkAllMode) {
-                        QualityStatusCard(
-                            text = "已启用全量质检，将检查全部已索引样地",
-                            tone = QualityStatusTone.Success,
-                        )
-                    }
-                    QualityPrimaryButton(
-                        text = "开始质检",
-                        onClick = viewModel::startCheck,
-                        enabled = if (state.checkAllMode) state.indexedPlots.isNotEmpty() else state.selectedPlot != null,
-                        modifier = Modifier.padding(top = 4.dp),
-                    )
-                }
-                Column(
-                    modifier = Modifier.weight(0.58f),
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
-                ) {
-                    PlotSelectionList(
-                        plots = state.filteredPlots,
-                        selectedPlot = state.selectedPlot,
-                        enabled = !state.checkAllMode,
-                        onPlotClick = viewModel::selectPlot,
-                    )
-                }
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(layout.verticalSpacing),
+        ) {
+            CompactFilterBar(
+                state = state,
+                filterControlsEnabled = filterControlsEnabled,
+                countyMenuExpanded = countyMenuExpanded,
+                onExpandCounty = { countyMenuExpanded = true },
+                onDismissCounty = { countyMenuExpanded = false },
+                onSelectCounty = {
+                    countyMenuExpanded = false
+                    viewModel.updateCountyFilter(it)
+                },
+                onUpdateQuery = viewModel::updatePlotQuery,
+            )
+            if (state.errorMessage != null) {
+                QualityStatusCard(text = state.errorMessage, tone = QualityStatusTone.Error)
             }
-        } else {
-            Column(verticalArrangement = Arrangement.spacedBy(layout.verticalSpacing)) {
-                ScopeFilterCard(
-                    state = state,
-                    filterControlsEnabled = filterControlsEnabled,
-                    countyMenuExpanded = countyMenuExpanded,
-                    onExpandCounty = { countyMenuExpanded = true },
-                    onDismissCounty = { countyMenuExpanded = false },
-                    onSelectCounty = {
-                        countyMenuExpanded = false
-                        viewModel.updateCountyFilter(it)
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    text = if (state.checkAllMode) {
+                        "全量模式，将检查全部已索引样地"
+                    } else {
+                        "匹配 ${state.filteredPlots.size} 个样地"
                     },
-                    onUpdateQuery = viewModel::updatePlotQuery,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = QualityDesignTokens.textSecondary,
                 )
-                if (state.errorMessage != null) {
-                    QualityStatusCard(text = state.errorMessage, tone = QualityStatusTone.Error)
-                }
-                if (state.checkAllMode) {
-                    QualityStatusCard(
-                        text = "已启用全量质检，将检查全部已索引样地",
-                        tone = QualityStatusTone.Success,
-                    )
-                }
-                PlotSelectionList(
-                    plots = state.filteredPlots,
-                    selectedPlot = state.selectedPlot,
-                    enabled = !state.checkAllMode,
-                    onPlotClick = viewModel::selectPlot,
-                )
-                QualityPrimaryButton(
-                    text = "开始质检",
-                    onClick = viewModel::startCheck,
-                    enabled = if (state.checkAllMode) state.indexedPlots.isNotEmpty() else state.selectedPlot != null,
-                    modifier = Modifier.padding(top = 4.dp),
+                Text(
+                    text = if (state.selectedPlot == null || state.checkAllMode) "" else "已选择 ${state.selectedPlot.displayPlotId}",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = QualityDesignTokens.passedColor,
                 )
             }
+            PlotSelectionList(
+                plots = state.filteredPlots,
+                selectedPlot = state.selectedPlot,
+                enabled = !state.checkAllMode,
+                onPlotClick = viewModel::selectPlot,
+                modifier = Modifier.weight(1f, fill = true),
+            )
         }
     }
 }
 
 @Composable
-private fun ScopeFilterCard(
+private fun CompactFilterBar(
     state: QualityCheckUiState,
     filterControlsEnabled: Boolean,
     countyMenuExpanded: Boolean,
@@ -173,100 +147,78 @@ private fun ScopeFilterCard(
     onUpdateQuery: (String) -> Unit,
 ) {
     QualityPanelCard {
-        Text(
-            text = "区县范围",
-            style = MaterialTheme.typography.titleMedium,
-            color = QualityDesignTokens.textSecondary,
-        )
-        Box {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 6.dp)
-                    .then(
-                        if (filterControlsEnabled) Modifier.background(Color.Transparent).padding(0.dp)
-                        else Modifier,
-                    ),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Text(
-                    text = if (state.checkAllMode) "全域" else state.selectedCounty ?: "全域",
-                    style = MaterialTheme.typography.headlineMedium,
-                    color = if (filterControlsEnabled) QualityDesignTokens.textPrimary else QualityDesignTokens.textTertiary,
-                    modifier = Modifier.weight(1f),
-                )
-                Icon(
-                    imageVector = Icons.Rounded.KeyboardArrowDown,
-                    contentDescription = null,
-                    tint = if (filterControlsEnabled) QualityDesignTokens.textSecondary else QualityDesignTokens.textTertiary,
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
+        ) {
+            Box(modifier = Modifier.weight(0.38f)) {
+                Surface(
+                    onClick = onExpandCounty,
+                    enabled = filterControlsEnabled,
                     modifier = Modifier
-                        .clickableIf(filterControlsEnabled, onExpandCounty)
-                        .padding(4.dp),
-                )
-            }
-            DropdownMenu(
-                expanded = countyMenuExpanded && filterControlsEnabled,
-                onDismissRequest = onDismissCounty,
-            ) {
-                DropdownMenuItem(text = { Text("全域") }, onClick = { onSelectCounty(null) })
-                state.countyOptions.forEach { county ->
-                    DropdownMenuItem(text = { Text(county) }, onClick = { onSelectCounty(county) })
+                        .fillMaxWidth()
+                        .heightIn(min = 54.dp),
+                    color = if (filterControlsEnabled) QualityDesignTokens.surface else QualityDesignTokens.surfaceAlt,
+                    contentColor = if (filterControlsEnabled) QualityDesignTokens.textPrimary else QualityDesignTokens.textTertiary,
+                    shape = QualityDesignTokens.buttonShape,
+                    border = BorderStroke(1.dp, QualityDesignTokens.border),
+                    shadowElevation = 0.dp,
+                ) {
+                    Row(
+                        modifier = Modifier.padding(horizontal = 14.dp, vertical = 10.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Text(
+                            text = if (state.checkAllMode) "全域" else state.selectedCounty ?: "全域",
+                            style = MaterialTheme.typography.titleMedium,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            modifier = Modifier.weight(1f),
+                        )
+                        Icon(Icons.Rounded.KeyboardArrowDown, contentDescription = null)
+                    }
+                }
+                DropdownMenu(
+                    expanded = countyMenuExpanded && filterControlsEnabled,
+                    onDismissRequest = onDismissCounty,
+                ) {
+                    DropdownMenuItem(text = { Text("全域") }, onClick = { onSelectCounty(null) })
+                    state.countyOptions.forEach { county ->
+                        DropdownMenuItem(text = { Text(county) }, onClick = { onSelectCounty(county) })
+                    }
                 }
             }
-        }
-        androidx.compose.material3.HorizontalDivider(color = QualityDesignTokens.border)
-        OutlinedTextField(
-            value = state.plotQuery,
-            onValueChange = onUpdateQuery,
-            singleLine = true,
-            enabled = filterControlsEnabled,
-            placeholder = {
-                Text("搜索样地编号", color = QualityDesignTokens.textTertiary)
-            },
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Rounded.Search,
-                    contentDescription = null,
-                    tint = QualityDesignTokens.textTertiary,
-                )
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .heightIn(min = 64.dp),
-            shape = androidx.compose.foundation.shape.RoundedCornerShape(28.dp),
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = QualityDesignTokens.borderStrong,
-                unfocusedBorderColor = QualityDesignTokens.border,
-                disabledBorderColor = QualityDesignTokens.border,
-                focusedContainerColor = QualityDesignTokens.surface,
-                unfocusedContainerColor = QualityDesignTokens.surface,
-                disabledContainerColor = QualityDesignTokens.surfaceAlt,
-                focusedTextColor = QualityDesignTokens.textPrimary,
-                unfocusedTextColor = QualityDesignTokens.textPrimary,
-                disabledTextColor = QualityDesignTokens.textTertiary,
-            ),
-        )
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(
-                imageVector = Icons.Rounded.Eco,
-                contentDescription = null,
-                tint = QualityDesignTokens.textSecondary,
-            )
-            Spacer(Modifier.width(10.dp))
-            Text(
-                text = "匹配 ",
-                style = MaterialTheme.typography.titleMedium,
-                color = QualityDesignTokens.textSecondary,
-            )
-            Text(
-                text = state.filteredPlots.size.toString(),
-                style = MaterialTheme.typography.titleLarge,
-                color = QualityDesignTokens.passedColor,
-            )
-            Text(
-                text = " 个样地",
-                style = MaterialTheme.typography.titleMedium,
-                color = QualityDesignTokens.textSecondary,
+            OutlinedTextField(
+                value = state.plotQuery,
+                onValueChange = onUpdateQuery,
+                singleLine = true,
+                enabled = filterControlsEnabled,
+                placeholder = {
+                    Text("搜索样地编号", color = QualityDesignTokens.textTertiary)
+                },
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Rounded.Search,
+                        contentDescription = null,
+                        tint = QualityDesignTokens.textTertiary,
+                    )
+                },
+                modifier = Modifier
+                    .weight(0.62f)
+                    .heightIn(min = 54.dp),
+                shape = QualityDesignTokens.buttonShape,
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = QualityDesignTokens.borderStrong,
+                    unfocusedBorderColor = QualityDesignTokens.border,
+                    disabledBorderColor = QualityDesignTokens.border,
+                    focusedContainerColor = QualityDesignTokens.surface,
+                    unfocusedContainerColor = QualityDesignTokens.surface,
+                    disabledContainerColor = QualityDesignTokens.surfaceAlt,
+                    focusedTextColor = QualityDesignTokens.textPrimary,
+                    unfocusedTextColor = QualityDesignTokens.textPrimary,
+                    disabledTextColor = QualityDesignTokens.textTertiary,
+                ),
             )
         }
     }
@@ -278,15 +230,21 @@ private fun PlotSelectionList(
     selectedPlot: PlotRef?,
     enabled: Boolean,
     onPlotClick: (PlotRef) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     if (plots.isEmpty()) {
-        QualityStatusCard(text = "当前筛选条件下没有匹配样地", tone = QualityStatusTone.Info)
+        QualityStatusCard(
+            text = "当前筛选条件下没有匹配样地",
+            tone = QualityStatusTone.Info,
+            modifier = modifier,
+        )
         return
     }
     val listState = rememberLazyListState()
     LazyColumn(
+        modifier = modifier.fillMaxWidth(),
         state = listState,
-        verticalArrangement = Arrangement.spacedBy(14.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         items(
             items = plots,
@@ -298,7 +256,7 @@ private fun PlotSelectionList(
                 enabled = enabled,
                 onClick = { onPlotClick(plot) },
             ) {
-                com.example.myapplication.quality.ui.components.QualityIconTile(
+                QualityIconTile(
                     icon = Icons.Rounded.Eco,
                     tint = accent,
                     containerColor = accent.copy(alpha = 0.12f),
@@ -306,7 +264,7 @@ private fun PlotSelectionList(
                 Row(
                     modifier = Modifier.weight(1f),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
                 ) {
                     Text(
                         text = "样地 ${plot.displayPlotId}",
@@ -323,7 +281,7 @@ private fun PlotSelectionList(
                     )
                     Box(
                         modifier = Modifier
-                            .size(18.dp)
+                            .size(16.dp)
                             .background(
                                 color = if (enabled) accent else QualityDesignTokens.borderStrong,
                                 shape = CircleShape,

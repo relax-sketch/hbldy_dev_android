@@ -42,11 +42,11 @@ fun QualityPanelCard(
         colors = CardDefaults.cardColors(containerColor = containerColor),
         shape = QualityDesignTokens.cardShape,
         border = if (borderColor == Color.Transparent) null else BorderStroke(1.dp, borderColor),
-        elevation = CardDefaults.cardElevation(defaultElevation = 10.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
     ) {
         Column(
             modifier = Modifier.padding(QualityDesignTokens.largeCardPadding),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
+            verticalArrangement = Arrangement.spacedBy(14.dp),
             content = content,
         )
     }
@@ -73,18 +73,18 @@ fun QualitySelectableCard(
         modifier = modifier
             .fillMaxWidth()
             .border(1.dp, borderColor, QualityDesignTokens.cardShape)
-            .defaultMinSize(minHeight = 112.dp)
+            .defaultMinSize(minHeight = 96.dp)
             .clickable(enabled = enabled, onClick = onClick),
         colors = CardDefaults.cardColors(containerColor = containerColor),
         shape = QualityDesignTokens.cardShape,
-        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 5.dp),
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(QualityDesignTokens.mediumCardPadding),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(14.dp),
             content = content,
         )
     }
@@ -119,7 +119,7 @@ fun QualityMetricRow(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         QualityIconTile(icon = icon, tint = tint, containerColor = tint.copy(alpha = 0.12f))
-        Spacer(Modifier.size(16.dp))
+        Spacer(Modifier.size(14.dp))
         Text(
             text = title,
             style = MaterialTheme.typography.titleLarge,
@@ -174,14 +174,14 @@ fun QualityStatTile(
     Card(
         modifier = modifier,
         colors = CardDefaults.cardColors(containerColor = containerColor),
-        shape = RoundedCornerShape(24.dp),
+        shape = RoundedCornerShape(20.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(18.dp),
-            verticalArrangement = Arrangement.spacedBy(10.dp),
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             Icon(icon, contentDescription = null, tint = tint)
             Text(

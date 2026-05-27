@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -35,6 +36,7 @@ fun QualityPageScaffold(
     onNavigateBack: () -> Unit,
     modifier: Modifier = Modifier,
     trailingContent: @Composable RowScope.() -> Unit = {},
+    bottomBar: (@Composable RowScope.(QualityLayoutSpec) -> Unit)? = null,
     content: @Composable BoxScope.(QualityLayoutSpec) -> Unit,
 ) {
     val layoutSpec = rememberQualityLayoutSpec()
@@ -48,7 +50,12 @@ fun QualityPageScaffold(
                 .fillMaxSize()
                 .statusBarsPadding()
                 .navigationBarsPadding()
-                .padding(top = 20.dp, start = layoutSpec.horizontalPadding, end = layoutSpec.horizontalPadding),
+                .imePadding()
+                .padding(
+                    top = layoutSpec.topPadding,
+                    start = layoutSpec.horizontalPadding,
+                    end = layoutSpec.horizontalPadding,
+                ),
             contentAlignment = Alignment.TopCenter,
         ) {
             Box(
@@ -64,6 +71,7 @@ fun QualityPageScaffold(
                         title = title,
                         canNavigateBack = canNavigateBack,
                         onNavigateBack = onNavigateBack,
+                        layoutSpec = layoutSpec,
                         trailingContent = trailingContent,
                     )
                     Box(
@@ -72,6 +80,17 @@ fun QualityPageScaffold(
                             .weight(1f, fill = true),
                         content = { content(layoutSpec) },
                     )
+                    if (bottomBar != null) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 6.dp, bottom = 4.dp),
+                            horizontalArrangement = Arrangement.spacedBy(12.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            bottomBar(layoutSpec)
+                        }
+                    }
                 }
             }
         }
@@ -83,12 +102,13 @@ private fun QualityTopBar(
     title: String,
     canNavigateBack: Boolean,
     onNavigateBack: () -> Unit,
+    layoutSpec: QualityLayoutSpec,
     trailingContent: @Composable RowScope.() -> Unit,
 ) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(84.dp),
+            .height(layoutSpec.topBarHeight),
         contentAlignment = Alignment.Center,
     ) {
         Row(
@@ -102,16 +122,16 @@ private fun QualityTopBar(
                     color = QualityDesignTokens.surface,
                     contentColor = QualityDesignTokens.textPrimary,
                     shape = QualityDesignTokens.iconTileShape,
-                    shadowElevation = 10.dp,
+                    shadowElevation = 6.dp,
                 ) {
-                    Box(modifier = Modifier.padding(18.dp)) {
+                    Box(modifier = Modifier.padding(14.dp)) {
                         Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = "返回")
                     }
                 }
             } else {
-                Box(Modifier.padding(30.dp))
+                Box(Modifier.padding(26.dp))
             }
-            Row(horizontalArrangement = Arrangement.spacedBy(10.dp), content = trailingContent)
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp), content = trailingContent)
         }
         Text(
             text = title,

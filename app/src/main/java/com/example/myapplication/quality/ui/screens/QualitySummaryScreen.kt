@@ -53,7 +53,7 @@ fun QualitySummaryScreen(
             QualityEmptyStateCard(title = "暂无质检结果", message = "完成一次批量质检后，会在这里查看汇总。")
             return@QualityPageScaffold
         }
-        Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+        Column(verticalArrangement = Arrangement.spacedBy(14.dp)) {
             if (reviewed.sourceRun.cancelled) {
                 com.example.myapplication.quality.ui.components.QualityStatusCard(
                     text = "本次质检已取消，以下为取消前完成的样地结果",
@@ -119,7 +119,7 @@ fun QualitySummaryScreen(
             }
             LazyColumn(
                 modifier = Modifier.weight(1f, fill = true),
-                verticalArrangement = Arrangement.spacedBy(14.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
                 items(
                     items = reviewed.plotResults,
@@ -128,7 +128,7 @@ fun QualitySummaryScreen(
                     SummaryPlotCard(result = result, showPassedRules = state.testMode, onClick = { viewModel.showPlotDetails(result) })
                 }
             }
-            Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 QualityButtonPair(
                     primaryText = "再次质检",
                     onPrimaryClick = viewModel::recheck,
@@ -161,9 +161,9 @@ private fun SummaryPlotCard(
         )
         Column(
             modifier = Modifier.weight(1f),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp),
         ) {
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                 Text(
                     text = "样地 ${result.plot.displayPlotId}",
                     style = MaterialTheme.typography.headlineMedium,

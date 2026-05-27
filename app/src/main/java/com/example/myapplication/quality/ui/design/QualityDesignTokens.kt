@@ -39,19 +39,19 @@ object QualityDesignTokens {
         colors = listOf(QualityPrimary, QualityPrimaryDark),
     )
 
-    val pageShape = RoundedCornerShape(34.dp)
-    val cardShape = RoundedCornerShape(30.dp)
-    val buttonShape = RoundedCornerShape(24.dp)
-    val chipShape = RoundedCornerShape(18.dp)
-    val iconTileShape = RoundedCornerShape(22.dp)
+    val pageShape = RoundedCornerShape(28.dp)
+    val cardShape = RoundedCornerShape(24.dp)
+    val buttonShape = RoundedCornerShape(20.dp)
+    val chipShape = RoundedCornerShape(16.dp)
+    val iconTileShape = RoundedCornerShape(18.dp)
 
-    val largeCardPadding = 26.dp
-    val mediumCardPadding = 20.dp
-    val smallCardPadding = 14.dp
+    val largeCardPadding = 20.dp
+    val mediumCardPadding = 16.dp
+    val smallCardPadding = 12.dp
 
-    val buttonHeight = 78.dp
-    val secondaryButtonHeight = 68.dp
-    val iconTileSize = 72.dp
+    val buttonHeight = 64.dp
+    val secondaryButtonHeight = 58.dp
+    val iconTileSize = 60.dp
 
     val textPrimary: Color = QualityTextPrimary
     val textSecondary: Color = QualityTextSecondary

@@ -72,22 +72,22 @@ fun QualityStatusCard(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .defaultMinSize(minHeight = 84.dp),
+            .defaultMinSize(minHeight = 72.dp),
         colors = CardDefaults.cardColors(containerColor = container),
         shape = QualityDesignTokens.cardShape,
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 3.dp),
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Box(
                 modifier = Modifier
                     .padding(start = QualityDesignTokens.mediumCardPadding)
-                    .size(40.dp)
+                    .size(36.dp)
                     .background(Color.White.copy(alpha = 0.82f), QualityDesignTokens.chipShape),
                 contentAlignment = Alignment.Center,
             ) {
                 Icon(icon, contentDescription = null, tint = tint)
             }
-            Spacer(Modifier.size(14.dp))
+            Spacer(Modifier.size(12.dp))
             Text(
                 text = text,
                 color = QualityDesignTokens.textPrimary,
