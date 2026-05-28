@@ -19,17 +19,17 @@ import com.example.myapplication.quality.ui.design.QualityDesignTokens
 fun QualityTagChip(
     text: String,
     modifier: Modifier = Modifier,
-    containerColor: Color = QualityDesignTokens.surfaceAlt,
+    containerColor: Color = QualityDesignTokens.surfaceContainerLow,
     textColor: Color = QualityDesignTokens.textSecondary,
     borderColor: Color = Color.Transparent,
-    contentPadding: PaddingValues = PaddingValues(horizontal = 12.dp, vertical = 7.dp),
+    contentPadding: PaddingValues = PaddingValues(horizontal = 10.dp, vertical = 5.dp),
 ) {
     Box(
         modifier = modifier
-            .background(containerColor, QualityDesignTokens.chipShape)
+            .background(containerColor, QualityDesignTokens.innerShape)
             .then(
                 if (borderColor != Color.Transparent) {
-                    Modifier.border(1.dp, borderColor, QualityDesignTokens.chipShape)
+                    Modifier.border(1.dp, borderColor, QualityDesignTokens.innerShape)
                 } else {
                     Modifier
                 },
@@ -47,15 +47,15 @@ fun QualityFilterChip(
     selected: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    selectedContainer: Color = QualityDesignTokens.surfaceSoftGreen,
-    selectedText: Color = QualityDesignTokens.passedColor,
+    selectedContainer: Color = QualityDesignTokens.primary,
+    selectedText: Color = QualityDesignTokens.onPrimary,
 ) {
     QualityTagChip(
         text = text,
         modifier = modifier.clickable(onClick = onClick),
-        containerColor = if (selected) selectedContainer else QualityDesignTokens.surface,
+        containerColor = if (selected) selectedContainer else Color.Transparent,
         textColor = if (selected) selectedText else QualityDesignTokens.textSecondary,
-        borderColor = if (selected) Color.Transparent else QualityDesignTokens.border,
-        contentPadding = PaddingValues(horizontal = 14.dp, vertical = 8.dp),
+        borderColor = if (selected) Color.Transparent else Color.Transparent,
+        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 9.dp),
     )
 }

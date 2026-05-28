@@ -8,6 +8,7 @@ internal fun titleFor(screen: QualityScreen): String = when (screen) {
     QualityScreen.PROGRESS -> "质检进行中"
     QualityScreen.SUMMARY -> "质检结果"
     QualityScreen.DETAIL -> "样地详情"
+    QualityScreen.SETTINGS -> "设置"
 }
 
 internal fun severityLabel(severity: RuleSeverity): String = when (severity) {

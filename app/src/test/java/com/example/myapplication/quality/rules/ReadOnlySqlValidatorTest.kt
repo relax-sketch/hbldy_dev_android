@@ -22,6 +22,15 @@ class ReadOnlySqlValidatorTest {
     }
 
     @Test
+    fun validate_replaceIntoStatement_rejectsRule() {
+        val rule = rule("REPLACE INTO YD_TRCY_PT (YD_ID) VALUES (:ydId)")
+
+        assertThrows(UnsafeRuleSqlException::class.java) {
+            ReadOnlySqlValidator.validate(rule)
+        }
+    }
+
+    @Test
     fun validate_multipleStatements_rejectsRule() {
         val rule = rule(
             "SELECT YD_ID FROM YD_TRCY_PT WHERE YD_ID = :ydId; " +

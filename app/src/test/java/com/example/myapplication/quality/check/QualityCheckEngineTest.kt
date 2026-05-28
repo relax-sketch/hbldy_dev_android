@@ -68,6 +68,29 @@ class QualityCheckEngineTest {
         assertEquals(1, run.plotResults.single().executedRuleCount)
     }
 
+    @Test
+    fun check_canExcludeBaselineSnapshotRules() {
+        val checker = RecordingPlotChecker()
+        QualityCheckEngine(
+            FakeRuleRepository(
+                sources = listOf(
+                    RuleSourceMetadata("base", RuleSourceKind.BASE_SNAPSHOT, "base", "base"),
+                    RuleSourceMetadata("additional", RuleSourceKind.ADDITIONAL, "additional", "additional"),
+                ),
+                rules = listOf(
+                    rule(id = "BASE_RULE", sourceId = "base"),
+                    rule(id = "ADDITIONAL_RULE", sourceId = "additional"),
+                ),
+            ),
+            checker,
+        ).check(
+            scope = selector.single(plots.first()),
+            includeBaselineRules = false,
+        )
+
+        assertEquals(listOf("ADDITIONAL_RULE"), checker.receivedRuleIds)
+    }
+
     private fun fingerprints(result: PlotCheckResult): List<String> = result.issues.map(CheckIssue::fingerprint)
 
     private fun plot(uri: String, rawId: String, displayId: String, county: String): PlotRef =
@@ -104,10 +127,14 @@ class QualityCheckEngineTest {
             )
     }
 
-    private fun rule(id: String = "TEST", targetTable: String = "YD_TRCY_PT"): EmbeddedRule =
+    private fun rule(
+        id: String = "TEST",
+        targetTable: String = "YD_TRCY_PT",
+        sourceId: String = "test",
+    ): EmbeddedRule =
         EmbeddedRule(
             id = id,
-            sourceId = "test",
+            sourceId = sourceId,
             severity = RuleSeverity.MANDATORY,
             targetTable = targetTable,
             title = "test",
@@ -135,13 +162,15 @@ class QualityCheckEngineTest {
 
     private class FakeRuleRepository(
         private val rules: List<EmbeddedRule> = listOf(defaultRule()),
+        private val sources: List<RuleSourceMetadata> =
+            listOf(RuleSourceMetadata("test", RuleSourceKind.ADDITIONAL, "test", "test")),
     ) : RuleRepository {
         override fun loadRuleSet(): EmbeddedRuleSet =
             EmbeddedRuleSet(
                 schemaVersion = 1,
                 ruleSetVersion = "test",
                 publishedAt = "2026-05-26",
-                sources = listOf(RuleSourceMetadata("test", RuleSourceKind.ADDITIONAL, "test", "test")),
+                sources = sources,
                 rules = rules,
             )
 

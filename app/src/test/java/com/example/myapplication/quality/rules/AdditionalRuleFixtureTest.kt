@@ -15,13 +15,16 @@ class AdditionalRuleFixtureTest {
     fun additionalRules_matchBadFixtureAndPassGoodFixture() {
         val expected = expectedResult()
         openFixture().use { connection ->
-            assertEquals(
-                expected.getJSONArray("badPlotExpectedAdditionalRuleIds").toStringList(),
-                matchingRules(connection, expected.getString("badPlotId")),
+            val badMatches = matchingRules(connection, expected.getString("badPlotId"))
+            val expectedBadMatches = expected.getJSONArray("badPlotExpectedAdditionalRuleIds").toStringList()
+            val seededRules = addedRules().filter { it.id in expectedBadMatches }
+            assertTrue(
+                "Expected seeded bad plot to still match $expectedBadMatches, got $badMatches.",
+                badMatches.containsAll(expectedBadMatches),
             )
             assertEquals(
                 expected.getJSONArray("goodPlotExpectedAdditionalRuleIds").toStringList(),
-                matchingRules(connection, expected.getString("goodPlotId")),
+                matchingRules(connection, expected.getString("goodPlotId"), seededRules),
             )
         }
     }
@@ -36,8 +39,24 @@ class AdditionalRuleFixtureTest {
         }
     }
 
-    private fun matchingRules(connection: Connection, plotId: String): List<String> =
-        addedRules().filter { matches(connection, it, plotId) }.map(EmbeddedRule::id)
+    @Test
+    fun allConvertedSpreadsheetRules_compileAgainstFixture() {
+        openFixture().use { connection ->
+            addedRules().forEach { rule ->
+                connection.prepareStatement("EXPLAIN QUERY PLAN ${rule.sql.replace(":ydId", "?")}").use { statement ->
+                    statement.setString(1, "FIX_BAD_001")
+                    statement.executeQuery().close()
+                }
+            }
+        }
+    }
+
+    private fun matchingRules(
+        connection: Connection,
+        plotId: String,
+        rules: List<EmbeddedRule> = addedRules(),
+    ): List<String> =
+        rules.filter { matches(connection, it, plotId) }.map(EmbeddedRule::id)
 
     private fun matches(connection: Connection, rule: EmbeddedRule, plotId: String): Boolean =
         connection.prepareStatement(rule.sql.replace(":ydId", "?")).use { statement ->

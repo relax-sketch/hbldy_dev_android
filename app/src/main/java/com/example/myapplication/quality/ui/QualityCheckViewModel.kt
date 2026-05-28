@@ -133,6 +133,10 @@ class QualityCheckViewModel(application: Application) : AndroidViewModel(applica
         _uiState.update { it.copy(testMode = enabled) }
     }
 
+    fun setNationalCheckMode(enabled: Boolean) {
+        _uiState.update { it.copy(nationalCheckMode = enabled) }
+    }
+
     fun setCheckAllMode(enabled: Boolean) {
         _uiState.update { state ->
             if (enabled) {
@@ -160,6 +164,7 @@ class QualityCheckViewModel(application: Application) : AndroidViewModel(applica
     }
 
     private fun runCheck(scope: CheckScope) {
+        val includeBaselineRules = _uiState.value.nationalCheckMode
         cancelRequested = false
         runJob?.cancel()
         _uiState.update {
@@ -176,6 +181,7 @@ class QualityCheckViewModel(application: Application) : AndroidViewModel(applica
             runCatching {
                 engine.check(
                     scope = scope,
+                    includeBaselineRules = includeBaselineRules,
                     onProgress = { progress -> _uiState.update { it.copy(progress = progress) } },
                     isCancelled = { cancelRequested },
                 )
@@ -224,7 +230,13 @@ class QualityCheckViewModel(application: Application) : AndroidViewModel(applica
     }
 
     fun showSummary() {
-        _uiState.update { it.copy(screen = QualityScreen.SUMMARY, detailPlot = null) }
+        if (_uiState.value.checkAllMode) {
+            _uiState.update { it.copy(screen = QualityScreen.SUMMARY, detailPlot = null) }
+        }
+    }
+
+    fun showSettings() {
+        _uiState.update { it.copy(screen = QualityScreen.SETTINGS, detailPlot = null, errorMessage = null) }
     }
 
     fun navigateBack() {
@@ -233,6 +245,7 @@ class QualityCheckViewModel(application: Application) : AndroidViewModel(applica
             QualityScreen.PROGRESS -> Unit
             QualityScreen.SCOPE -> showSourceSelection()
             QualityScreen.SUMMARY -> showScopeSelection()
+            QualityScreen.SETTINGS -> showSourceSelection()
             QualityScreen.DETAIL -> {
                 when (screenAfterDetailBack(_uiState.value.reviewedRun?.sourceRun?.scope)) {
                     QualityScreen.SCOPE -> showScopeSelection()
@@ -295,7 +308,7 @@ class QualityCheckViewModel(application: Application) : AndroidViewModel(applica
                 val selectedCounty = scopeSelector.restoreCounty(directoryStore.savedCountyLabel(), countyOptions)
                 _uiState.update {
                     it.copy(
-                        screen = if (indexedPlots.isEmpty()) QualityScreen.SOURCE else QualityScreen.SCOPE,
+                        screen = QualityScreen.SOURCE,
                         scanResult = scanResult,
                         indexedPlots = indexedPlots,
                         rejectedSources = scanResult.invalidSources + indexResult.rejectedSources,

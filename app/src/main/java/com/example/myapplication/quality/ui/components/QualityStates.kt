@@ -4,9 +4,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -73,16 +73,18 @@ fun QualityStatusCard(
         modifier = modifier
             .fillMaxWidth()
             .defaultMinSize(minHeight = 72.dp),
-        colors = CardDefaults.cardColors(containerColor = container),
-        shape = QualityDesignTokens.cardShape,
-        elevation = CardDefaults.cardElevation(defaultElevation = 3.dp),
+        colors = CardDefaults.cardColors(containerColor = container.copy(alpha = 0.8f)),
+        shape = QualityDesignTokens.glassShape,
+        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
     ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
+        Row(
+            modifier = Modifier.padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
             Box(
                 modifier = Modifier
-                    .padding(start = QualityDesignTokens.mediumCardPadding)
                     .size(36.dp)
-                    .background(Color.White.copy(alpha = 0.82f), QualityDesignTokens.chipShape),
+                    .background(Color.White.copy(alpha = 0.7f), QualityDesignTokens.pillShape),
                 contentAlignment = Alignment.Center,
             ) {
                 Icon(icon, contentDescription = null, tint = tint)
@@ -91,7 +93,8 @@ fun QualityStatusCard(
             Text(
                 text = text,
                 color = QualityDesignTokens.textPrimary,
-                modifier = Modifier.padding(vertical = QualityDesignTokens.mediumCardPadding),
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier.weight(1f),
             )
         }
     }
@@ -105,7 +108,7 @@ fun QualityEmptyStateCard(
 ) {
     QualityPanelCard(
         modifier = modifier,
-        containerColor = QualityDesignTokens.surfaceAlt,
+        containerColor = QualityDesignTokens.glassSoft,
     ) {
         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Text(

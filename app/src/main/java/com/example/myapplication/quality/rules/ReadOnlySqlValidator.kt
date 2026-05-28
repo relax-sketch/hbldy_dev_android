@@ -4,7 +4,7 @@ class UnsafeRuleSqlException(message: String) : IllegalArgumentException(message
 
 object ReadOnlySqlValidator {
     private val forbiddenKeyword = Regex(
-        """\b(INSERT|UPDATE|DELETE|REPLACE|CREATE|DROP|ALTER|ATTACH|DETACH|PRAGMA|VACUUM|REINDEX)\b""",
+        """\b(INSERT|UPDATE|DELETE|CREATE|DROP|ALTER|ATTACH|DETACH|PRAGMA|VACUUM|REINDEX)\b|\bREPLACE\s+INTO\b""",
         RegexOption.IGNORE_CASE,
     )
     private val leadingQuery = Regex("""^\s*(SELECT|WITH)\b""", RegexOption.IGNORE_CASE)

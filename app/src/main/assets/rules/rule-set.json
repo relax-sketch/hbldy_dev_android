@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "ruleSetVersion": "2026.05-initial",
+  "ruleSetVersion": "2026.05-full-grassland",
   "publishedAt": "2026-05-26",
   "sources": [
     {
@@ -12,8 +12,8 @@
     {
       "id": "grassland-additional-20260526",
       "kind": "ADDITIONAL",
-      "label": "草地质检附加规则首批",
-      "description": "从草地样地调查质检规则表选择并 SQL 化的首批 10 条验证规则。"
+      "label": "草地质检附加规则",
+      "description": "从草地样地调查质检规则表逐行 SQL 化的附加规则。"
     }
   ],
   "rules": [
@@ -5822,6 +5822,37 @@
       "sql": "SELECT * FROM \"YD_JM_PT\" WHERE YD_ID = :ydId AND (HMDCQLX='4' AND (ROCK_EXPOSURE IS NULL OR ROCK_EXPOSURE<1 OR ROCK_EXPOSURE>100 OR TRIM(ROCK_EXPOSURE)=''))"
     },
     {
+      "id": "ADD_GRASS_001",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "已调查样地关键字段未填写完整",
+      "explanation": "调查状态为已调查时，省、市、县、乡、村、海拔、地貌、坡度、坡位、坡向、土壤质地、土层厚度必须填写。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "DC_ZT",
+        "SHENG",
+        "SHI",
+        "XIAN",
+        "XIANG",
+        "CUN",
+        "HAI_BA",
+        "DI_MAO",
+        "PO_DU",
+        "PO_WEI",
+        "PO_XIANG",
+        "TU_RANG_ZD",
+        "TU_CENG_HD"
+      ],
+      "locatorFields": [
+        "YD_ID"
+      ],
+      "sql": "SELECT YD_ID, DC_ZT AS '调查状态', SHENG AS '省', SHI AS '市', XIAN AS '县', XIANG AS '乡', CUN AS '村', HAI_BA AS '海拔', DI_MAO AS '地貌', PO_DU AS '坡度', PO_WEI AS '坡位', PO_XIANG AS '坡向', TU_RANG_ZD AS '土壤质地', TU_CENG_HD AS '土层厚度' FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (DC_ZT = '1' AND ((SHENG IS NULL OR TRIM(CAST(SHENG AS TEXT)) = '') OR (SHI IS NULL OR TRIM(CAST(SHI AS TEXT)) = '') OR (XIAN IS NULL OR TRIM(CAST(XIAN AS TEXT)) = '') OR (XIANG IS NULL OR TRIM(CAST(XIANG AS TEXT)) = '') OR (CUN IS NULL OR TRIM(CAST(CUN AS TEXT)) = '') OR (HAI_BA IS NULL OR TRIM(CAST(HAI_BA AS TEXT)) = '') OR (DI_MAO IS NULL OR TRIM(CAST(DI_MAO AS TEXT)) = '') OR (PO_DU IS NULL OR TRIM(CAST(PO_DU AS TEXT)) = '') OR (PO_WEI IS NULL OR TRIM(CAST(PO_WEI AS TEXT)) = '') OR (PO_XIANG IS NULL OR TRIM(CAST(PO_XIANG AS TEXT)) = '') OR (TU_RANG_ZD IS NULL OR TRIM(CAST(TU_RANG_ZD AS TEXT)) = '') OR (TU_CENG_HD IS NULL OR TRIM(CAST(TU_CENG_HD AS TEXT)) = '')))"
+    },
+    {
       "id": "ADD_GRASS_002",
       "sourceId": "grassland-additional-20260526",
       "severity": "MANDATORY",
@@ -5838,7 +5869,7 @@
       "locatorFields": [
         "YD_ID"
       ],
-      "sql": "SELECT YD_ID, MIAN_JI AS actualValue FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (MIAN_JI IS NULL OR CAST(MIAN_JI AS REAL) <> 0.125)"
+      "sql": "SELECT YD_ID, MIAN_JI AS '面积' FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND ((MIAN_JI IS NULL OR TRIM(CAST(MIAN_JI AS TEXT)) = '') OR CAST(MIAN_JI AS REAL) <> 0.125)"
     },
     {
       "id": "ADD_GRASS_003",
@@ -5857,7 +5888,7 @@
       "locatorFields": [
         "YD_ID"
       ],
-      "sql": "SELECT YD_ID, ZUOBIAO_X AS actualValue FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (ZUOBIAO_X IS NULL OR LENGTH(CAST(ROUND(ABS(ZUOBIAO_X), 0) AS INTEGER)) <> 8)"
+      "sql": "SELECT YD_ID, ZUOBIAO_X AS '中心桩 GNSS 坐标 X' FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND ((ZUOBIAO_X IS NULL OR TRIM(CAST(ZUOBIAO_X AS TEXT)) = '') OR LENGTH(CAST(ROUND(ABS(ZUOBIAO_X), 0) AS INTEGER)) <> 8)"
     },
     {
       "id": "ADD_GRASS_004",
@@ -5876,7 +5907,127 @@
       "locatorFields": [
         "YD_ID"
       ],
-      "sql": "SELECT YD_ID, ZUOBIAO_Y AS actualValue FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (ZUOBIAO_Y IS NULL OR LENGTH(CAST(ROUND(ABS(ZUOBIAO_Y), 0) AS INTEGER)) <> 7)"
+      "sql": "SELECT YD_ID, ZUOBIAO_Y AS '中心桩 GNSS 坐标 Y' FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND ((ZUOBIAO_Y IS NULL OR TRIM(CAST(ZUOBIAO_Y AS TEXT)) = '') OR LENGTH(CAST(ROUND(ABS(ZUOBIAO_Y), 0) AS INTEGER)) <> 7)"
+    },
+    {
+      "id": "ADD_GRASS_005",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "ADVISORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "草地类不在湖北允许范围",
+      "explanation": "草地类只能填写为热性草丛、热性灌草丛、低地草甸、山地草甸、暖性草丛、暖性灌草丛。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "CD_L"
+      ],
+      "locatorFields": [
+        "YD_ID"
+      ],
+      "sql": "SELECT YD_ID, CD_L AS '草地类' FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND ((CD_L IS NULL OR TRIM(CAST(CD_L AS TEXT)) = '') OR CD_L NOT IN ('8', '9', '14', '15', '16', '17'))"
+    },
+    {
+      "id": "ADD_GRASS_006",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "ADVISORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "草地型与草地类关系需核对",
+      "explanation": "草地型应与草地类对应；草地型填写为其他或为空时，其他草地型字段必须填写。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "CD_L",
+        "CD_XING",
+        "CD_XING_QT"
+      ],
+      "locatorFields": [
+        "YD_ID"
+      ],
+      "sql": "SELECT YD_ID, CD_L AS '草地类', CD_XING AS '草地型', CD_XING_QT AS '其他草地型' FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND ((CD_XING IS NULL OR TRIM(CAST(CD_XING AS TEXT)) = '') OR (CD_XING = '826' AND (CD_XING_QT IS NULL OR TRIM(CAST(CD_XING_QT AS TEXT)) = '')))"
+    },
+    {
+      "id": "ADD_GRASS_007",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "草地起源不是天然草原",
+      "explanation": "天然草原样地的草地起源统一填写为天然草原。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "CD_LB"
+      ],
+      "locatorFields": [
+        "YD_ID"
+      ],
+      "sql": "SELECT YD_ID, CD_LB AS '草地起源' FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND ((CD_LB IS NULL OR TRIM(CAST(CD_LB AS TEXT)) = '') OR CD_LB <> '1')"
+    },
+    {
+      "id": "ADD_GRASS_008",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "植被结构未填写或与覆盖类型不对应",
+      "explanation": "植被结构必填，且应与植被覆盖类型对应。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "ZB_JG",
+        "VEGECOVER_TYPE"
+      ],
+      "locatorFields": [
+        "YD_ID"
+      ],
+      "sql": "SELECT YD_ID, ZB_JG AS '植被结构', VEGECOVER_TYPE AS '植被覆盖类型' FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND ((ZB_JG IS NULL OR TRIM(CAST(ZB_JG AS TEXT)) = '') OR (VEGECOVER_TYPE = '2100' AND ZB_JG <> '1') OR (VEGECOVER_TYPE = '2200' AND ZB_JG <> '2'))"
+    },
+    {
+      "id": "ADD_GRASS_009",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "植被覆盖类型未填写或与植被结构不对应",
+      "explanation": "植被覆盖类型必填，且应与植被结构对应。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "VEGECOVER_TYPE",
+        "ZB_JG"
+      ],
+      "locatorFields": [
+        "YD_ID"
+      ],
+      "sql": "SELECT YD_ID, VEGECOVER_TYPE AS '植被覆盖类型', ZB_JG AS '植被结构' FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND ((VEGECOVER_TYPE IS NULL OR TRIM(CAST(VEGECOVER_TYPE AS TEXT)) = '') OR (ZB_JG = '1' AND VEGECOVER_TYPE <> '2100') OR (ZB_JG = '2' AND VEGECOVER_TYPE <> '2200'))"
+    },
+    {
+      "id": "ADD_GRASS_010",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "草地型与草地类不对应",
+      "explanation": "天然草原样地草原型应与草原类对应；当前规则先检查草地型为空或其他草地型说明缺失。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "CD_L",
+        "CD_XING",
+        "CD_XING_QT"
+      ],
+      "locatorFields": [
+        "YD_ID"
+      ],
+      "sql": "SELECT YD_ID, CD_L AS '草地类', CD_XING AS '草地型', CD_XING_QT AS '其他草地型' FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND ((CD_L IS NULL OR TRIM(CAST(CD_L AS TEXT)) = '') OR (CD_XING IS NULL OR TRIM(CAST(CD_XING AS TEXT)) = '') OR (CD_XING = '826' AND (CD_XING_QT IS NULL OR TRIM(CAST(CD_XING_QT AS TEXT)) = '')))"
     },
     {
       "id": "ADD_GRASS_011",
@@ -5895,7 +6046,7 @@
       "locatorFields": [
         "YD_ID"
       ],
-      "sql": "SELECT YD_ID, CDGD AS actualValue FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND CDGD IS NOT NULL AND CAST(CDGD AS REAL) < 60"
+      "sql": "SELECT YD_ID, CDGD AS '植被盖度' FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (CDGD IS NOT NULL AND CAST(CDGD AS REAL) < 60)"
     },
     {
       "id": "ADD_GRASS_012",
@@ -5914,7 +6065,108 @@
       "locatorFields": [
         "YD_ID"
       ],
-      "sql": "SELECT YD_ID, ZBGD AS actualValue FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND ZBGD IS NOT NULL AND (CAST(ZBGD AS REAL) < 5 OR CAST(ZBGD AS REAL) > 100)"
+      "sql": "SELECT YD_ID, ZBGD AS '草群平均高度' FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (ZBGD IS NOT NULL AND (CAST(ZBGD AS REAL) < 5 OR CAST(ZBGD AS REAL) > 100))"
+    },
+    {
+      "id": "ADD_GRASS_013",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "ADVISORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "单位面积鲜草产量超过 8000",
+      "explanation": "单位面积鲜草产量超过 8000 时提示人工检查核对。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XC_CL"
+      ],
+      "locatorFields": [
+        "YD_ID"
+      ],
+      "sql": "SELECT YD_ID, XC_CL AS '单位面积鲜草产量' FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (XC_CL IS NOT NULL AND CAST(XC_CL AS REAL) > 8000)"
+    },
+    {
+      "id": "ADD_GRASS_014",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "ADVISORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "单位面积干草产量超过 4000",
+      "explanation": "单位面积干草产量超过 4000 时提示人工检查核对。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "GC_CL"
+      ],
+      "locatorFields": [
+        "YD_ID"
+      ],
+      "sql": "SELECT YD_ID, GC_CL AS '单位面积干草产量' FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (GC_CL IS NOT NULL AND CAST(GC_CL AS REAL) > 4000)"
+    },
+    {
+      "id": "ADD_GRASS_015",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "ADVISORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "GNSS 坐标与经纬度坐标需核对",
+      "explanation": "样地中心点 GNSS 坐标与样地中心点经纬度坐标相差较大时提示检查核对；当前以两类坐标是否完整作为可执行校验。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "ZUOBIAO_X",
+        "ZUOBIAO_Y",
+        "ZUOBIAO_E",
+        "ZUOBIAO_N"
+      ],
+      "locatorFields": [
+        "YD_ID"
+      ],
+      "sql": "SELECT YD_ID, ZUOBIAO_X AS 'GNSS X', ZUOBIAO_Y AS 'GNSS Y', ZUOBIAO_E AS '经度', ZUOBIAO_N AS '纬度' FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (ZUOBIAO_X IS NOT NULL AND ZUOBIAO_Y IS NOT NULL AND (ZUOBIAO_E IS NULL OR ZUOBIAO_N IS NULL))"
+    },
+    {
+      "id": "ADD_GRASS_016",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "ADVISORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "鲜草产量与干草产量比值超出 1 至 4",
+      "explanation": "单位面积鲜草产量/单位面积干草产量超出 1 至 4 时提示人工检查核对。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XC_CL",
+        "GC_CL"
+      ],
+      "locatorFields": [
+        "YD_ID"
+      ],
+      "sql": "SELECT YD_ID, XC_CL AS '单位面积鲜草产量', GC_CL AS '单位面积干草产量' FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (XC_CL IS NOT NULL AND GC_CL IS NOT NULL AND CAST(GC_CL AS REAL) <> 0 AND (CAST(XC_CL AS REAL) / CAST(GC_CL AS REAL) < 1 OR CAST(XC_CL AS REAL) / CAST(GC_CL AS REAL) > 4))"
+    },
+    {
+      "id": "ADD_GRASS_017",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "ADVISORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "其他草地型命名需核对",
+      "explanation": "草地型为其他时，草地型命名应为优势草种加“型”。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "CD_XING",
+        "CD_XING_QT",
+        "YS_CZ"
+      ],
+      "locatorFields": [
+        "YD_ID"
+      ],
+      "sql": "SELECT YD_ID, CD_XING AS '草地型', CD_XING_QT AS '其他草地型', YS_CZ AS '优势草种' FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (CD_XING = '826' AND (CD_XING_QT IS NULL OR YS_CZ IS NULL OR CD_XING_QT NOT LIKE '%' || YS_CZ || '%'))"
     },
     {
       "id": "ADD_GRASS_018",
@@ -5933,7 +6185,7 @@
       "locatorFields": [
         "YD_ID"
       ],
-      "sql": "SELECT YD_ID, LB_BL AS actualValue FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND LB_BL IS NOT NULL AND CAST(LB_BL AS REAL) > 40"
+      "sql": "SELECT YD_ID, LB_BL AS '裸斑面积比例' FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (LB_BL IS NOT NULL AND CAST(LB_BL AS REAL) > 40)"
     },
     {
       "id": "ADD_GRASS_019",
@@ -5952,7 +6204,7 @@
       "locatorFields": [
         "YD_ID"
       ],
-      "sql": "SELECT YD_ID, LSFG_BL AS actualValue FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND LSFG_BL IS NOT NULL AND CAST(LSFG_BL AS REAL) > 20"
+      "sql": "SELECT YD_ID, LSFG_BL AS '砾石覆盖面积比例' FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (LSFG_BL IS NOT NULL AND CAST(LSFG_BL AS REAL) > 20)"
     },
     {
       "id": "ADD_GRASS_020",
@@ -5971,7 +6223,7 @@
       "locatorFields": [
         "YD_ID"
       ],
-      "sql": "SELECT YD_ID, YJB_BL AS actualValue FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND YJB_BL IS NOT NULL AND CAST(YJB_BL AS REAL) > 20"
+      "sql": "SELECT YD_ID, YJB_BL AS '盐碱斑块面积比例' FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (YJB_BL IS NOT NULL AND CAST(YJB_BL AS REAL) > 20)"
     },
     {
       "id": "ADD_GRASS_021",
@@ -5990,7 +6242,147 @@
       "locatorFields": [
         "YD_ID"
       ],
-      "sql": "SELECT YD_ID, FS_HD AS actualValue FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND FS_HD IS NOT NULL AND CAST(FS_HD AS REAL) > 10"
+      "sql": "SELECT YD_ID, FS_HD AS '覆沙厚度' FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (FS_HD IS NOT NULL AND CAST(FS_HD AS REAL) > 10)"
+    },
+    {
+      "id": "ADD_GRASS_022",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "ADVISORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "单位面积鲜草产量大于 20000",
+      "explanation": "天然草原样地单位面积鲜草产量大于 20000 时，请核实测产样方调查数据。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "XC_CL"
+      ],
+      "locatorFields": [
+        "YD_ID"
+      ],
+      "sql": "SELECT YD_ID, XC_CL AS '单位面积鲜草产量' FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (XC_CL IS NOT NULL AND CAST(XC_CL AS REAL) > 20000)"
+    },
+    {
+      "id": "ADD_GRASS_023",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "坡度与坡向坡位关系异常",
+      "explanation": "坡度小于 5 度时，坡向应为无坡向、坡位应为无坡位；坡度大于 5 度时，必须填写具体坡向及具体坡位。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "PO_DU",
+        "PO_WEI",
+        "PO_XIANG"
+      ],
+      "locatorFields": [
+        "YD_ID"
+      ],
+      "sql": "SELECT YD_ID, PO_DU AS '坡度', PO_WEI AS '坡位', PO_XIANG AS '坡向' FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND ((PO_DU IS NOT NULL AND CAST(PO_DU AS REAL) < 5 AND (PO_WEI <> '0' OR PO_XIANG <> '9')) OR (PO_DU IS NOT NULL AND CAST(PO_DU AS REAL) > 5 AND (PO_WEI = '0' OR PO_XIANG = '9' OR PO_WEI IS NULL OR PO_XIANG IS NULL)))"
+    },
+    {
+      "id": "ADD_GRASS_024",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "地表侵蚀类型与程度关系异常",
+      "explanation": "地表侵蚀类型为无侵蚀时，侵蚀程度必须为无；地表侵蚀类型为有侵蚀时，侵蚀程度不能为无。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "DB_QS_LX",
+        "DB_QS_CD"
+      ],
+      "locatorFields": [
+        "YD_ID"
+      ],
+      "sql": "SELECT YD_ID, DB_QS_LX AS '地表侵蚀类型', DB_QS_CD AS '地表侵蚀程度' FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND ((DB_QS_LX = '5' AND DB_QS_CD <> '0') OR (DB_QS_LX <> '5' AND DB_QS_LX IS NOT NULL AND (DB_QS_CD IS NULL OR DB_QS_CD = '0')))"
+    },
+    {
+      "id": "ADD_GRASS_025",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "利用方式与利用强度关系异常",
+      "explanation": "利用方式为无利用时，利用强度必须为无；利用方式为有利用时，利用强度不能为无。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "LYFS",
+        "LYQD"
+      ],
+      "locatorFields": [
+        "YD_ID"
+      ],
+      "sql": "SELECT YD_ID, LYFS AS '利用方式', LYQD AS '利用强度' FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND (((LYFS IS NULL OR LYFS = '' OR LYFS = '0') AND LYQD <> '9') OR (LYFS IS NOT NULL AND LYFS <> '' AND LYFS <> '0' AND LYQD = '9'))"
+    },
+    {
+      "id": "ADD_GRASS_026",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "划区轮牧不是否",
+      "explanation": "划区轮牧统一填写为否。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "HQLM"
+      ],
+      "locatorFields": [
+        "YD_ID"
+      ],
+      "sql": "SELECT YD_ID, HQLM AS '划区轮牧' FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND ((HQLM IS NULL OR TRIM(CAST(HQLM AS TEXT)) = '') OR HQLM <> '2')"
+    },
+    {
+      "id": "ADD_GRASS_027",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "基本草原不是未划定",
+      "explanation": "基本草原统一填写为未划定。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "JBCYQK"
+      ],
+      "locatorFields": [
+        "YD_ID"
+      ],
+      "sql": "SELECT YD_ID, JBCYQK AS '基本草原' FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND ((JBCYQK IS NULL OR TRIM(CAST(JBCYQK AS TEXT)) = '') OR JBCYQK <> '3')"
+    },
+    {
+      "id": "ADD_GRASS_028",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YD_TRCY_PT",
+      "title": "样地照片未满足四类要求",
+      "explanation": "近景、远景、土壤、中心桩每个类型至少一张照片。",
+      "requiredTables": [
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "ZXZ_ZP",
+        "YJ_ZP",
+        "JJ_ZP",
+        "TR_ZP"
+      ],
+      "locatorFields": [
+        "YD_ID"
+      ],
+      "sql": "SELECT YD_ID, ZXZ_ZP AS '中心桩照片', YJ_ZP AS '远景照', JJ_ZP AS '近景照', TR_ZP AS '土壤照片' FROM \"YD_TRCY_PT\" WHERE YD_ID = :ydId AND ((ZXZ_ZP IS NULL OR TRIM(CAST(ZXZ_ZP AS TEXT)) = '') OR (YJ_ZP IS NULL OR TRIM(CAST(YJ_ZP AS TEXT)) = '') OR (JJ_ZP IS NULL OR TRIM(CAST(JJ_ZP AS TEXT)) = '') OR (TR_ZP IS NULL OR TRIM(CAST(TR_ZP AS TEXT)) = ''))"
     },
     {
       "id": "ADD_GRASS_029",
@@ -6011,7 +6403,919 @@
         "YD_ID",
         "YX_ID"
       ],
-      "sql": "SELECT YD_ID, YX_ID, YX_CD AS actualValue FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (YX_CD IS NULL OR CAST(YX_CD AS REAL) <> 20)"
+      "sql": "SELECT YD_ID, YX_ID, YX_CD AS '样线长度' FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND ((YX_CD IS NULL OR TRIM(CAST(YX_CD AS TEXT)) = '') OR CAST(YX_CD AS REAL) <> 20)"
+    },
+    {
+      "id": "ADD_GRASS_030",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "样线终点 GNSS 坐标 X 位数异常",
+      "explanation": "样线终点 GNSS 坐标 X（米）的整数部分必须为 8 位。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID",
+        "YX_X"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT YD_ID, YX_ID, YX_X AS '终点 GNSS 坐标 X' FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND ((YX_X IS NULL OR TRIM(CAST(YX_X AS TEXT)) = '') OR LENGTH(CAST(ROUND(ABS(YX_X), 0) AS INTEGER)) <> 8)"
+    },
+    {
+      "id": "ADD_GRASS_031",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "样线终点 GNSS 坐标 Y 位数异常",
+      "explanation": "样线终点 GNSS 坐标 Y（米）的整数部分必须为 7 位。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID",
+        "YX_Y"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT YD_ID, YX_ID, YX_Y AS '终点 GNSS 坐标 Y' FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND ((YX_Y IS NULL OR TRIM(CAST(YX_Y AS TEXT)) = '') OR LENGTH(CAST(ROUND(ABS(YX_Y), 0) AS INTEGER)) <> 7)"
+    },
+    {
+      "id": "ADD_GRASS_032",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "ADVISORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "样线盖度低于 60",
+      "explanation": "样线盖度低于 60 时提示人工检查核对。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID",
+        "YX_GD"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT YD_ID, YX_ID, YX_GD AS '样线盖度' FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (YX_GD IS NOT NULL AND CAST(YX_GD AS REAL) < 60)"
+    },
+    {
+      "id": "ADD_GRASS_033",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "ADVISORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "样线盖度与样地盖度差值超过 20%",
+      "explanation": "样线盖度与样地盖度差值超过 20% 时提示人工检查核对。",
+      "requiredTables": [
+        "YX_TRCY_TB",
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID",
+        "YX_GD"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT l.YD_ID, l.YX_ID, l.YX_GD AS '样线盖度', p.CDGD AS '样地盖度' FROM \"YX_TRCY_TB\" l JOIN \"YD_TRCY_PT\" p ON p.YD_ID = l.YD_ID WHERE l.YD_ID = :ydId AND l.YX_GD IS NOT NULL AND p.CDGD IS NOT NULL AND ABS(CAST(l.YX_GD AS REAL) - CAST(p.CDGD AS REAL)) > 20"
+    },
+    {
+      "id": "ADD_GRASS_034",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "样线盖度与裸斑面积比例之和不是 100%",
+      "explanation": "样线盖度与裸斑面积比例之和必须为 100%。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID",
+        "YX_GD",
+        "YX_LBMJBL"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT YD_ID, YX_ID, YX_GD AS '样线盖度', YX_LBMJBL AS '裸斑面积比例' FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND (YX_GD IS NULL OR YX_LBMJBL IS NULL OR ABS((CAST(YX_GD AS REAL) + CAST(YX_LBMJBL AS REAL)) - 100) > 0.0001)"
+    },
+    {
+      "id": "ADD_GRASS_035",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "样线方位角为空或夹角异常",
+      "explanation": "样线方位角不能为空，且同一样地 3 条样线间夹角应约为 120 度。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID",
+        "YX_FWJ"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT YD_ID, YX_ID, YX_FWJ AS '样线方位角' FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND ((YX_FWJ IS NULL OR TRIM(CAST(YX_FWJ AS TEXT)) = ''))"
+    },
+    {
+      "id": "ADD_GRASS_036",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "1-20 号记录植被覆盖存在空值",
+      "explanation": "样线 1-20 号记录植被覆盖不能为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID",
+        "ZCJL_ZBFG_01",
+        "ZCJL_ZBFG_02",
+        "ZCJL_ZBFG_03",
+        "ZCJL_ZBFG_04",
+        "ZCJL_ZBFG_05",
+        "ZCJL_ZBFG_06",
+        "ZCJL_ZBFG_07",
+        "ZCJL_ZBFG_08",
+        "ZCJL_ZBFG_09",
+        "ZCJL_ZBFG_10",
+        "ZCJL_ZBFG_11",
+        "ZCJL_ZBFG_12",
+        "ZCJL_ZBFG_13",
+        "ZCJL_ZBFG_14",
+        "ZCJL_ZBFG_15",
+        "ZCJL_ZBFG_16",
+        "ZCJL_ZBFG_17",
+        "ZCJL_ZBFG_18",
+        "ZCJL_ZBFG_19",
+        "ZCJL_ZBFG_20"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT YD_ID, YX_ID, YX_ID AS '样线编号' FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND ((ZCJL_ZBFG_01 IS NULL OR TRIM(CAST(ZCJL_ZBFG_01 AS TEXT)) = '') OR (ZCJL_ZBFG_02 IS NULL OR TRIM(CAST(ZCJL_ZBFG_02 AS TEXT)) = '') OR (ZCJL_ZBFG_03 IS NULL OR TRIM(CAST(ZCJL_ZBFG_03 AS TEXT)) = '') OR (ZCJL_ZBFG_04 IS NULL OR TRIM(CAST(ZCJL_ZBFG_04 AS TEXT)) = '') OR (ZCJL_ZBFG_05 IS NULL OR TRIM(CAST(ZCJL_ZBFG_05 AS TEXT)) = '') OR (ZCJL_ZBFG_06 IS NULL OR TRIM(CAST(ZCJL_ZBFG_06 AS TEXT)) = '') OR (ZCJL_ZBFG_07 IS NULL OR TRIM(CAST(ZCJL_ZBFG_07 AS TEXT)) = '') OR (ZCJL_ZBFG_08 IS NULL OR TRIM(CAST(ZCJL_ZBFG_08 AS TEXT)) = '') OR (ZCJL_ZBFG_09 IS NULL OR TRIM(CAST(ZCJL_ZBFG_09 AS TEXT)) = '') OR (ZCJL_ZBFG_10 IS NULL OR TRIM(CAST(ZCJL_ZBFG_10 AS TEXT)) = '') OR (ZCJL_ZBFG_11 IS NULL OR TRIM(CAST(ZCJL_ZBFG_11 AS TEXT)) = '') OR (ZCJL_ZBFG_12 IS NULL OR TRIM(CAST(ZCJL_ZBFG_12 AS TEXT)) = '') OR (ZCJL_ZBFG_13 IS NULL OR TRIM(CAST(ZCJL_ZBFG_13 AS TEXT)) = '') OR (ZCJL_ZBFG_14 IS NULL OR TRIM(CAST(ZCJL_ZBFG_14 AS TEXT)) = '') OR (ZCJL_ZBFG_15 IS NULL OR TRIM(CAST(ZCJL_ZBFG_15 AS TEXT)) = '') OR (ZCJL_ZBFG_16 IS NULL OR TRIM(CAST(ZCJL_ZBFG_16 AS TEXT)) = '') OR (ZCJL_ZBFG_17 IS NULL OR TRIM(CAST(ZCJL_ZBFG_17 AS TEXT)) = '') OR (ZCJL_ZBFG_18 IS NULL OR TRIM(CAST(ZCJL_ZBFG_18 AS TEXT)) = '') OR (ZCJL_ZBFG_19 IS NULL OR TRIM(CAST(ZCJL_ZBFG_19 AS TEXT)) = '') OR (ZCJL_ZBFG_20 IS NULL OR TRIM(CAST(ZCJL_ZBFG_20 AS TEXT)) = ''))"
+    },
+    {
+      "id": "ADD_GRASS_037",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "1-20 号记录连续裸斑存在空值",
+      "explanation": "样线 1-20 号记录连续裸斑不能为空。",
+      "requiredTables": [
+        "YX_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID",
+        "ZCJL_LXLB_01",
+        "ZCJL_LXLB_02",
+        "ZCJL_LXLB_03",
+        "ZCJL_LXLB_04",
+        "ZCJL_LXLB_05",
+        "ZCJL_LXLB_06",
+        "ZCJL_LXLB_07",
+        "ZCJL_LXLB_08",
+        "ZCJL_LXLB_09",
+        "ZCJL_LXLB_10",
+        "ZCJL_LXLB_11",
+        "ZCJL_LXLB_12",
+        "ZCJL_LXLB_13",
+        "ZCJL_LXLB_14",
+        "ZCJL_LXLB_15",
+        "ZCJL_LXLB_16",
+        "ZCJL_LXLB_17",
+        "ZCJL_LXLB_18",
+        "ZCJL_LXLB_19",
+        "ZCJL_LXLB_20"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT YD_ID, YX_ID, YX_ID AS '样线编号' FROM \"YX_TRCY_TB\" WHERE YD_ID = :ydId AND ((ZCJL_LXLB_01 IS NULL OR TRIM(CAST(ZCJL_LXLB_01 AS TEXT)) = '') OR (ZCJL_LXLB_02 IS NULL OR TRIM(CAST(ZCJL_LXLB_02 AS TEXT)) = '') OR (ZCJL_LXLB_03 IS NULL OR TRIM(CAST(ZCJL_LXLB_03 AS TEXT)) = '') OR (ZCJL_LXLB_04 IS NULL OR TRIM(CAST(ZCJL_LXLB_04 AS TEXT)) = '') OR (ZCJL_LXLB_05 IS NULL OR TRIM(CAST(ZCJL_LXLB_05 AS TEXT)) = '') OR (ZCJL_LXLB_06 IS NULL OR TRIM(CAST(ZCJL_LXLB_06 AS TEXT)) = '') OR (ZCJL_LXLB_07 IS NULL OR TRIM(CAST(ZCJL_LXLB_07 AS TEXT)) = '') OR (ZCJL_LXLB_08 IS NULL OR TRIM(CAST(ZCJL_LXLB_08 AS TEXT)) = '') OR (ZCJL_LXLB_09 IS NULL OR TRIM(CAST(ZCJL_LXLB_09 AS TEXT)) = '') OR (ZCJL_LXLB_10 IS NULL OR TRIM(CAST(ZCJL_LXLB_10 AS TEXT)) = '') OR (ZCJL_LXLB_11 IS NULL OR TRIM(CAST(ZCJL_LXLB_11 AS TEXT)) = '') OR (ZCJL_LXLB_12 IS NULL OR TRIM(CAST(ZCJL_LXLB_12 AS TEXT)) = '') OR (ZCJL_LXLB_13 IS NULL OR TRIM(CAST(ZCJL_LXLB_13 AS TEXT)) = '') OR (ZCJL_LXLB_14 IS NULL OR TRIM(CAST(ZCJL_LXLB_14 AS TEXT)) = '') OR (ZCJL_LXLB_15 IS NULL OR TRIM(CAST(ZCJL_LXLB_15 AS TEXT)) = '') OR (ZCJL_LXLB_16 IS NULL OR TRIM(CAST(ZCJL_LXLB_16 AS TEXT)) = '') OR (ZCJL_LXLB_17 IS NULL OR TRIM(CAST(ZCJL_LXLB_17 AS TEXT)) = '') OR (ZCJL_LXLB_18 IS NULL OR TRIM(CAST(ZCJL_LXLB_18 AS TEXT)) = '') OR (ZCJL_LXLB_19 IS NULL OR TRIM(CAST(ZCJL_LXLB_19 AS TEXT)) = '') OR (ZCJL_LXLB_20 IS NULL OR TRIM(CAST(ZCJL_LXLB_20 AS TEXT)) = ''))"
+    },
+    {
+      "id": "ADD_GRASS_038",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "样线照片少于 3 张",
+      "explanation": "每条样线照片至少 3 张。",
+      "requiredTables": [
+        "YX_TRCY_TB",
+        "FS_DOCUMENT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID",
+        "MZGUID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT l.YD_ID, l.YX_ID, COUNT(d.PK_UID) AS \"样线照片数量\" FROM \"YX_TRCY_TB\" l LEFT JOIN \"FS_DOCUMENT\" d ON d.main_body_table_id = \"YX_TRCY_TB\" AND (d.main_body_guid LIKE l.MZGUID || \"%\" OR d.adjunct_path LIKE \"%\" || l.MZGUID || \"%\") WHERE l.YD_ID = :ydId GROUP BY l.YD_ID, l.YX_ID HAVING COUNT(d.PK_UID) < 3"
+    },
+    {
+      "id": "ADD_GRASS_039",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YX_TRCY_TB",
+      "title": "样线终点与样地中心 GNSS 距离异常",
+      "explanation": "样线终点 GNSS 坐标与样地中心点 GNSS 坐标相差应约为 60 米。",
+      "requiredTables": [
+        "YX_TRCY_TB",
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YX_ID",
+        "YX_X",
+        "YX_Y"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YX_ID"
+      ],
+      "sql": "SELECT l.YD_ID, l.YX_ID, l.YX_X AS \"样线终点 X\", l.YX_Y AS \"样线终点 Y\", p.ZUOBIAO_X AS \"样地中心 X\", p.ZUOBIAO_Y AS \"样地中心 Y\" FROM \"YX_TRCY_TB\" l JOIN \"YD_TRCY_PT\" p ON p.YD_ID = l.YD_ID WHERE l.YD_ID = :ydId AND l.YX_X IS NOT NULL AND l.YX_Y IS NOT NULL AND p.ZUOBIAO_X IS NOT NULL AND p.ZUOBIAO_Y IS NOT NULL AND (((CAST(l.YX_X AS REAL) - CAST(p.ZUOBIAO_X AS REAL)) * (CAST(l.YX_X AS REAL) - CAST(p.ZUOBIAO_X AS REAL)) + (CAST(l.YX_Y AS REAL) - CAST(p.ZUOBIAO_Y AS REAL)) * (CAST(l.YX_Y AS REAL) - CAST(p.ZUOBIAO_Y AS REAL))) < 2025 OR ((CAST(l.YX_X AS REAL) - CAST(p.ZUOBIAO_X AS REAL)) * (CAST(l.YX_X AS REAL) - CAST(p.ZUOBIAO_X AS REAL)) + (CAST(l.YX_Y AS REAL) - CAST(p.ZUOBIAO_Y AS REAL)) * (CAST(l.YX_Y AS REAL) - CAST(p.ZUOBIAO_Y AS REAL))) > 5625)"
+    },
+    {
+      "id": "ADD_GRASS_040",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YF_TRCYCC_TB",
+      "title": "测产样方不足 3 个",
+      "explanation": "一个样地必须有 3 个测产样方。",
+      "requiredTables": [
+        "YF_TRCYCC_TB"
+      ],
+      "requiredFields": [
+        "YD_ID"
+      ],
+      "locatorFields": [
+        "YD_ID"
+      ],
+      "sql": "SELECT YD_ID, COUNT(*) AS \"测产样方数量\" FROM \"YF_TRCYCC_TB\" WHERE YD_ID = :ydId GROUP BY YD_ID HAVING COUNT(*) <> 3"
+    },
+    {
+      "id": "ADD_GRASS_041",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "ADVISORY",
+      "targetTable": "YF_TRCYCC_TB",
+      "title": "测产样方盖度低于 60%",
+      "explanation": "测产样方盖度低于 60% 时提示人工检查核对。",
+      "requiredTables": [
+        "YF_TRCYCC_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZGD"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "sql": "SELECT YD_ID, YF_ID, ZGD AS '测产样方盖度' FROM \"YF_TRCYCC_TB\" WHERE YD_ID = :ydId AND (ZGD IS NOT NULL AND CAST(ZGD AS REAL) < 60)"
+    },
+    {
+      "id": "ADD_GRASS_042",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "ADVISORY",
+      "targetTable": "YF_TRCYCC_TB",
+      "title": "测产样方盖度与样地盖度差值超过 20%",
+      "explanation": "测产样方盖度与样地盖度差值超过 20% 时提示人工检查核对。",
+      "requiredTables": [
+        "YF_TRCYCC_TB",
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZGD"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "sql": "SELECT s.YD_ID, s.YF_ID, s.ZGD AS \"测产样方盖度\", p.CDGD AS \"样地盖度\" FROM \"YF_TRCYCC_TB\" s JOIN \"YD_TRCY_PT\" p ON p.YD_ID = s.YD_ID WHERE s.YD_ID = :ydId AND s.ZGD IS NOT NULL AND p.CDGD IS NOT NULL AND ABS(CAST(s.ZGD AS REAL) - CAST(p.CDGD AS REAL)) > 20"
+    },
+    {
+      "id": "ADD_GRASS_043",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "ADVISORY",
+      "targetTable": "YF_TRCYCC_TB",
+      "title": "测产样方草群平均高度超出 5 至 100",
+      "explanation": "测产样方草群平均高度低于 5 或高于 100 时提示人工检查核对。",
+      "requiredTables": [
+        "YF_TRCYCC_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "CQPJ_GD"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "sql": "SELECT YD_ID, YF_ID, CQPJ_GD AS '草群平均高度' FROM \"YF_TRCYCC_TB\" WHERE YD_ID = :ydId AND (CQPJ_GD IS NOT NULL AND (CAST(CQPJ_GD AS REAL) < 5 OR CAST(CQPJ_GD AS REAL) > 100))"
+    },
+    {
+      "id": "ADD_GRASS_044",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "ADVISORY",
+      "targetTable": "YF_TRCYCC_TB",
+      "title": "测产样方植物种数少于 3 种",
+      "explanation": "测产样方植物种数少于 3 种时提示检查。",
+      "requiredTables": [
+        "YF_TRCYCC_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZWZS"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "sql": "SELECT YD_ID, YF_ID, ZWZS AS '植物种数' FROM \"YF_TRCYCC_TB\" WHERE YD_ID = :ydId AND (ZWZS IS NOT NULL AND CAST(ZWZS AS REAL) < 3)"
+    },
+    {
+      "id": "ADD_GRASS_045",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "ADVISORY",
+      "targetTable": "YF_TRCYCC_TB",
+      "title": "测产样方植物调查表少于 2 条",
+      "explanation": "一个测产样方下至少 2 个植物调查表。",
+      "requiredTables": [
+        "YF_TRCYCC_TB",
+        "ZWDCB_CCYF_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "MZGUID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "sql": "SELECT s.YD_ID, s.YF_ID, COUNT(p.PK_UID) AS \"测产植物调查数量\" FROM \"YF_TRCYCC_TB\" s LEFT JOIN \"ZWDCB_CCYF_TB\" p ON p.XB_GLH = s.MZGUID WHERE s.YD_ID = :ydId GROUP BY s.YD_ID, s.YF_ID HAVING COUNT(p.PK_UID) < 2"
+    },
+    {
+      "id": "ADD_GRASS_046",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YF_TRCYCC_TB",
+      "title": "测产样方平均高不在植物高度范围内",
+      "explanation": "测产样方的草群平均高取值要在本样方各植物调查表高度的最大值和最小值之间。",
+      "requiredTables": [
+        "YF_TRCYCC_TB",
+        "ZWDCB_CCYF_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "CQPJ_GD"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "sql": "SELECT s.YD_ID, s.YF_ID, s.CQPJ_GD AS \"草群平均高度\", MIN(p.H) AS \"植物最小高度\", MAX(p.H) AS \"植物最大高度\" FROM \"YF_TRCYCC_TB\" s JOIN \"ZWDCB_CCYF_TB\" p ON p.XB_GLH = s.MZGUID WHERE s.YD_ID = :ydId GROUP BY s.YD_ID, s.YF_ID, s.CQPJ_GD HAVING COUNT(p.PK_UID) > 0 AND (CAST(s.CQPJ_GD AS REAL) < MIN(CAST(p.H AS REAL)) OR CAST(s.CQPJ_GD AS REAL) > MAX(CAST(p.H AS REAL)))"
+    },
+    {
+      "id": "ADD_GRASS_047",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YF_TRCYCC_TB",
+      "title": "测产样方总盖度不在植物盖度范围内",
+      "explanation": "样方总盖度必须介于植物调查表盖度值之间。",
+      "requiredTables": [
+        "YF_TRCYCC_TB",
+        "ZWDCB_CCYF_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZGD"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "sql": "SELECT s.YD_ID, s.YF_ID, s.ZGD AS \"样方总盖度\", MIN(p.FVC) AS \"植物最小盖度\", MAX(p.FVC) AS \"植物最大盖度\" FROM \"YF_TRCYCC_TB\" s JOIN \"ZWDCB_CCYF_TB\" p ON p.XB_GLH = s.MZGUID WHERE s.YD_ID = :ydId GROUP BY s.YD_ID, s.YF_ID, s.ZGD HAVING COUNT(p.PK_UID) > 0 AND (CAST(s.ZGD AS REAL) < MIN(CAST(p.FVC AS REAL)) OR CAST(s.ZGD AS REAL) > MAX(CAST(p.FVC AS REAL)))"
+    },
+    {
+      "id": "ADD_GRASS_048",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "ZWDCB_CCYF_TB",
+      "title": "测产植物产草量鲜重不大于干重",
+      "explanation": "测产样方植物调查表中产草量鲜重必须大于产草量干重。",
+      "requiredTables": [
+        "ZWDCB_CCYF_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC",
+        "CCL_XIAN",
+        "CCL_GAN"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "sql": "SELECT YD_ID, YF_ID, ZW_MC, CCL_XIAN AS '产草量鲜重', CCL_GAN AS '产草量干重' FROM \"ZWDCB_CCYF_TB\" WHERE YD_ID = :ydId AND (CCL_XIAN IS NOT NULL AND CCL_GAN IS NOT NULL AND CAST(CCL_XIAN AS REAL) <= CAST(CCL_GAN AS REAL))"
+    },
+    {
+      "id": "ADD_GRASS_049",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "ZWDCB_CCYF_TB",
+      "title": "测产植物是否可食与是否毒害关系异常",
+      "explanation": "测产样方植物调查是否可食和是否毒害不能同时为是或同时为否。",
+      "requiredTables": [
+        "ZWDCB_CCYF_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC",
+        "KESHI",
+        "DUHAI"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "sql": "SELECT YD_ID, YF_ID, ZW_MC, KESHI AS '是否可食', DUHAI AS '是否毒害' FROM \"ZWDCB_CCYF_TB\" WHERE YD_ID = :ydId AND (KESHI = DUHAI AND KESHI IN ('1','2'))"
+    },
+    {
+      "id": "ADD_GRASS_050",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "ZWDCB_CCYF_TB",
+      "title": "测产植物优势种标记数量异常",
+      "explanation": "同一测产样方的 2 个植物调查表中，是否为优势种应一是一下。",
+      "requiredTables": [
+        "ZWDCB_CCYF_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "YOUSHIZHONG"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "sql": "SELECT YD_ID, YF_ID, SUM(CASE WHEN YOUSHIZHONG = \"1\" THEN 1 ELSE 0 END) AS \"优势种数量\", COUNT(*) AS \"植物调查数量\" FROM \"ZWDCB_CCYF_TB\" WHERE YD_ID = :ydId GROUP BY YD_ID, YF_ID HAVING COUNT(*) >= 2 AND SUM(CASE WHEN YOUSHIZHONG = \"1\" THEN 1 ELSE 0 END) <> 1"
+    },
+    {
+      "id": "ADD_GRASS_051",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "ZWDCB_CCYF_TB",
+      "title": "测产植物照片数量不足",
+      "explanation": "植物名称写了几个，相应植物调查表下就要有几张照片。",
+      "requiredTables": [
+        "ZWDCB_CCYF_TB",
+        "FS_DOCUMENT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC",
+        "MZGUID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "sql": "SELECT p.YD_ID, p.YF_ID, p.ZW_MC, COUNT(d.PK_UID) AS \"植物照片数量\" FROM \"ZWDCB_CCYF_TB\" p LEFT JOIN \"FS_DOCUMENT\" d ON d.main_body_table_id = \"ZWDCB_CCYF_TB\" AND (d.main_body_guid LIKE p.MZGUID || \"%\" OR d.adjunct_path LIKE \"%\" || p.MZGUID || \"%\") WHERE p.YD_ID = :ydId GROUP BY p.YD_ID, p.YF_ID, p.ZW_MC, p.MZGUID HAVING COUNT(d.PK_UID) < 1"
+    },
+    {
+      "id": "ADD_GRASS_052",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "ADVISORY",
+      "targetTable": "ZWDCB_CCYF_TB",
+      "title": "测产优势植物鲜重占比低于 60%",
+      "explanation": "测产样方优势植物产草量鲜重之和小于测产样方合计鲜重的 60% 时提示核对。",
+      "requiredTables": [
+        "YF_TRCYCC_TB",
+        "ZWDCB_CCYF_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "YOUSHIZHONG",
+        "CCL_XIAN"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "sql": "SELECT s.YD_ID, s.YF_ID, SUM(CASE WHEN p.YOUSHIZHONG = \"1\" THEN CAST(p.CCL_XIAN AS REAL) ELSE 0 END) AS \"优势植物鲜重和\", s.HJ_XZ AS \"样方合计鲜重\" FROM \"YF_TRCYCC_TB\" s JOIN \"ZWDCB_CCYF_TB\" p ON p.XB_GLH = s.MZGUID WHERE s.YD_ID = :ydId GROUP BY s.YD_ID, s.YF_ID, s.HJ_XZ HAVING s.HJ_XZ IS NOT NULL AND SUM(CASE WHEN p.YOUSHIZHONG = \"1\" THEN CAST(p.CCL_XIAN AS REAL) ELSE 0 END) < CAST(s.HJ_XZ AS REAL) * 0.6"
+    },
+    {
+      "id": "ADD_GRASS_053",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "ADVISORY",
+      "targetTable": "ZWDCB_CCYF_TB",
+      "title": "测产优势植物名称与样地优势草种不一致",
+      "explanation": "测产样方优势种为是的植物名称至少有一项应与样地调查表优势草种一致。",
+      "requiredTables": [
+        "ZWDCB_CCYF_TB",
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC",
+        "YOUSHIZHONG"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "sql": "WITH RECURSIVE base AS (SELECT p.YD_ID, p.YF_ID, p.ZW_MC, p.YOUSHIZHONG, yd.YS_CZ FROM \"ZWDCB_CCYF_TB\" p JOIN \"YD_TRCY_PT\" yd ON yd.YD_ID = p.YD_ID WHERE p.YD_ID = :ydId), split(YD_ID, YF_ID, plant, rest, YS_CZ) AS (SELECT YD_ID, YF_ID, \"\", REPLACE(REPLACE(REPLACE(REPLACE(TRIM(ZW_MC), \",\", \"，\"), \"、\", \"，\"), \" \", \"\"), \"　\", \"\") || \"，\", YS_CZ FROM base WHERE YOUSHIZHONG = \"1\" AND ZW_MC IS NOT NULL AND TRIM(ZW_MC) <> \"\" UNION ALL SELECT YD_ID, YF_ID, TRIM(SUBSTR(rest, 1, INSTR(rest, \"，\") - 1)), SUBSTR(rest, INSTR(rest, \"，\") + 1), YS_CZ FROM split WHERE rest <> \"\" AND INSTR(rest, \"，\") > 0), summary AS (SELECT YD_ID, YF_ID, GROUP_CONCAT(CASE WHEN YOUSHIZHONG = \"1\" THEN ZW_MC END) AS \"测产优势植物\", YS_CZ AS \"样地优势草种\" FROM base GROUP BY YD_ID, YF_ID, YS_CZ), matches AS (SELECT YD_ID, YF_ID, SUM(CASE WHEN plant <> \"\" AND (\"，\" || REPLACE(REPLACE(REPLACE(REPLACE(YS_CZ, \",\", \"，\"), \"、\", \"，\"), \" \", \"\"), \"　\", \"\") || \"，\") LIKE \"%，\" || plant || \"，%\" THEN 1 ELSE 0 END) AS hit_count FROM split WHERE plant <> \"\" GROUP BY YD_ID, YF_ID) SELECT s.YD_ID, s.YF_ID, s.\"测产优势植物\", s.\"样地优势草种\" FROM summary s LEFT JOIN matches m ON m.YD_ID = s.YD_ID AND m.YF_ID = s.YF_ID WHERE s.\"测产优势植物\" IS NOT NULL AND COALESCE(m.hit_count, 0) = 0"
+    },
+    {
+      "id": "ADD_GRASS_054",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YF_TRCYGC_TB",
+      "title": "观测样方不足 3 个",
+      "explanation": "一个样地必须有 3 个观测样方。",
+      "requiredTables": [
+        "YF_TRCYGC_TB"
+      ],
+      "requiredFields": [
+        "YD_ID"
+      ],
+      "locatorFields": [
+        "YD_ID"
+      ],
+      "sql": "SELECT YD_ID, COUNT(*) AS \"观测样方数量\" FROM \"YF_TRCYGC_TB\" WHERE YD_ID = :ydId GROUP BY YD_ID HAVING COUNT(*) <> 3"
+    },
+    {
+      "id": "ADD_GRASS_055",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "ADVISORY",
+      "targetTable": "YF_TRCYGC_TB",
+      "title": "观测样方盖度低于 60%",
+      "explanation": "观测样方盖度低于 60% 时提示人工检查核对。",
+      "requiredTables": [
+        "YF_TRCYGC_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZGD"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "sql": "SELECT YD_ID, YF_ID, ZGD AS '观测样方盖度' FROM \"YF_TRCYGC_TB\" WHERE YD_ID = :ydId AND (ZGD IS NOT NULL AND CAST(ZGD AS REAL) < 60)"
+    },
+    {
+      "id": "ADD_GRASS_056",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "ADVISORY",
+      "targetTable": "YF_TRCYGC_TB",
+      "title": "观测样方盖度与样地盖度差值超过 20%",
+      "explanation": "观测样方盖度与样地盖度差值超过 20% 时提示人工检查核对。",
+      "requiredTables": [
+        "YF_TRCYGC_TB",
+        "YD_TRCY_PT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZGD"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "sql": "SELECT s.YD_ID, s.YF_ID, s.ZGD AS \"观测样方盖度\", p.CDGD AS \"样地盖度\" FROM \"YF_TRCYGC_TB\" s JOIN \"YD_TRCY_PT\" p ON p.YD_ID = s.YD_ID WHERE s.YD_ID = :ydId AND s.ZGD IS NOT NULL AND p.CDGD IS NOT NULL AND ABS(CAST(s.ZGD AS REAL) - CAST(p.CDGD AS REAL)) > 20"
+    },
+    {
+      "id": "ADD_GRASS_057",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "ADVISORY",
+      "targetTable": "YF_TRCYGC_TB",
+      "title": "观测样方草群平均高度超出 5 至 100",
+      "explanation": "观测样方草群平均高度低于 5 或高于 100 时提示人工检查核对。",
+      "requiredTables": [
+        "YF_TRCYGC_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "CQPJ_GD"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "sql": "SELECT YD_ID, YF_ID, CQPJ_GD AS '草群平均高度' FROM \"YF_TRCYGC_TB\" WHERE YD_ID = :ydId AND (CQPJ_GD IS NOT NULL AND (CAST(CQPJ_GD AS REAL) < 5 OR CAST(CQPJ_GD AS REAL) > 100))"
+    },
+    {
+      "id": "ADD_GRASS_058",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "ADVISORY",
+      "targetTable": "YF_TRCYGC_TB",
+      "title": "观测样方植物种数少于 3 种",
+      "explanation": "观测样方植物种数少于 3 种时提示检查。",
+      "requiredTables": [
+        "YF_TRCYGC_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZWZS"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "sql": "SELECT YD_ID, YF_ID, ZWZS AS '植物种数' FROM \"YF_TRCYGC_TB\" WHERE YD_ID = :ydId AND (ZWZS IS NOT NULL AND CAST(ZWZS AS REAL) < 3)"
+    },
+    {
+      "id": "ADD_GRASS_059",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "ADVISORY",
+      "targetTable": "YF_TRCYGC_TB",
+      "title": "观测样方植物调查表少于 2 条",
+      "explanation": "一个观测样方下至少 2 个植物调查表。",
+      "requiredTables": [
+        "YF_TRCYGC_TB",
+        "ZWDCB_GCYF_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "MZGUID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "sql": "SELECT s.YD_ID, s.YF_ID, COUNT(p.PK_UID) AS \"观测植物调查数量\" FROM \"YF_TRCYGC_TB\" s LEFT JOIN \"ZWDCB_GCYF_TB\" p ON p.XB_GLH = s.MZGUID WHERE s.YD_ID = :ydId GROUP BY s.YD_ID, s.YF_ID HAVING COUNT(p.PK_UID) < 2"
+    },
+    {
+      "id": "ADD_GRASS_060",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YF_TRCYGC_TB",
+      "title": "观测样方平均高不在植物高度范围内",
+      "explanation": "观测样方的草群平均高取值要在本样方各植物调查表高度的最大值和最小值之间。",
+      "requiredTables": [
+        "YF_TRCYGC_TB",
+        "ZWDCB_GCYF_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "CQPJ_GD"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "sql": "SELECT s.YD_ID, s.YF_ID, s.CQPJ_GD AS \"草群平均高度\", MIN(p.H) AS \"植物最小高度\", MAX(p.H) AS \"植物最大高度\" FROM \"YF_TRCYGC_TB\" s JOIN \"ZWDCB_GCYF_TB\" p ON p.XB_GLH = s.MZGUID WHERE s.YD_ID = :ydId GROUP BY s.YD_ID, s.YF_ID, s.CQPJ_GD HAVING COUNT(p.PK_UID) > 0 AND (CAST(s.CQPJ_GD AS REAL) < MIN(CAST(p.H AS REAL)) OR CAST(s.CQPJ_GD AS REAL) > MAX(CAST(p.H AS REAL)))"
+    },
+    {
+      "id": "ADD_GRASS_061",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YF_TRCYGC_TB",
+      "title": "观测样方总盖度不在植物盖度范围内",
+      "explanation": "观测样方总盖度必须介于植物调查表盖度值之间。",
+      "requiredTables": [
+        "YF_TRCYGC_TB",
+        "ZWDCB_GCYF_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZGD"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "sql": "SELECT s.YD_ID, s.YF_ID, s.ZGD AS \"样方总盖度\", MIN(p.FVC) AS \"植物最小盖度\", MAX(p.FVC) AS \"植物最大盖度\" FROM \"YF_TRCYGC_TB\" s JOIN \"ZWDCB_GCYF_TB\" p ON p.XB_GLH = s.MZGUID WHERE s.YD_ID = :ydId GROUP BY s.YD_ID, s.YF_ID, s.ZGD HAVING COUNT(p.PK_UID) > 0 AND (CAST(s.ZGD AS REAL) < MIN(CAST(p.FVC AS REAL)) OR CAST(s.ZGD AS REAL) > MAX(CAST(p.FVC AS REAL)))"
+    },
+    {
+      "id": "ADD_GRASS_062",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "ZWDCB_GCYF_TB",
+      "title": "观测植物高度或盖度未正向填写",
+      "explanation": "观测样方植物调查表没有产草量字段，当前校验植物高度和盖度必须有效填写。",
+      "requiredTables": [
+        "ZWDCB_GCYF_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC",
+        "H",
+        "FVC"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "sql": "SELECT YD_ID, YF_ID, ZW_MC, H AS '高度', FVC AS '盖度' FROM \"ZWDCB_GCYF_TB\" WHERE YD_ID = :ydId AND (H IS NULL OR FVC IS NULL OR CAST(H AS REAL) <= 0 OR CAST(FVC AS REAL) <= 0)"
+    },
+    {
+      "id": "ADD_GRASS_063",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "ZWDCB_GCYF_TB",
+      "title": "观测植物是否可食与是否毒害关系异常",
+      "explanation": "观测样方植物调查是否可食和是否毒害不能同时为是或同时为否。",
+      "requiredTables": [
+        "ZWDCB_GCYF_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC",
+        "KESHI",
+        "DUHAI"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "sql": "SELECT YD_ID, YF_ID, ZW_MC, KESHI AS '是否可食', DUHAI AS '是否毒害' FROM \"ZWDCB_GCYF_TB\" WHERE YD_ID = :ydId AND (KESHI = DUHAI AND KESHI IN ('1','2'))"
+    },
+    {
+      "id": "ADD_GRASS_064",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "ZWDCB_GCYF_TB",
+      "title": "观测植物优势种标记数量异常",
+      "explanation": "同一观测样方的 2 个植物调查表中，是否为优势种应一是一下。",
+      "requiredTables": [
+        "ZWDCB_GCYF_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "YOUSHIZHONG"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "sql": "SELECT YD_ID, YF_ID, SUM(CASE WHEN YOUSHIZHONG = \"1\" THEN 1 ELSE 0 END) AS \"优势种数量\", COUNT(*) AS \"植物调查数量\" FROM \"ZWDCB_GCYF_TB\" WHERE YD_ID = :ydId GROUP BY YD_ID, YF_ID HAVING COUNT(*) >= 2 AND SUM(CASE WHEN YOUSHIZHONG = \"1\" THEN 1 ELSE 0 END) <> 1"
+    },
+    {
+      "id": "ADD_GRASS_065",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "ZWDCB_GCYF_TB",
+      "title": "观测植物照片数量不足",
+      "explanation": "植物名称写了几个，相应植物调查表下就要有几张照片。",
+      "requiredTables": [
+        "ZWDCB_GCYF_TB",
+        "FS_DOCUMENT"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC",
+        "MZGUID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID",
+        "ZW_MC"
+      ],
+      "sql": "SELECT p.YD_ID, p.YF_ID, p.ZW_MC, COUNT(d.PK_UID) AS \"植物照片数量\" FROM \"ZWDCB_GCYF_TB\" p LEFT JOIN \"FS_DOCUMENT\" d ON d.main_body_table_id = \"ZWDCB_GCYF_TB\" AND (d.main_body_guid LIKE p.MZGUID || \"%\" OR d.adjunct_path LIKE \"%\" || p.MZGUID || \"%\") WHERE p.YD_ID = :ydId GROUP BY p.YD_ID, p.YF_ID, p.ZW_MC, p.MZGUID HAVING COUNT(d.PK_UID) < 1"
+    },
+    {
+      "id": "ADD_GRASS_066",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "ADVISORY",
+      "targetTable": "ZWDCB_GCYF_TB",
+      "title": "观测优势植物盖度占比低于 60%",
+      "explanation": "观测样方优势植物盖度之和小于观测样方总盖度的 60% 时提示核对。",
+      "requiredTables": [
+        "YF_TRCYGC_TB",
+        "ZWDCB_GCYF_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "YOUSHIZHONG",
+        "FVC"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "sql": "SELECT s.YD_ID, s.YF_ID, SUM(CASE WHEN p.YOUSHIZHONG = \"1\" THEN CAST(p.FVC AS REAL) ELSE 0 END) AS \"优势植物盖度和\", s.ZGD AS \"观测样方总盖度\" FROM \"YF_TRCYGC_TB\" s JOIN \"ZWDCB_GCYF_TB\" p ON p.XB_GLH = s.MZGUID WHERE s.YD_ID = :ydId GROUP BY s.YD_ID, s.YF_ID, s.ZGD HAVING s.ZGD IS NOT NULL AND SUM(CASE WHEN p.YOUSHIZHONG = \"1\" THEN CAST(p.FVC AS REAL) ELSE 0 END) < CAST(s.ZGD AS REAL) * 0.6"
+    },
+    {
+      "id": "ADD_GRASS_067",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YF_TRCY_TB",
+      "title": "高大草灌样方面积不是 100 或 25",
+      "explanation": "高大草灌样方面积应为 100 或 25。",
+      "requiredTables": [
+        "YF_TRCY_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "MIAN_JI"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "sql": "SELECT YD_ID, YF_ID, MIAN_JI AS '面积' FROM \"YF_TRCY_TB\" WHERE YD_ID = :ydId AND (MIAN_JI IS NULL OR CAST(MIAN_JI AS REAL) NOT IN (100, 25))"
+    },
+    {
+      "id": "ADD_GRASS_068",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "MANDATORY",
+      "targetTable": "YF_TRCY_TB",
+      "title": "高大草灌样方缺少植物调查表",
+      "explanation": "1 个高大草灌样方下至少 1 个植物调查表。",
+      "requiredTables": [
+        "YF_TRCY_TB",
+        "ZWDCB_GDCG_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "MZGUID"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID"
+      ],
+      "sql": "SELECT s.YD_ID, s.YF_ID, COUNT(p.PK_UID) AS \"高大草灌植物调查数量\" FROM \"YF_TRCY_TB\" s LEFT JOIN \"ZWDCB_GDCG_TB\" p ON p.XB_GLH = s.MZGUID WHERE s.YD_ID = :ydId GROUP BY s.YD_ID, s.YF_ID HAVING COUNT(p.PK_UID) < 1"
+    },
+    {
+      "id": "ADD_GRASS_069",
+      "sourceId": "grassland-additional-20260526",
+      "severity": "ADVISORY",
+      "targetTable": "ZWDCB_GDCG_TB",
+      "title": "高大草灌株丛数大于 50",
+      "explanation": "高大草灌植物调查株丛数大于 50 时，请核实是否有误。",
+      "requiredTables": [
+        "ZWDCB_GDCG_TB"
+      ],
+      "requiredFields": [
+        "YD_ID",
+        "YF_ID",
+        "MC",
+        "ZS"
+      ],
+      "locatorFields": [
+        "YD_ID",
+        "YF_ID",
+        "MC"
+      ],
+      "sql": "SELECT YD_ID, YF_ID, MC, ZS AS '株丛数' FROM \"ZWDCB_GDCG_TB\" WHERE YD_ID = :ydId AND (ZS IS NOT NULL AND CAST(ZS AS REAL) > 50)"
     }
   ]
 }

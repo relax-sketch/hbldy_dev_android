@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,6 +23,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.myapplication.quality.ui.design.QualityDesignTokens
@@ -33,23 +35,34 @@ fun QualityPrimaryButton(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     leadingIcon: ImageVector? = null,
+    trailingIcon: ImageVector? = null,
+    filledMint: Boolean = false,
+    pill: Boolean = false,
 ) {
+    val shape = if (pill) QualityDesignTokens.pillShape else QualityDesignTokens.buttonShape
+    val brush = when {
+        !enabled -> Brush.horizontalGradient(listOf(QualityDesignTokens.surfaceContainer, QualityDesignTokens.surfaceContainer))
+        filledMint -> QualityDesignTokens.primaryFixedButtonBrush
+        else -> QualityDesignTokens.primaryButtonBrush
+    }
+    val textColor = when {
+        !enabled -> QualityDesignTokens.textTertiary
+        filledMint -> QualityDesignTokens.onPrimaryFixed
+        else -> QualityDesignTokens.onPrimary
+    }
     QualityBrushButton(
         text = text,
         onClick = onClick,
         modifier = modifier,
         enabled = enabled,
         leadingIcon = leadingIcon,
-        brush = if (enabled) {
-            QualityDesignTokens.primaryButtonBrush
-        } else {
-            Brush.linearGradient(listOf(QualityDesignTokens.borderStrong, QualityDesignTokens.borderStrong))
-        },
-        textColor = if (enabled) QualityDesignTokens.onPrimary else QualityDesignTokens.textSecondary,
+        trailingIcon = trailingIcon,
+        brush = brush,
+        textColor = textColor,
         borderColor = Color.Transparent,
-        minHeight = QualityDesignTokens.buttonHeight,
+        minHeight = if (pill) QualityDesignTokens.floatingButtonHeight else QualityDesignTokens.buttonHeight,
         horizontalPadding = 20.dp,
-        cornerRadius = 20.dp,
+        shape = shape,
     )
 }
 
@@ -59,20 +72,23 @@ fun QualitySecondaryButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    accentColor: Color = QualityDesignTokens.textPrimary,
+    accentColor: Color = QualityDesignTokens.primary,
     leadingIcon: ImageVector? = null,
+    trailingIcon: ImageVector? = null,
+    pill: Boolean = false,
 ) {
+    val shape = if (pill) QualityDesignTokens.pillShape else QualityDesignTokens.buttonShape
     Surface(
         modifier = modifier
             .fillMaxWidth()
-            .defaultMinSize(minHeight = QualityDesignTokens.secondaryButtonHeight),
+            .defaultMinSize(minHeight = QualityDesignTokens.buttonHeight),
         onClick = onClick,
         enabled = enabled,
-        color = QualityDesignTokens.surface,
+        color = QualityDesignTokens.glass,
         contentColor = if (enabled) accentColor else QualityDesignTokens.textTertiary,
-        shape = QualityDesignTokens.buttonShape,
+        shape = shape,
         border = BorderStroke(1.dp, QualityDesignTokens.borderStrong),
-        shadowElevation = 0.dp,
+        shadowElevation = 6.dp,
     ) {
         Box(
             modifier = Modifier
@@ -84,6 +100,7 @@ fun QualitySecondaryButton(
                 text = text,
                 color = if (enabled) accentColor else QualityDesignTokens.textTertiary,
                 leadingIcon = leadingIcon,
+                trailingIcon = trailingIcon,
             )
         }
     }
@@ -97,15 +114,16 @@ fun RowScope.QualityButtonPair(
     onSecondaryClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    QualityPrimaryButton(
-        text = primaryText,
-        onClick = onPrimaryClick,
-        modifier = modifier.weight(1f),
-    )
     QualitySecondaryButton(
         text = secondaryText,
         onClick = onSecondaryClick,
         modifier = modifier.weight(1f),
+    )
+    QualityPrimaryButton(
+        text = primaryText,
+        onClick = onPrimaryClick,
+        modifier = modifier.weight(1f),
+        filledMint = true,
     )
 }
 
@@ -119,7 +137,7 @@ fun QualityModePill(
     val background = if (checked) {
         QualityDesignTokens.primaryButtonBrush
     } else {
-        Brush.linearGradient(listOf(QualityDesignTokens.surface, QualityDesignTokens.surface))
+        Brush.horizontalGradient(listOf(QualityDesignTokens.glass, QualityDesignTokens.glass))
     }
     QualityBrushButton(
         text = label,
@@ -127,12 +145,13 @@ fun QualityModePill(
         modifier = modifier,
         enabled = true,
         leadingIcon = null,
+        trailingIcon = null,
         brush = background,
         textColor = if (checked) QualityDesignTokens.onPrimary else QualityDesignTokens.textSecondary,
         borderColor = if (checked) Color.Transparent else QualityDesignTokens.borderStrong,
-        minHeight = 46.dp,
-        horizontalPadding = 16.dp,
-        cornerRadius = 18.dp,
+        minHeight = 36.dp,
+        horizontalPadding = 12.dp,
+        shape = QualityDesignTokens.pillShape,
     )
 }
 
@@ -143,12 +162,13 @@ private fun QualityBrushButton(
     modifier: Modifier = Modifier,
     enabled: Boolean,
     leadingIcon: ImageVector?,
+    trailingIcon: ImageVector?,
     brush: Brush,
     textColor: Color,
     borderColor: Color,
     minHeight: Dp,
     horizontalPadding: Dp,
-    cornerRadius: Dp,
+    shape: RoundedCornerShape,
 ) {
     Surface(
         modifier = modifier
@@ -158,16 +178,16 @@ private fun QualityBrushButton(
         enabled = enabled,
         color = Color.Transparent,
         contentColor = textColor,
-        shape = RoundedCornerShape(cornerRadius),
+        shape = shape,
         shadowElevation = if (enabled) 8.dp else 0.dp,
     ) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(brush = brush, shape = RoundedCornerShape(cornerRadius))
+                .background(brush = brush, shape = shape)
                 .then(
                     if (borderColor != Color.Transparent) {
-                        Modifier.border(1.dp, borderColor, RoundedCornerShape(cornerRadius))
+                        Modifier.border(1.dp, borderColor, shape)
                     } else {
                         Modifier
                     },
@@ -175,7 +195,12 @@ private fun QualityBrushButton(
                 .padding(horizontal = horizontalPadding, vertical = 14.dp),
             contentAlignment = Alignment.Center,
         ) {
-            ButtonLabel(text = text, color = textColor, leadingIcon = leadingIcon)
+            ButtonLabel(
+                text = text,
+                color = textColor,
+                leadingIcon = leadingIcon,
+                trailingIcon = trailingIcon,
+            )
         }
     }
 }
@@ -185,17 +210,24 @@ private fun ButtonLabel(
     text: String,
     color: Color,
     leadingIcon: ImageVector?,
+    trailingIcon: ImageVector?,
 ) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         if (leadingIcon != null) {
-            Icon(
-                imageVector = leadingIcon,
-                contentDescription = null,
-                tint = color,
-                modifier = Modifier.size(20.dp),
-            )
+            Icon(leadingIcon, contentDescription = null, tint = color, modifier = Modifier.size(20.dp))
             Spacer(Modifier.size(8.dp))
         }
-        Text(text = text, color = color, textAlign = TextAlign.Center)
+        Text(
+            text = text,
+            color = color,
+            style = MaterialTheme.typography.titleMedium,
+            textAlign = TextAlign.Center,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+        )
+        if (trailingIcon != null) {
+            Spacer(Modifier.size(8.dp))
+            Icon(trailingIcon, contentDescription = null, tint = color, modifier = Modifier.size(20.dp))
+        }
     }
 }

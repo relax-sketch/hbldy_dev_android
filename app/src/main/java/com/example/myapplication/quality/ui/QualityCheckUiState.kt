@@ -17,6 +17,7 @@ enum class QualityScreen {
     PROGRESS,
     SUMMARY,
     DETAIL,
+    SETTINGS,
 }
 
 data class QualityCheckUiState(
@@ -33,6 +34,7 @@ data class QualityCheckUiState(
     val selectedScope: CheckScope? = null,
     val checkAllMode: Boolean = false,
     val testMode: Boolean = false,
+    val nationalCheckMode: Boolean = true,
     val progress: CheckProgress? = null,
     val reviewedRun: ReviewedCheckRun? = null,
     val detailPlot: ReviewedPlotResult? = null,
